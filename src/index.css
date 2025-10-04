@@ -1,0 +1,245 @@
+@import "tailwindcss";
+
+/* Importar fuentes locales */
+@font-face {
+    font-family: 'Tarrget';
+    src: url('/assets/fonts/tarrget.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Tarrget-Italic';
+    src: url('/assets/fonts/tarrget3dital.ttf') format('truetype');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@theme {
+    --color-black: #010101;
+    --color-white: #efefef;
+    --color-gray: #898989;
+    --color-dark-blue: rgb(21, 40, 60);
+    --color-dark-red: rgb(43, 18, 18);
+    --color-light-red: #f23506;
+    --color-light-blue: #007bff;
+
+    --font-sans: "Mona Sans", sans-serif;
+    --font-modern-negra: "Modern Negra", sans-serif;
+    --font-serif: "DM Serif Text", serif;
+    --font-tarrget: "Tarrget", sans-serif;
+    --font-tarrget-italic: "Tarrget-italic", italic;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+html,
+body {
+    width: 100%;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+@layer components {
+    #navbar {
+        @apply flex h-[7.5%] w-full fixed z-50 justify-center items-center;
+
+        .logo-image {
+            @apply h-15;
+        }
+
+        .nav-container {
+            @apply flex justify-between items-center w-2/3
+        }
+
+        .nav-links {
+            @apply flex gap-4 text-shadow-current text-base text-[var(--color-black)] font-bold tracking-wider uppercase;
+        }
+
+        .nav-buttons {
+            @apply flex gap-2 !px-1 !py-1 hover:bg-[var(--color-black)] hover:rounded-4xl
+        }
+
+        .nav-button {
+            @apply !px-2 !py-1 rounded-2xl;
+        }
+
+        .signup-button {
+            @apply bg-[var(--color-white)] text-[var(--color-black)];
+        }
+
+        a.active {
+            @apply !text-[var(--color-white)];
+        }
+    }
+
+    #main-app-container {
+        @apply w-full min-h-screen flex items-center justify-center;
+
+        h1 {
+            @apply text-4xl font-bold;
+        }
+    }
+
+    #hero {
+        @apply relative w-full h-screen;
+
+        .hero-container {
+            @apply relative z-10 w-full h-[100vh] overflow-hidden;
+
+        }
+
+        .hero-video {
+            @apply absolute top-0 left-0 w-full h-full object-cover z-0;
+        }
+
+        .hero-gradient {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 45%;
+            pointer-events: none;
+            z-index: 20;
+            background: linear-gradient(to bottom, transparent, var(--color-black) 90%);
+        }
+
+        .hero-content {
+            @apply relative w-full h-full flex flex-col items-center justify-center z-30;
+        }
+
+        .biglogo {
+            @apply w-2/5 h-auto mb-8;
+
+            img {
+                @apply w-full h-auto opacity-90 brightness-90;
+            }
+        }
+
+        .hero-text {
+            @apply flex flex-col items-center text-center max-w-3xl px-4 !mt-5;
+        }
+
+        .hero-title {
+            @apply !text-5xl md:text-6xl font-bold mb-6;
+            font-family: var(--font-tarrget);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .rotating-text {
+            @apply !text-6xl text-[var(--color-light-red)];
+            font-family: var(--font-tarrget-italic);
+        }
+
+        .hero-description {
+            @apply text-lg md:text-xl text-white/90 mb-8 max-w-2xl leading-relaxed;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.9);
+        }
+
+        .hero-cta {
+            @apply flex gap-4 flex-wrap justify-center;
+            display: none;
+        }
+
+        .cta-primary {
+            @apply px-8 py-4 bg-[var(--color-light-red)] text-white font-bold text-lg rounded-lg hover:bg-[var(--color-light-red)]/80 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[var(--color-light-red)]/50;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-secondary {
+            @apply px-8 py-4 bg-transparent border-2 border-white text-white font-bold text-lg rounded-lg hover:bg-white hover:text-[var(--color-black)] transition-all duration-300 hover:scale-105;
+        }
+    }
+
+
+
+    #art {
+        @apply w-full min-h-screen flex justify-center !py-40 px-4;
+
+        .art-content {
+            @apply w-full max-w-7xl mx-auto;
+        }
+
+        .art-header {
+            @apply text-center mb-16;
+        }
+
+        .art-title {
+            @apply text-5xl md:text-6xl font-bold mb-4;
+            font-family: var(--font-modern-negra);
+            background: linear-gradient(to bottom, var(--color-gray-500), var(--color-white));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .art-subtitle {
+            @apply text-xl md:text-2xl text-gray/80 !mb-20;
+        }
+
+
+
+        .art-image-section {
+            @apply overflow-hidden shadow-2xl;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            grid-column-gap: 2rem;
+            grid-row-gap: 2rem;
+            border-radius: 1rem;
+        }
+
+        .art-img {
+            @apply w-full h-[30rem] object-cover rounded-2xl;
+        }
+
+        .art-image1 {
+            grid-area: 1 / 1 / 2 / 2;
+        }
+
+        .art-image2 {
+            grid-area: 2 / 1 / 3 / 3;
+        }
+
+        .art-image3 {
+
+            grid-area: 3 / 2 / 4 / 3;
+        }
+
+        .art-image-overlay {
+            @apply absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end justify-center pb-8 opacity-0 hover:opacity-100 transition-opacity duration-300;
+        }
+
+        .art-image-text {
+            @apply text-2xl font-bold text-white;
+            font-family: var(--font-modern-negra);
+        }
+
+
+
+
+    }
+}
+
+@utility text-gradient {
+    background: linear-gradient(to bottom, #ffffff, #898989);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+@utility proximamente {
+    @apply bg-gradient-to-b from-[var(--color-gray)] to-[var(--color-black)] relative w-full min-h-screen flex flex-col items-center justify-center text-center p-4
+}
