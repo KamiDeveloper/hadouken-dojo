@@ -56,12 +56,12 @@ body {
     #navbar {
         @apply flex h-[7.5%] w-full fixed z-50 justify-center items-center;
 
-        .logo-image {
-            @apply h-15;
+        .nav-container {
+            @apply flex justify-between items-center w-3/4 lg:w-2/3;
         }
 
-        .nav-container {
-            @apply flex justify-between items-center w-2/3
+        .logo-image {
+            @apply h-15;
         }
 
         .nav-links {
@@ -83,6 +83,10 @@ body {
         a.active {
             @apply !text-[var(--color-white)];
         }
+
+        #hamburger-menu {
+            @apply !ml-5;
+        }
     }
 
     #main-app-container {
@@ -97,7 +101,7 @@ body {
         @apply relative w-full h-screen;
 
         .hero-container {
-            @apply relative z-10 w-full h-[100vh] overflow-hidden;
+            @apply relative z-10 w-full h-dvh overflow-hidden;
 
         }
 
@@ -121,7 +125,7 @@ body {
         }
 
         .biglogo {
-            @apply w-2/5 h-auto mb-8;
+            @apply lg:w-2/5 h-auto mb-8 md:w-3/5 sm:w-4/5;
 
             img {
                 @apply w-full h-auto opacity-90 brightness-90;
@@ -133,13 +137,13 @@ body {
         }
 
         .hero-title {
-            @apply !text-5xl md:text-6xl font-bold mb-6;
+            @apply lg:text-5xl md:text-3xl font-bold mb-6;
             font-family: var(--font-tarrget);
             text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .rotating-text {
-            @apply !text-6xl text-[var(--color-light-red)];
+            @apply lg:text-6xl md:text-4xl text-[var(--color-light-red)];
             font-family: var(--font-tarrget-italic);
         }
 

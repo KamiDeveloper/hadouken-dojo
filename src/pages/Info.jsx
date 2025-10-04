@@ -1,5 +1,3 @@
-import React from 'react'
-import WhiteGradienteBG from '../components/WhiteGradienteBG'
 
 const Info = () => {
     return (

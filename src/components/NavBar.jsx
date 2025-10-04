@@ -1,8 +1,8 @@
-import React from 'react'
 import logo from '/assets/images/logoland.webp'
 import { NavLink } from 'react-router-dom'
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
+import HamburguerMenu from './HamburguerMenu'
 
 const NavBar = () => {
     useGSAP(() => {
@@ -40,13 +40,13 @@ const NavBar = () => {
 
     return (
         <nav id='navbar'>
-            <div className="nav-container">
+            <div className="nav-container ">
                 <div className="logo">
                     <NavLink to="/">
                         <img className='logo-image' src={logo} alt="Logo" />
                     </NavLink>
                 </div>
-                <div className="nav-links">
+                <div className="nav-links md:flex hidden">
                     <NavLink to="/">Inicio</NavLink>
                     <NavLink to="/info">Información</NavLink>
                     <NavLink to="/reservations">Reservas</NavLink>
@@ -61,6 +61,7 @@ const NavBar = () => {
                     </NavLink>
                 </div>
             </div>
+            <HamburguerMenu />
         </nav>
     )
 }
