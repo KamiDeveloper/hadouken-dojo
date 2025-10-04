@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/"
+    }
+  ],
+  "buildCommand": "bun run build",
+  "framework": "vite",
+  "outputDirectory": "dist"
+}
