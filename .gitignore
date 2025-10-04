@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+SKELETON_LOADING.md
+STRUCTURE.md
+QUICK_START_SKELETON.md

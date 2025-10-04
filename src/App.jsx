@@ -1,4 +1,3 @@
-
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -7,9 +6,11 @@ import Reservations from './pages/Reservations'
 import Info from './pages/Info'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import RootLayout from './layout/RootLayout'
+import { LoadingProvider, useLoading } from './context/LoadingContext'
+import SkeletonPage from './components/skeletons/SkeletonPage'
 
-function App() {
-
+function AppContent() {
+  const { isLoading } = useLoading();
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -24,8 +25,21 @@ function App() {
     )
   )
 
+  // Mostrar skeleton mientras carga
+  if (isLoading) {
+    return <SkeletonPage />;
+  }
+
   return (
     <RouterProvider router={router} />
+  )
+}
+
+function App() {
+  return (
+    <LoadingProvider>
+      <AppContent />
+    </LoadingProvider>
   )
 }
 

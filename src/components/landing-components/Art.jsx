@@ -27,7 +27,6 @@ const Art = () => {
                 start: "top center",
                 end: "80% center",
                 scrub: true,
-                markers: true,
             }
         })
 

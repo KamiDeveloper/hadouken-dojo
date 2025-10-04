@@ -1,0 +1,150 @@
+/* ============================================
+   SKELETON LOADING STYLES
+   ============================================ */
+
+/* Keyframe para la animación shimmer */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* Keyframe para pulse suave */
+@keyframes pulse-soft {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* Clase base para elementos skeleton */
+.skeleton-box {
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0.05) 0%,
+            rgba(255, 255, 255, 0.1) 50%,
+            rgba(255, 255, 255, 0.05) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+    border-radius: 4px;
+}
+
+/* Variante más sutil para fondos grandes */
+.skeleton-box-subtle {
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0.02) 0%,
+            rgba(255, 255, 255, 0.05) 50%,
+            rgba(255, 255, 255, 0.02) 100%);
+    background-size: 1000px 100%;
+    animation: shimmer 3s infinite linear;
+}
+
+/* Contenedor de skeleton con fade-in */
+.skeleton-page {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Skeleton para navbar */
+.skeleton-navbar {
+    animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Skeleton para hero section */
+.skeleton-hero {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Skeleton para art cards */
+.skeleton-art-card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Animación de entrada escalonada para múltiples cards */
+.skeleton-art-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.skeleton-art-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.skeleton-art-card:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* Efecto de pulse suave para elementos interactivos */
+.skeleton-pulse {
+    animation: pulse-soft 2s infinite ease-in-out;
+}
+
+/* Transición suave cuando el contenido real aparece */
+.content-loaded {
+    animation: contentReveal 0.6s ease-out;
+}
+
+@keyframes contentReveal {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Media queries para optimización en móviles */
+@media (prefers-reduced-motion: reduce) {
+
+    .skeleton-box,
+    .skeleton-box-subtle,
+    .skeleton-page,
+    .skeleton-navbar,
+    .skeleton-hero,
+    .skeleton-art-card {
+        animation: none;
+    }
+}
