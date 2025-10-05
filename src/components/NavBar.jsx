@@ -32,9 +32,11 @@ const NavBar = () => {
             ease: 'power4.out'
         })
 
-        linkTween.to('.nav-links a', {
-            color: '#555',
-        })
+        linkTween
+            .to('.nav-links a', {
+                color: '#aaa',
+            })
+
     }, [])
 
 
@@ -42,9 +44,7 @@ const NavBar = () => {
         <nav id='navbar'>
             <div className="nav-container ">
                 <div className="logo">
-                    <NavLink to="/">
-                        <img className='logo-image' src={logo} alt="Logo" />
-                    </NavLink>
+                    <img className='logo-image' src={logo} alt="Logo" />
                 </div>
                 <div className="nav-links md:flex hidden">
                     <NavLink to="/">Inicio</NavLink>

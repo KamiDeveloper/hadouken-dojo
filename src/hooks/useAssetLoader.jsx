@@ -15,9 +15,9 @@ const useAssetLoader = () => {
             images: [
                 '/assets/images/logoland.webp',
                 '/assets/images/biglogo.webp',
-                '/assets/images/art.jpg',
-                '/assets/images/art2.png',
-                '/assets/images/art3.png'
+                '/assets/images/art_1.webp',
+                '/assets/images/art_2.webp',
+                '/assets/images/art_3.webp'
             ],
             videos: [
                 '/assets/videos/hero-video.mp4'
