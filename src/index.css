@@ -190,7 +190,7 @@ body {
 
 
     #art {
-        @apply w-full min-h-screen flex justify-center !py-40 px-4;
+        @apply w-full min-h-screen flex justify-center !py-40 px-4 !mb-20;
 
         .art-content {
             @apply w-full mx-auto;
@@ -201,12 +201,7 @@ body {
         }
 
         .art-title {
-            @apply text-5xl md:text-6xl font-bold mb-4;
-            font-family: var(--font-modern-negra);
-            background: linear-gradient(to bottom, var(--color-gray-500), var(--color-white));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            @apply text-5xl md:text-6xl mb-4 text-gradient-pro;
         }
 
         .art-subtitle {
@@ -254,6 +249,55 @@ body {
         }
     }
 
+
+
+    #masked-section {
+        @apply flex-center flex-col min-h-dvh p-5 mt-20 relative;
+
+        h2 {
+            @apply relative lg:text-[12vw] text-6xl leading-none text-center text-gradient-btt !mb-4;
+        }
+
+        .content {
+            @apply flex md:flex-row flex-col justify-between md:mb-16 md:mt-0 gap-10;
+        }
+
+        .tekken-8-img {
+            @apply md:w-[90vw] w-full h-[50vh] md:h-[70vh] rounded-4xl overflow-hidden absolute top-0 md:top-1/2 md:-translate-y-1/2 left-1/2 -translate-x-1/2;
+        }
+
+        .tekken-8-img img {
+            @apply w-1/2 h-auto;
+        }
+
+        .masked-title {
+            @apply lg:translate-y-30 -translate-y-20 !mt-20
+        }
+
+        .masked-container {
+            h2 {
+                @apply absolute bottom-80 text-4xl md:text-5xl font-tarrget text-center mb-1 text-[var(--color-gray)] mt-70;
+            }
+
+            div {
+                @apply opacity-0 md:px-0 px-5 absolute md:bottom-5 bottom-52 left-1/2 -translate-x-1/2;
+
+                h3 {
+                    @apply md:text-5xl text-2xl text-center uppercase md:w-full w-80 text-gradient-pro;
+                }
+
+                p {
+                    @apply text-lg text-center;
+                }
+
+                h3,
+                p {
+                    @apply -translate-y-20
+                }
+            }
+        }
+    }
+
     #footer {
         @apply overflow-hidden w-full border-t border-white/10 !mt-10;
 
@@ -274,6 +318,48 @@ body {
     color: transparent;
 }
 
+@utility text-gradient-pro {
+    @apply font-bold;
+    font-family: var(--font-modern-negra);
+    background: linear-gradient(to bottom, var(--color-gray-500), var(--color-white));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
 @utility proximamente {
     @apply bg-gradient-to-b from-[var(--color-gray)] to-[var(--color-black)] relative w-full min-h-screen flex flex-col items-center justify-center text-center p-4
+}
+
+@utility masked-img {
+    mask-image: url("/assets/images/Tekken-8-mask-img.png");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: 75%;
+}
+
+@utility radial-gradient {
+    background: radial-gradient(circle at center,
+            #434343 0%,
+            #000 50%,
+            transparent 100%);
+}
+
+@utility flex-center {
+    @apply flex justify-center items-center;
+}
+
+@utility col-center {
+    @apply flex flex-col justify-center items-center;
+}
+
+@utility abs-center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
+
+@utility text-gradient-btt {
+    background: linear-gradient(to top, var(--color-black) 25%, var(--color-gray) 125%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
