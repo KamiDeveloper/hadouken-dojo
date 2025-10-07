@@ -63,7 +63,6 @@ const MaskedArt = () => {
     return (
         <div id="masked-section">
             <div className="container mx-auto h-full pt-20">
-                <h2 className="will-fade masked-title"> THE PASSION</h2>
                 <div className="content">
                     <div className="tekken-8-img">
                         <img
