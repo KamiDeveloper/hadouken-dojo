@@ -363,3 +363,28 @@ body {
     background-clip: text;
     color: transparent;
 }
+
+/* Estilos para la escena 3D */
+#art-3d-section {
+    @apply w-full min-h-screen relative overflow-hidden bg-[var(--color-black)];
+
+    .scene-header {
+        @apply absolute top-0 left-0 w-full z-10 pt-20 px-8 text-center;
+
+        h2 {
+            @apply text-4xl md:text-6xl font-bold tracking-wider uppercase mb-4;
+            font-family: var(--font-tarrget);
+            color: var(--color-white);
+            text-shadow: 0 0 20px rgba(242, 53, 6, 0.5);
+        }
+
+        p {
+            @apply text-base md:text-lg text-[var(--color-gray)] max-w-2xl mx-auto;
+        }
+    }
+
+    .three-canvas {
+        @apply w-full h-screen;
+        background: radial-gradient(circle at center, rgba(21, 40, 60, 0.3) 0%, var(--color-black) 100%);
+    }
+}
