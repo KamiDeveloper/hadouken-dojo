@@ -18,11 +18,17 @@ const MaskedArt = () => {
             }
         })
         if (isMobile) {
-            maskTimeline.to('.will-fade', {
-                opacity: 0,
-                stagger: 0.2,
+            maskTimeline.fromTo('.catchword', {
+                opacity: 0
+            }, {
+                opacity: 1,
                 ease: "power1.inOut"
             })
+                .to('.will-fade', {
+                    opacity: 0,
+                    stagger: 0.2,
+                    ease: "power1.inOut"
+                })
                 .to('.masked-img', {
                     scale: 0.8,
                     maskPosition: '47% 50%',
@@ -37,9 +43,14 @@ const MaskedArt = () => {
                 })
         } else {
             maskTimeline
-                .to('.catchword', {
+                .fromTo('.catchword', {
+                    x: 0,
+                    opacity: 0
+                }, {
                     x: 220,
-                    duration: 1
+                    duration: 2,
+                    opacity: 1,
+                    ease: "power1.inOut"
                 })
                 .to('.will-fade', {
                     opacity: 0,

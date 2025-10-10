@@ -7,8 +7,8 @@ const Art3d = () => {
         <div id='art-3d-section'>
             {/* Header de la sección */}
             <div className="scene-header">
-                <h2>Experiencia 3D</h2>
-                <p>Explora nuestra escena interactiva. Usa el mouse para rotar, zoom y explorar.</p>
+                <h2>Experiencia y Dedicación</h2>
+                <p>Explora nuestra escena competitiva desde todos los ángulos.</p>
             </div>
 
             {/* Canvas de Three.js */}
@@ -23,7 +23,7 @@ const Art3d = () => {
                 }}
             >
                 <Suspense fallback={null}>
-                    <ThreeScene />
+                    {/* Componente de la escena 3D */}
                 </Suspense>
             </Canvas>
         </div>
