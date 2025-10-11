@@ -12,20 +12,8 @@ const Art3d = () => {
             </div>
 
             {/* Canvas de Three.js */}
-            <Canvas
-                className="three-canvas"
-                shadows
-                dpr={[1, 2]}
-                gl={{
-                    antialias: true,
-                    alpha: true,
-                    powerPreference: "high-performance"
-                }}
-            >
-                <Suspense fallback={null}>
-                    {/* Componente de la escena 3D */}
-                </Suspense>
-            </Canvas>
+            <ThreeScene />
+
         </div>
     )
 }
