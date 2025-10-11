@@ -1,15 +1,66 @@
-import React, { useRef, useEffect, Suspense } from 'react'
+import React, { useRef, useEffect, Suspense, useMemo, useCallback } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { useGLTF, OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { useGLTF, PerspectiveCamera } from '@react-three/drei'
 import * as THREE from 'three'
 
-// Componente del modelo 3D con seguimiento del mouse
-const Model = ({ mouseX }) => {
+// Precargar el modelo GLTF para mejor performance
+useGLTF.preload('/assets/3dmodels/PIU.glb')
+
+// Throttle helper para optimizar eventos
+const throttle = (func, delay) => {
+    let lastCall = 0
+    return (...args) => {
+        const now = Date.now()
+        if (now - lastCall >= delay) {
+            lastCall = now
+            func(...args)
+        }
+    }
+}
+
+// Componente del modelo 3D con seguimiento del mouse - MEMOIZADO
+const Model = React.memo(({ mouseX }) => {
     const modelRef = useRef()
     const { scene } = useGLTF('/assets/3dmodels/PIU.glb')
 
     // Rotación inicial semi-lateral (30 grados en Y)
     const initialRotation = Math.PI / 6 // 30 grados
+
+    // Configurar materiales y sombras del modelo - OPTIMIZADO
+    useEffect(() => {
+        if (scene) {
+            scene.traverse((child) => {
+                if (child.isMesh) {
+                    // Solo el modelo proyecta sombras (no recibe para mejor performance)
+                    child.castShadow = true
+                    child.receiveShadow = false
+
+                    // Optimizar materiales
+                    if (child.material) {
+                        // Si el material no es compatible con luces, convertirlo
+                        if (child.material.isMeshBasicMaterial) {
+                            const oldMaterial = child.material
+                            child.material = new THREE.MeshStandardMaterial({
+                                map: oldMaterial.map,
+                                color: oldMaterial.color,
+                                metalness: 0.3,
+                                roughness: 0.7,
+                                // Optimizaciones de material
+                                flatShading: false,
+                                toneMapped: true
+                            })
+                        }
+                        child.material.needsUpdate = true
+                    }
+
+                    // Optimizar geometría
+                    if (child.geometry) {
+                        child.geometry.computeVertexNormals()
+                    }
+                }
+            })
+        }
+    }, [scene])
 
     useFrame(() => {
         if (modelRef.current) {
@@ -35,69 +86,90 @@ const Model = ({ mouseX }) => {
             rotation={[0, initialRotation, 0]}
         />
     )
-}
+})
 
-// Componente de iluminación dramática
-const DramaticLighting = () => {
+Model.displayName = 'Model'
+
+// Componente de iluminación dramática - OPTIMIZADO (menos sombras)
+const DramaticLighting = React.memo(() => {
+    const spotLightTarget = useRef()
+
     return (
         <>
-            {/* Luz ambiental suave para definición básica */}
-            <ambientLight intensity={0.2} />
+            {/* Target invisible para los spotlights */}
+            <group ref={spotLightTarget} position={[0, -1.5, 0]} />
 
-            {/* Spotlight principal desde arriba-derecha */}
+            {/* Luz ambiental - incrementada para compensar menos luces */}
+            <ambientLight intensity={0.8} />
+
+            {/* Luz hemisférica para iluminación natural */}
+            <hemisphereLight
+                color="#ffffff"
+                groundColor="#444444"
+                intensity={0.8}
+                position={[0, 10, 0]}
+            />
+
+            {/* SOLO 1 Spotlight con sombras - OPTIMIZACIÓN CRÍTICA */}
             <spotLight
                 position={[5, 8, 5]}
-                angle={0.4}
+                target={spotLightTarget.current}
+                angle={0.6}
                 penumbra={0.5}
-                intensity={2}
+                intensity={4}
                 castShadow
                 shadow-mapSize-width={1024}
                 shadow-mapSize-height={1024}
+                shadow-bias={-0.0001}
+                shadow-camera-near={1}
+                shadow-camera-far={20}
                 color="#ffffff"
             />
 
-            {/* Spotlight secundario desde la izquierda para highlights */}
-            <spotLight
+            {/* Luces sin sombras para efectos de color - MUY LIGERO */}
+            <pointLight
                 position={[-5, 5, 3]}
-                angle={0.3}
-                penumbra={0.7}
-                intensity={1.5}
+                intensity={2}
+                distance={20}
+                decay={2}
                 color="#4a90e2"
             />
 
-            {/* Spotlight de relleno desde abajo para evitar sombras duras */}
-            <spotLight
-                position={[0, -3, 5]}
-                angle={0.5}
-                penumbra={0.8}
-                intensity={0.8}
+            <pointLight
+                position={[0, -2, 5]}
+                intensity={1.5}
+                distance={15}
+                decay={2}
                 color="#ff6b6b"
             />
 
-            {/* Luz direccional de borde */}
+            {/* Luz direccional de borde sin sombras */}
             <directionalLight
                 position={[-3, 2, -5]}
-                intensity={1}
+                intensity={1.5}
                 color="#a855f7"
             />
         </>
     )
-}
+})
 
-// Componente principal de la escena
+DramaticLighting.displayName = 'DramaticLighting'
+
+// Componente principal de la escena - SUPER OPTIMIZADO
 const ThreeScene = () => {
     const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 })
 
+    // Throttle del mousemove - OPTIMIZACIÓN CRÍTICA
     useEffect(() => {
-        const handleMouseMove = (event) => {
+        const handleMouseMove = throttle((event) => {
             // Normalizar la posición del mouse a -1 (izquierda) a 1 (derecha)
             const x = (event.clientX / window.innerWidth) * 2 - 1
             const y = -(event.clientY / window.innerHeight) * 2 + 1
 
             setMousePosition({ x, y })
-        }
+        }, 66) // ~15fps en lugar de 60fps - 75% menos cálculos
 
-        window.addEventListener('mousemove', handleMouseMove)
+        window.addEventListener('mousemove', handleMouseMove, { passive: true })
 
         return () => {
             window.removeEventListener('mousemove', handleMouseMove)
@@ -119,16 +191,26 @@ const ThreeScene = () => {
             <Canvas
                 shadows
                 style={{ background: '#010101' }}
+                dpr={[1, 2]} // Limitar pixel ratio para mejor performance
+                performance={{ min: 0.5 }} // Adaptive performance
                 gl={{
-                    antialias: true,
+                    antialias: window.innerWidth > 768, // Solo antialiasing en desktop
                     alpha: false,
-                    powerPreference: 'high-performance'
+                    powerPreference: 'high-performance',
+                    stencil: false,
+                    depth: true,
+                    // Optimizaciones adicionales
+                    logarithmicDepthBuffer: false,
+                    precision: 'mediump' // Menor precisión = mejor performance
                 }}
+                frameloop="always" // Renderizar siempre para animaciones suaves
             >
                 <PerspectiveCamera
                     makeDefault
                     position={[0, 0, 8]}
                     fov={50}
+                    near={0.1}
+                    far={100}
                 />
 
                 <DramaticLighting />
@@ -136,14 +218,6 @@ const ThreeScene = () => {
                 <Suspense fallback={null}>
                     <Model mouseX={mousePosition.x} />
                 </Suspense>
-
-                {/* OrbitControls opcional - puedes desactivarlo si solo quieres el mouse tracking */}
-                {/* <OrbitControls 
-                    enableZoom={false}
-                    enablePan={false}
-                    maxPolarAngle={Math.PI / 2}
-                    minPolarAngle={Math.PI / 2}
-                /> */}
             </Canvas>
         </div>
     )

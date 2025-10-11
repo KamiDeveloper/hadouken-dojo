@@ -14,7 +14,11 @@ const MaskedArt = () => {
                 start,
                 end: 'bottom center',
                 scrub: 1.5,
-                pin: true
+                pin: true,
+                // Optimizaciones de performance
+                fastScrollEnd: true,
+                preventOverlaps: true,
+                anticipatePin: 1
             }
         })
         if (isMobile) {
@@ -22,24 +26,28 @@ const MaskedArt = () => {
                 opacity: 0
             }, {
                 opacity: 1,
-                ease: "power1.inOut"
+                ease: "power1.inOut",
+                willChange: 'opacity'
             })
                 .to('.will-fade', {
                     opacity: 0,
                     stagger: 0.2,
-                    ease: "power1.inOut"
+                    ease: "power1.inOut",
+                    willChange: 'opacity'
                 })
                 .to('.masked-img', {
                     scale: 0.8,
                     maskPosition: '47% 50%',
                     maskSize: '12000%',
                     duration: 1,
-                    ease: "power1.inOut"
+                    ease: "power1.inOut",
+                    willChange: 'transform'
                 })
                 .to('#masked-content', {
                     opacity: 1,
                     duration: 1.5,
-                    ease: "power1.inOut"
+                    ease: "power1.inOut",
+                    willChange: 'opacity'
                 })
         } else {
             maskTimeline
@@ -50,27 +58,31 @@ const MaskedArt = () => {
                     x: 220,
                     duration: 2,
                     opacity: 1,
-                    ease: "power1.inOut"
+                    ease: "power1.inOut",
+                    willChange: 'transform, opacity'
                 })
                 .to('.will-fade', {
                     opacity: 0,
                     stagger: 0.2,
-                    ease: "power1.inOut"
+                    ease: "power1.inOut",
+                    willChange: 'opacity'
                 })
                 .to('.masked-img', {
                     scale: 0.8,
                     maskPosition: '47% 50%',
                     maskSize: '12000%',
                     duration: 1,
-                    ease: "power1.inOut"
+                    ease: "power1.inOut",
+                    willChange: 'transform'
                 })
                 .to('#masked-content', {
                     opacity: 1,
                     duration: 1.5,
-                    ease: "power1.inOut"
+                    ease: "power1.inOut",
+                    willChange: 'opacity'
                 })
         }
-    }, [])
+    }, [isMobile]) // Agregar dependencia
     return (
         <div id="masked-section">
             <div className="container mx-auto h-full pt-20">
@@ -80,6 +92,8 @@ const MaskedArt = () => {
                             src="assets/images/art-upper.jpg"
                             alt="Tekken Passion"
                             className="abs-center masked-img size-full object-contain"
+                            loading="lazy"
+                            decoding="async"
                         />
                     </div>
                 </div>
