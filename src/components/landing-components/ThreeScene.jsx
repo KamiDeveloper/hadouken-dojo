@@ -4,7 +4,7 @@ import { useGLTF, PerspectiveCamera } from '@react-three/drei'
 import * as THREE from 'three'
 
 // Precargar el modelo GLTF para mejor performance
-useGLTF.preload('/assets/3dmodels/PIU.glb')
+useGLTF.preload('/assets/models/PIU.glb')
 
 // Throttle helper para optimizar eventos
 const throttle = (func, delay) => {
@@ -21,7 +21,7 @@ const throttle = (func, delay) => {
 // Componente del modelo 3D con seguimiento del mouse - MEMOIZADO
 const Model = React.memo(({ mouseX }) => {
     const modelRef = useRef()
-    const { scene } = useGLTF('/assets/3dmodels/PIU.glb')
+    const { scene } = useGLTF('/assets/models/PIU.glb')
 
     // Rotación inicial semi-lateral (30 grados en Y)
     const initialRotation = Math.PI / 6 // 30 grados

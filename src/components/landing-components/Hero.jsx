@@ -1,5 +1,6 @@
 import { useRef, useEffect } from 'react'
 import RotatingText from './RotatingText'
+import ScrollArrow from '../ScrollArrow'
 
 const Hero = () => {
     const videoRef = useRef(null)
@@ -64,14 +65,7 @@ const Hero = () => {
                         <p className="hero-description">
                             Únete a nuestra comunidad y domina el arte del juego competitivo
                         </p>
-                        <div className="hero-cta">
-                            <a href="#reservations" className="cta-primary">
-                                Reserva tu Clase Gratis
-                            </a>
-                            <a href="#info" className="cta-secondary">
-                                Conoce Más
-                            </a>
-                        </div>
+                        <ScrollArrow />
                     </div>
                 </div>
             </div>

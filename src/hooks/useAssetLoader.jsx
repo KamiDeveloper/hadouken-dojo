@@ -25,10 +25,13 @@ const useAssetLoader = () => {
             fonts: [
                 '/assets/fonts/tarrget.ttf',
                 '/assets/fonts/tarrget3dital.ttf'
+            ],
+            models: [
+                '/assets/models/PIU.glb'
             ]
         };
 
-        const totalAssets = assets.images.length + assets.videos.length + assets.fonts.length;
+        const totalAssets = assets.images.length + assets.videos.length + assets.fonts.length + assets.models.length;
         let loadedCount = 0;
 
         // Función para actualizar el progreso
@@ -97,6 +100,36 @@ const useAssetLoader = () => {
                 }
             });
         };
+        // Precargar modelos 3D usando GLTFLoader
+        const loadModel = (src) => {
+            return new Promise((resolve, reject) => {
+                // Importar dinámicamente el GLTFLoader
+                import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+                    const loader = new GLTFLoader();
+
+                    loader.load(
+                        src,
+                        (gltf) => {
+                            updateProgress(src);
+                            resolve(gltf);
+                        },
+                        (progress) => {
+                            // Opcionalmente manejar el progreso de carga individual
+                            // console.log(`Loading ${src}: ${(progress.loaded / progress.total * 100).toFixed(2)}%`);
+                        },
+                        (error) => {
+                            console.warn(`Failed to load model: ${src}`, error);
+                            updateProgress(src);
+                            resolve(null);
+                        }
+                    );
+                }).catch((error) => {
+                    console.warn(`Failed to import GLTFLoader for ${src}`, error);
+                    updateProgress(src);
+                    resolve(null);
+                });
+            });
+        };
 
         // Cargar todos los assets
         const loadAllAssets = async () => {
@@ -107,18 +140,20 @@ const useAssetLoader = () => {
                     loadFont('Tarrget', assets.fonts[0]),
                     loadFont('Tarrget3D', assets.fonts[1])
                 ];
+                const modelPromises = assets.models.map(loadModel);
 
                 // Esperar a que todos los assets se carguen
                 await Promise.all([
                     ...imagePromises,
                     ...videoPromises,
-                    ...fontPromises
+                    ...fontPromises,
+                    ...modelPromises
                 ]);
 
                 // Pequeño delay para transición suave
                 setTimeout(() => {
                     setIsLoading(false);
-                }, 300);
+                }, 1000);
 
             } catch (error) {
                 console.error('Error loading assets:', error);

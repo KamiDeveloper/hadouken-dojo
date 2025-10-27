@@ -7,14 +7,12 @@ const Art = () => {
     const isMobile = useMediaQuery({ maxWidth: 767 })
 
     useGSAP(() => {
-        // OPTIMIZACIÓN: Configuración de ScrollTrigger más eficiente
         const headerArtTimeline = gsap.timeline({
             scrollTrigger: {
                 trigger: '#art',
                 start: "top center",
                 end: "center center",
                 toggleActions: "play none none reverse",
-                // Optimizaciones de performance
                 fastScrollEnd: true,
                 preventOverlaps: true,
                 invalidateOnRefresh: false
@@ -26,7 +24,6 @@ const Art = () => {
             duration: 1,
             ease: 'power4.out',
             stagger: 0.5,
-            // Optimización: usar will-change
             willChange: 'transform, opacity'
         })
 
@@ -35,8 +32,7 @@ const Art = () => {
                 trigger: '.art-content',
                 start: "top center",
                 end: "75% center",
-                scrub: 1, // Agregar valor numérico para suavizar (1 segundo de delay)
-                // Optimizaciones de performance
+                scrub: 1,
                 fastScrollEnd: true,
                 preventOverlaps: true,
                 invalidateOnRefresh: false
@@ -49,10 +45,11 @@ const Art = () => {
             gridArtTimeline.fromTo('.art-image-section', {
                 gap: '0.5rem',
                 opacity: 0,
+                scale: 2,
                 y: 100,
                 borderRadius: '0.1rem',
             }, {
-                scale: 2,
+                scale: 1.5,
                 opacity: 1,
                 willChange: 'transform, opacity'
             }).to('.art-image1', {
@@ -61,37 +58,72 @@ const Art = () => {
             }, '<').to('.art-image3', {
                 x: -100,
                 willChange: 'transform'
-            }, '<').fromTo('.art-image2', {
-                opacity: 0,
-                x: 50
-            }, {
-                opacity: 1,
-                x: -50,
-                willChange: 'transform, opacity'
-            })
+            }, '<').to('.description-1', {
+                x: -200,
+                ease: 'power4.out',
+                willChange: 'transform'
+            }, '<').to('.description-2', {
+                x: 200,
+                ease: 'power4.out',
+                willChange: 'transform'
+            }, '<')
+                .fromTo('.art-image2', {
+                    opacity: 0,
+                    x: 50,
+                    willChange: 'transform, opacity'
+                }, {
+                    opacity: 1,
+                    x: -50,
+                    willChange: 'transform, opacity'
+                })
         } else {
             gridArtTimeline
                 .from('.art-image1', {
                     x: 600,
                     opacity: 0,
-                    duration: 1,
+                    duration: 0.75,
                     ease: 'power4.out',
-                    stagger: 1,
                     willChange: 'transform, opacity'
                 })
-
+                .fromTo('.description-1', {
+                    y: 100,
+                    x: -200,
+                    opacity: 0,
+                    duration: 0.25,
+                    ease: 'power4.out',
+                    willChange: 'transform, opacity'
+                }, {
+                    y: 0,
+                    opacity: 0.9,
+                    duration: 0.25,
+                    ease: 'power4.out',
+                    willChange: 'transform, opacity'
+                })
                 .from('.art-image3', {
                     x: -600,
                     opacity: 0,
-                    duration: 0.5,
+                    duration: 0.75,
                     ease: 'power4.out',
-                    stagger: 1,
+                    willChange: 'transform, opacity'
+                })
+                .fromTo('.description-2', {
+                    y: 100,
+                    x: 200,
+                    opacity: 0,
+                    duration: 0.25,
+                    ease: 'power4.out',
+                    willChange: 'transform, opacity'
+                }, {
+                    y: 0,
+                    opacity: 0.9,
+                    duration: 0.25,
+                    ease: 'power4.out',
                     willChange: 'transform, opacity'
                 })
         }
 
 
-    }, [isMobile]) // Agregar dependencia para re-ejecutar si cambia
+    }, [isMobile])
 
 
 
@@ -114,6 +146,9 @@ const Art = () => {
                             loading="lazy"
                             decoding="async"
                         />
+                        <p className="art-description description-1">
+                            Rompe tus límites y compite con los mejores en todos los rincones del mundo.
+                        </p>
                         <img
                             src="/assets/images/art_2.webp"
                             alt="Gaming"
@@ -128,6 +163,9 @@ const Art = () => {
                             loading="lazy"
                             decoding="async"
                         />
+                        <p className="art-description description-2">
+                            Demuestra de que estás hecho y alcanza la cima, no importa que tan grande sea el desafío.
+                        </p>
                         <div className="art-image-overlay">
                         </div>
                     </div>
