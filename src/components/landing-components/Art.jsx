@@ -98,7 +98,7 @@ const Art = () => {
                     duration: 0.25,
                     ease: 'power4.out',
                     willChange: 'transform, opacity'
-                })
+                }, '<')
                 .from('.art-image3', {
                     x: -600,
                     opacity: 0,
@@ -119,7 +119,7 @@ const Art = () => {
                     duration: 0.25,
                     ease: 'power4.out',
                     willChange: 'transform, opacity'
-                })
+                }, '<')
         }
 
 
