@@ -204,7 +204,7 @@ body {
             gap: 5px;
 
             p {
-                @apply bottom-4 left-4 text-[var(--color-white)] px-3 py-1 text-[0.5rem] md:text-2xl md:w-full h-full flex items-center justify-center;
+                @apply bottom-4 left-4 text-[var(--color-gray)] px-3 py-1 text-[0.5rem] md:text-2xl md:w-full h-full flex items-center justify-center;
             }
 
         }
