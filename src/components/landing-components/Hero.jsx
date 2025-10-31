@@ -65,7 +65,7 @@ const Hero = () => {
                         <p className="hero-description">
                             Únete a nuestra comunidad y domina el arte del juego competitivo
                         </p>
-                        <ScrollArrow />
+                        {/* <ScrollArrow /> */}
                     </div>
                 </div>
             </div>

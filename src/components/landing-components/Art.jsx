@@ -146,7 +146,7 @@ const Art = () => {
                             loading="lazy"
                             decoding="async"
                         />
-                        <p className="art-description description-1">
+                        <p className="art-description description-1 hidden md:block">
                             Rompe tus límites y compite con los mejores en todos los rincones del mundo.
                         </p>
                         <img
@@ -163,7 +163,7 @@ const Art = () => {
                             loading="lazy"
                             decoding="async"
                         />
-                        <p className="art-description description-2">
+                        <p className="art-description description-2 hidden md:block">
                             Demuestra de que estás hecho y alcanza la cima, no importa que tan grande sea el desafío.
                         </p>
                         <div className="art-image-overlay">
