@@ -48,7 +48,7 @@ const HamburguerMenu = () => {
             <img src="/assets/icons/hamburger.svg" alt="Menu" onClick={toggleMenu} className="lg:hidden mobile-menu-img !p-1 cursor-pointer" />
             <div
                 onClick={toggleMenu}
-                className={`fixed lg:hidden inset-0 w-screen h-[95dvh] bg-black/60 transform ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} transition-opacity duration-300 ease-in-out z-40`}
+                className={`fixed lg:hidden inset-0 w-screen h-screen bg-black/60 transform ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} transition-opacity duration-300 ease-in-out z-40`}
             />
             <div
                 className={`fixed lg:hidden right-0 top-0 h-screen w-[75%] max-w-[320px] bg-gradient-to-br from-black/95 via-black/90 to-black/85 backdrop-blur-xl shadow-2xl transform ${isOpen ? 'translate-x-0' : 'translate-x-full'} transition-transform duration-300 ease-in-out z-50 border-l border-white/10 flex flex-col`}
