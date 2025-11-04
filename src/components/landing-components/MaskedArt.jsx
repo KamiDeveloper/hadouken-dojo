@@ -13,7 +13,7 @@ const MaskedArt = () => {
                 trigger: '#masked-section',
                 start,
                 end: 'bottom center',
-                scrub: 1.5,
+                scrub: 3,
                 pin: true,
                 // Optimizaciones de performance
                 fastScrollEnd: true,

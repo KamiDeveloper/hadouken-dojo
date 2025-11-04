@@ -1,6 +1,7 @@
 import Home from './pages/Home'
-import Login from './pages/Login'
-import Signup from './pages/Signup'
+import Acceder from './pages/Acceder'
+import Perfil from './pages/Perfil'
+import CompleteRegistration from './pages/CompleteRegistration'
 import SystemManagement from './pages/SystemManagement'
 import Reservations from './pages/Reservations'
 import Info from './pages/Info'
@@ -17,8 +18,12 @@ function AppContent() {
       <Route path='/' element={<RootLayout />}>
         <Route index element={<Home />} />
         <Route path='info' element={<Info />} />
-        <Route path='login' element={<Login />} />
-        <Route path='signup' element={<Signup />} />
+        <Route path='acceder' element={<Acceder />} />
+        <Route path='perfil' element={<Perfil />} />
+        {/* Rutas antiguas redirigen a la nueva */}
+        <Route path='login' element={<Acceder />} />
+        <Route path='signup' element={<Acceder />} />
+        <Route path='completar-registro' element={<CompleteRegistration />} />
         <Route path='system' element={<SystemManagement />} />
         <Route path='reservations' element={<Reservations />} />
       </Route>

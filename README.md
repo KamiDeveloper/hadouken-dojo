@@ -115,3 +115,12 @@ function App() {
 - **ESLint**: Para linting y calidad de código.
 
 Esta estructura asegura que la app sea mantenible, escalable y fácil de extender. Si necesitas añadir más rutas o funcionalidades, ¡házmelo saber!
+
+
+Arquitectura actual:
+
+Frontend (React) → Vercel
+Backend (Functions) → Firebase Hosting
+Base de datos → Firestore
+Auth → Firebase Authentication
+Storage → Firebase Storage

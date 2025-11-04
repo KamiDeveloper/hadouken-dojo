@@ -10,6 +10,7 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+docs
 *.local
 
 # Editor directories and files
@@ -26,3 +27,31 @@ SKELETON_LOADING.md
 STRUCTURE.md
 QUICK_START_SKELETON.md
 TODO.md
+
+# Environment variables - CRÍTICO PARA SEGURIDAD
+.env
+.env.local
+.env.*.local
+env.local
+.env.production.local
+
+# Firebase - CONTIENE INFORMACIÓN SENSIBLE
+.firebaserc
+firebase-debug.log
+.runtimeconfig.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# IDE specific
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db
+.DS_Store

@@ -31,12 +31,7 @@
     --font-tarrget-italic: "Tarrget-italic", italic;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 
-}
 
 a {
     text-decoration: none;
@@ -72,19 +67,7 @@ body {
             @apply flex gap-4 text-shadow-current text-base text-[var(--color-black)] font-bold tracking-wider uppercase;
         }
 
-        .nav-buttons {
-            @apply flex gap-2 !px-1 !py-1 hover:bg-[var(--color-black)] hover:rounded-4xl
-        }
-
-        .nav-button {
-            @apply !px-2 !py-1 rounded-2xl;
-        }
-
-        .signup-button {
-            @apply bg-[var(--color-white)] text-[var(--color-black)];
-        }
-
-        a.active {
+        .nav-links a.active {
             @apply !text-[var(--color-white)];
         }
 
@@ -204,7 +187,7 @@ body {
             gap: 5px;
 
             p {
-                @apply bottom-4 left-4 text-[var(--color-gray)] px-3 py-1 text-[0.5rem] md:text-2xl md:w-full h-full flex items-center justify-center;
+                @apply bottom-4 left-4 text-[var(--color-gray)] px-3 py-1 text-[0.5rem] md:text-2xl md:w-full h-full flex items-center justify-center mt-20;
             }
 
         }
@@ -437,5 +420,25 @@ body {
     .three-canvas {
         @apply w-full h-screen;
         background: radial-gradient(circle at center, rgba(21, 40, 60, 0.3) 0%, var(--color-black) 100%);
+    }
+}
+
+/* Glassmorphism container */
+.glass-container {
+    background: rgba(1, 1, 1, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+/* Animación de pulso para elementos importantes */
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 20px rgba(242, 53, 6, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 40px rgba(242, 53, 6, 0.6);
     }
 }

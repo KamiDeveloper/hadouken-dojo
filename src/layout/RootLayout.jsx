@@ -1,9 +1,14 @@
 import { NavBar } from '../components/NavBar'
 import { Outlet } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useAuth } from '../context/AuthContext'
+import CompleteProfileModal from '../components/CompleteProfileModal'
 import Lenis from 'lenis'
 
 const RootLayout = () => {
+    const { user } = useAuth();
+    const [showModal, setShowModal] = useState(false);
+
     useEffect(() => {
         const lenis = new Lenis({
             duration: 1.2,
@@ -27,12 +32,33 @@ const RootLayout = () => {
         }
     }, [])
 
+    // Mostrar modal si el usuario necesita completar perfil
+    useEffect(() => {
+        if (user?.needsProfileCompletion && !user.username) {
+            setShowModal(true);
+        } else {
+            setShowModal(false);
+        }
+    }, [user]);
+
+    const handleModalClose = () => {
+        // El modal solo se cierra cuando se completa el perfil
+        // Esta función es llamada desde el modal después de completar
+        setShowModal(false);
+    };
+
     return (
         <div>
             <NavBar />
             <div id="main-app-container">
                 <Outlet />
             </div>
+
+            {/* Modal de completar perfil - Bloqueante y persistente */}
+            <CompleteProfileModal
+                isOpen={showModal}
+                onClose={handleModalClose}
+            />
         </div>
     )
 }
