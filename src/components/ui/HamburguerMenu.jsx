@@ -136,7 +136,7 @@ const HamburguerMenu = () => {
                         </button>
                     </div>
                 ) : (
-                    <div className="border-t border-white/10 p-4">
+                    <div className="border-t border-white/10 p-4 mb-20">
                         <NavLink
                             to="/getstarted"
                             onClick={toggleMenu}
