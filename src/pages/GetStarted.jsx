@@ -184,9 +184,6 @@ const GetStarted = () => {
                         alt="Hadouken Dojo"
                         className="w-48 mx-auto mb-4 opacity-90"
                     />
-                    <h1 className="text-4xl font-bold text-gradient mb-2" style={{ fontFamily: 'var(--font-tarrget)' }}>
-                        Acceder
-                    </h1>
                     <p className="text-gray text-sm">
                         {activeTab === 'login' ? 'Bienvenido de nuevo' : 'Únete a la comunidad'}
                     </p>
@@ -200,7 +197,7 @@ const GetStarted = () => {
                             {/* Indicador animado */}
                             <div
                                 ref={tabIndicatorRef}
-                                className="absolute top-1 bottom-1 w-[calc(50%-0.25rem)] bg-gradient-to-r from-dark-red to-light-red rounded-xl transition-transform"
+                                className="absolute top-1 bottom-1 w-[calc(50%-0.25rem)] bg-medium-blue rounded-xl transition-transform"
                                 style={{ left: '0.25rem' }}
                             />
 
@@ -279,7 +276,7 @@ const GetStarted = () => {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full py-3 px-4 bg-gradient-to-r from-dark-red to-light-red text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                                    className="w-full py-3 px-4 bg-medium-blue text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
                                 >
                                     {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
                                 </button>
@@ -364,7 +361,7 @@ const GetStarted = () => {
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full py-3 px-4 bg-gradient-to-r from-dark-red to-light-red text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                                    className="w-full py-3 px-4 bg-medium-blue text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
                                 >
                                     {isLoading ? 'Creando cuenta...' : 'Crear Cuenta'}
                                 </button>
