@@ -2,7 +2,7 @@ import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../../context/AuthContext'
 
 const HamburguerMenu = () => {
     const { user, logout } = useAuth();
@@ -113,9 +113,9 @@ const HamburguerMenu = () => {
 
                 {/* Footer con acciones del usuario */}
                 {user ? (
-                    <div className="border-t border-white/10 p-4 space-y-2">
+                    <div className="border-t border-white/10 p-4 space-y-2 mb-20">
                         <NavLink
-                            to="/perfil"
+                            to="/profile"
                             onClick={toggleMenu}
                             className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-colors"
                         >
@@ -138,7 +138,7 @@ const HamburguerMenu = () => {
                 ) : (
                     <div className="border-t border-white/10 p-4">
                         <NavLink
-                            to="/acceder"
+                            to="/getstarted"
                             onClick={toggleMenu}
                             className="flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-dark-red to-light-red rounded-xl text-white font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all"
                         >

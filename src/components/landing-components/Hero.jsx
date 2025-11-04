@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react'
 import RotatingText from './RotatingText'
-import ScrollArrow from '../ScrollArrow'
+import ScrollArrow from '../ui/ScrollArrow'
 
 const Hero = () => {
     const videoRef = useRef(null)

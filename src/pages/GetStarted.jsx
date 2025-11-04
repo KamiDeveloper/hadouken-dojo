@@ -27,7 +27,7 @@ const signupSchema = z.object({
     path: ["confirmPassword"],
 });
 
-const Acceder = () => {
+const GetStarted = () => {
     const [activeTab, setActiveTab] = useState('login');
     const [isLoading, setIsLoading] = useState(false);
     const { loginWithEmail, signupWithEmail, loginWithGoogle, user } = useAuth();
@@ -377,4 +377,4 @@ const Acceder = () => {
     );
 };
 
-export default Acceder;
+export default GetStarted;

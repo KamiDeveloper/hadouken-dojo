@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 
-const Perfil = () => {
+const Profile = () => {
     const { user, loading } = useAuth();
     const navigate = useNavigate();
     const containerRef = useRef(null);
 
     useEffect(() => {
         if (!loading && !user) {
-            navigate('/acceder');
+            navigate('/getstarted');
         }
     }, [user, loading, navigate]);
 
@@ -162,4 +162,4 @@ const Perfil = () => {
     );
 };
 
-export default Perfil;
+export default Profile;

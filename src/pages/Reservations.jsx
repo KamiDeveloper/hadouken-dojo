@@ -18,7 +18,7 @@ const Reservations = () => {
             // Si no hay usuario y ya terminó de cargar, redirigir a login
             if (!loading && !user) {
                 toast.error('Debes iniciar sesión para hacer reservas');
-                navigate('/acceder', { state: { from: { pathname: '/reservations' } } });
+                navigate('/getstarted', { state: { from: { pathname: '/reservations' } } });
                 return;
             }
 
