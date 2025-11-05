@@ -123,24 +123,7 @@ const HamburguerMenu = () => {
                             </div>
                         </div>
                     ) : (
-                        <div className="text-center text-sm font-bold text-[var(--color-white)] tracking-wider w-full">
-                            <p>Inicia sesión o crea una cuenta</p>
-                            <div className=" p-4 mt-1">
-                                <NavLink
-                                    to="/getstarted"
-                                    onClick={toggleMenu}
-                                    className="flex items-center justify-center"
-                                >
-                                    <FlipButton
-                                        frontText="Acceder"
-                                        backText="Ingresar"
-                                        from="left"
-                                        frontClassName="bg-[var(--color-white)] font-bold !text-[var(--color-black)]"
-                                        backClassName="bg-[var(--color-black)] text-[var(--color-white)]"
-                                    />
-                                </NavLink>
-                            </div>
-                        </div>
+                        <div className="flex justify-center w-full pb-5"><img src="/assets/images/logoland.webp" className="w-20 h-auto" alt="Hadouken Dojo Logo" /></div>
                     )}
                 </div>
 

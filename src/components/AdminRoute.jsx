@@ -17,9 +17,9 @@ const AdminRoute = ({ children }) => {
         );
     }
 
-    // Si no está autenticado, redirigir a login
+    // Si no está autenticado, redirigir a getstarted
     if (!user) {
-        return <Navigate to="/login" replace />;
+        return <Navigate to="/getstarted" replace />;
     }
 
     // Si no es admin, redirigir a home

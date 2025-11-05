@@ -18,15 +18,16 @@ const PrivateRoute = ({ children }) => {
         );
     }
 
-    // Si no está autenticado, redirigir a login guardando la ubicación actual
+    // Si no está autenticado, redirigir a getstarted guardando la ubicación actual
     if (!user) {
-        return <Navigate to="/login" state={{ from: location }} replace />;
+        return <Navigate to="/getstarted" state={{ from: location }} replace />;
     }
 
-    // Si el usuario necesita completar su perfil, redirigir a completar-registro
-    if (user.needsProfileCompletion) {
-        return <Navigate to="/completar-registro" replace />;
-    }
+    // Si el usuario necesita completar su perfil, el modal se mostrará automáticamente
+    // Ya no redirigimos a /completar-registro porque usamos el modal
+    // if (user.needsProfileCompletion) {
+    //     return <Navigate to="/completar-registro" replace />;
+    // }
 
     // Usuario autenticado y con perfil completo - renderizar la ruta
     return children;

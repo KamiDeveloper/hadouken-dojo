@@ -98,7 +98,7 @@ const UserDropdown = () => {
                 aria-label="Menú de usuario"
             >
                 {/* Ring de animación al hover */}
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-dark-red to-light-red opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-dark-blue to-light-blue opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300" />
 
                 {/* Avatar */}
                 <div className="relative">
@@ -111,12 +111,12 @@ const UserDropdown = () => {
                                 e.target.style.display = 'none';
                                 e.target.nextElementSibling.style.display = 'flex';
                             }}
-                            className="w-10 h-10 rounded-full border-2 border-light-red object-cover transition-transform duration-300 group-hover:scale-110 group-hover:border-white"
+                            className="w-10 h-10 rounded-full border-2 border-light-blue object-cover transition-transform duration-300 group-hover:scale-110 group-hover:border-white"
                         />
                     ) : null}
                     <div
                         style={{ display: user?.photoURL ? 'none' : 'flex' }}
-                        className="w-10 h-10 rounded-full border-2 border-light-red bg-gradient-to-br from-dark-red to-light-red items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:border-white"
+                        className="w-10 h-10 rounded-full border-2 border-light-blue bg-gradient-to-br from-dark-blue to-light-blue items-center justify-center transition-transform duration-300 group-hover:scale-110 group-hover:border-white"
                     >
                         <span className="text-white text-sm font-bold">
                             {getInitial()}
@@ -136,7 +136,7 @@ const UserDropdown = () => {
                     style={{ opacity: 0 }}
                 >
                     {/* Header con info del usuario */}
-                    <div className="p-4 bg-gradient-to-r from-dark-red/30 to-light-red/30 border-b border-white/10">
+                    <div className="p-4 bg-gradient-to-r from-dark-blue/30 to-light-blue/30 border-b border-white/10">
                         <div className="flex items-center gap-3">
                             {/* Avatar en el dropdown */}
                             {user?.photoURL ? (
@@ -148,12 +148,12 @@ const UserDropdown = () => {
                                         e.target.style.display = 'none';
                                         e.target.nextElementSibling.style.display = 'flex';
                                     }}
-                                    className="w-12 h-12 rounded-full border-2 border-light-red object-cover"
+                                    className="w-12 h-12 rounded-full border-2 border-light-blue object-cover"
                                 />
                             ) : null}
                             <div
                                 style={{ display: user?.photoURL ? 'none' : 'flex' }}
-                                className="w-12 h-12 rounded-full border-2 border-light-red bg-gradient-to-br from-dark-red to-light-red items-center justify-center"
+                                className="w-12 h-12 rounded-full border-2 border-light-blue bg-gradient-to-br from-dark-blue to-light-blue items-center justify-center"
                             >
                                 <span className="text-white text-lg font-bold">
                                     {getInitial()}

@@ -9,6 +9,8 @@ import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } 
 import RootLayout from './layout/RootLayout'
 import { LoadingProvider, useLoading } from './context/LoadingContext'
 import SkeletonPage from './components/skeletons/SkeletonPage'
+import PrivateRoute from './components/PrivateRoute'
+import AdminRoute from './components/AdminRoute'
 
 function AppContent() {
   const { isLoading } = useLoading();
@@ -16,16 +18,36 @@ function AppContent() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path='/' element={<RootLayout />}>
+        {/* Rutas públicas */}
         <Route index element={<Home />} />
         <Route path='info' element={<Info />} />
         <Route path='getstarted' element={<GetStarted />} />
-        <Route path='profile' element={<Profile />} />
+
         {/* Rutas antiguas redirigen a la nueva */}
         <Route path='login' element={<GetStarted />} />
         <Route path='signup' element={<GetStarted />} />
+
+        {/* Ruta de completar registro (accesible para OAuth users) */}
         <Route path='completar-registro' element={<CompleteRegistration />} />
-        <Route path='system' element={<SystemManagement />} />
-        <Route path='reservations' element={<Reservations />} />
+
+        {/* Rutas protegidas - Requieren autenticación */}
+        <Route path='profile' element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        } />
+        <Route path='reservations' element={
+          <PrivateRoute>
+            <Reservations />
+          </PrivateRoute>
+        } />
+
+        {/* Rutas de administrador - Requieren rol admin */}
+        <Route path='system' element={
+          <AdminRoute>
+            <SystemManagement />
+          </AdminRoute>
+        } />
       </Route>
     )
   )

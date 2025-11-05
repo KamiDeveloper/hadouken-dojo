@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import CompleteProfileModal from '../components/CompleteProfileModal'
+import GoogleOneTap from '../components/GoogleOneTap'
 import Lenis from 'lenis'
 
 const RootLayout = () => {
@@ -53,6 +54,9 @@ const RootLayout = () => {
             <div id="main-app-container">
                 <Outlet />
             </div>
+
+            {/* Google One Tap - Flotante inteligente */}
+            <GoogleOneTap />
 
             {/* Modal de completar perfil - Bloqueante y persistente */}
             <CompleteProfileModal
