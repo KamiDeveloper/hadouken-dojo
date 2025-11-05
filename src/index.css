@@ -427,8 +427,8 @@ body {
 
 /* Glassmorphism container */
 .glass-container {
-    background: rgba(1, 1, 1, 0.6);
-    backdrop-filter: blur(200px);
+    background: rgba(1, 1, 1, 0.95);
+    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
 }
 

@@ -185,7 +185,7 @@ const GoogleOneTap = () => {
         <>
             {/* Banner inteligente con botón de Google */}
             <div
-                className="fixed top-18 right-4 z-[9998] pointer-events-auto"
+                className="fixed top-4 right-4 z-[9998] pointer-events-auto"
                 style={{
                     animation: 'fadeInSlide 0.5s ease-out',
                 }}
