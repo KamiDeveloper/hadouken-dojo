@@ -5,7 +5,6 @@ import gsap from "gsap"
 import HamburguerMenu from './HamburguerMenu'
 import UserDropdown from './UserDropdown'
 import { useAuth } from '../../context/AuthContext'
-import { FlipButton } from './FlipButton';
 
 const NavBar = () => {
     const { user } = useAuth();
