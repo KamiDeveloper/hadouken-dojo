@@ -55,14 +55,14 @@ body {
 
 @layer components {
     #navbar {
-        @apply flex h-[7.5%] w-full fixed z-50 justify-center items-center;
+        @apply flex h-16 w-full fixed z-50 justify-center items-center;
 
         .nav-container {
             @apply flex justify-between items-center w-3/4 lg:w-2/3;
         }
 
         .logo-image {
-            @apply h-15 select-none pointer-events-none;
+            @apply h-12 select-none pointer-events-none;
         }
 
         .nav-links {
@@ -427,9 +427,15 @@ body {
 
 /* Glassmorphism container */
 .glass-container {
-    background: rgba(1, 1, 1, 0.95);
+    background: rgba(1, 1, 1, 0.1);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+}
+
+.semitransparent-bg {
+    background-color: rgba(0, 0, 0, 0.76);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 /* Animación de pulso para elementos importantes */
@@ -443,4 +449,236 @@ body {
     50% {
         box-shadow: 0 0 40px rgba(242, 53, 6, 0.6);
     }
+}
+
+/* ============================================
+   RESERVATIONS SYSTEM - DARK MODE VARIABLES
+   ============================================ */
+:root {
+    /* Base Backgrounds */
+    --reservations-bg-primary: #111827;
+    /* Gray 900 - Calendar main */
+    --reservations-bg-secondary: #1F2937;
+    /* Gray 800 - Sidebar, Modal, BookingBar */
+    --reservations-bg-tertiary: #374151;
+    /* Gray 700 - Hover states, borders */
+
+    /* Borders */
+    --reservations-border-primary: #374151;
+    /* Gray 700 */
+    --reservations-border-secondary: #4B5563;
+    /* Gray 600 */
+
+    /* Text Colors */
+    --reservations-text-primary: #F9FAFB;
+    /* Gray 50 - Main text */
+    --reservations-text-secondary: #D1D5DB;
+    /* Gray 300 - Secondary text */
+    --reservations-text-tertiary: #9CA3AF;
+    /* Gray 400 - Muted text */
+    --reservations-text-muted: #6B7280;
+    /* Gray 500 - Very muted */
+
+    /* Slot States - Available */
+    --slot-available-bg: #065F46;
+    /* Emerald 900 */
+    --slot-available-border: #10B981;
+    /* Emerald 500 */
+    --slot-available-text: #6EE7B7;
+    /* Emerald 300 */
+    --slot-available-hover: #047857;
+    /* Emerald 800 */
+
+    /* Slot States - Selected */
+    --slot-selected-bg: #1E3A8A;
+    /* Blue 900 */
+    --slot-selected-border: #3B82F6;
+    /* Blue 500 */
+    --slot-selected-text: #93C5FD;
+    /* Blue 300 */
+    --slot-selected-glow: rgba(59, 130, 246, 0.2);
+    /* Blue 500 at 20% opacity */
+
+    /* Slot States - Booked (by others) */
+    --slot-booked-bg: #7F1D1D;
+    /* Red 900 */
+    --slot-booked-border: #EF4444;
+    /* Red 500 */
+    --slot-booked-text: #FCA5A5;
+    /* Red 300 */
+
+    /* Slot States - My Booking */
+    --slot-mine-bg: #78350F;
+    /* Amber 900 */
+    --slot-mine-border: #F59E0B;
+    /* Amber 500 */
+    --slot-mine-text: #FCD34D;
+    /* Amber 300 */
+
+    /* Slot States - Disabled/Past */
+    --slot-disabled-bg: #1F2937;
+    /* Gray 800 */
+    --slot-disabled-border: #4B5563;
+    /* Gray 600 */
+    --slot-disabled-text: #6B7280;
+    /* Gray 500 */
+
+    /* Accent Colors */
+    --accent-blue: #3B82F6;
+    /* Blue 500 */
+    --accent-emerald: #10B981;
+    /* Emerald 500 */
+    --accent-amber: #F59E0B;
+    /* Amber 500 */
+    --accent-red: #EF4444;
+    /* Red 500 */
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+    --shadow-booking-bar: 0 -4px 6px rgba(0, 0, 0, 0.3);
+    --shadow-sidebar: 0 10px 25px rgba(0, 0, 0, 0.3);
+    --shadow-modal: 0 20px 25px rgba(0, 0, 0, 0.7);
+}
+
+/* Utility classes for Reservations System */
+@utility reservations-sidebar {
+    @apply bg-[var(--reservations-bg-secondary)] border border-[var(--reservations-border-primary)];
+    box-shadow: var(--shadow-sidebar);
+}
+
+@utility reservations-calendar {
+    @apply bg-[var(--reservations-bg-primary)] rounded-2xl;
+}
+
+@utility slot-available {
+    background-color: var(--slot-available-bg);
+    border: 1px solid var(--slot-available-border);
+    color: var(--slot-available-text);
+
+    &:hover {
+        background-color: var(--slot-available-hover);
+    }
+}
+
+@utility slot-selected {
+    background-color: var(--slot-selected-bg);
+    border: 2px solid var(--slot-selected-border);
+    color: var(--slot-selected-text);
+    box-shadow: 0 0 0 3px var(--slot-selected-glow);
+}
+
+@utility slot-booked {
+    background-color: var(--slot-booked-bg);
+    border: 1px solid var(--slot-booked-border);
+    color: var(--slot-booked-text);
+}
+
+@utility slot-mine {
+    background-color: var(--slot-mine-bg);
+    border: 1px solid var(--slot-mine-border);
+    color: var(--slot-mine-text);
+}
+
+@utility slot-disabled {
+    background-color: var(--slot-disabled-bg);
+    border: 1px solid var(--slot-disabled-border);
+    color: var(--slot-disabled-text);
+    opacity: 0.5;
+}
+
+/* Animations for Reservations */
+@keyframes slide-up {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slide-down {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes modal-scale {
+    from {
+        transform: scale(0.95);
+    }
+
+    to {
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.animate-slide-up {
+    animation: slide-up 300ms ease-out forwards;
+}
+
+.animate-slide-down {
+    animation: slide-down 200ms ease-in forwards;
+}
+
+.animate-slide-in {
+    animation: slide-in 300ms ease-out forwards;
+}
+
+.animate-fade-in {
+    animation: fade-in 200ms ease-out forwards;
+}
+
+.animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right,
+            var(--reservations-bg-secondary) 0%,
+            var(--reservations-bg-tertiary) 50%,
+            var(--reservations-bg-secondary) 100%);
+    background-size: 2000px 100%;
 }

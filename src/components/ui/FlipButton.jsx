@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 const DEFAULT_SPAN_CLASS_NAME =

@@ -7,7 +7,7 @@ import {
     signOut,
     sendEmailVerification,
 } from 'firebase/auth';
-import { doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, getDoc, setDoc, serverTimestamp, collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { auth, googleProvider, db } from '../config/firebase';
 import toast from 'react-hot-toast';
 
@@ -219,7 +219,8 @@ export const AuthProvider = ({ children }) => {
             // Verificar que el username no esté en uso
             const usernameQuery = query(
                 collection(db, 'users'),
-                where('username', '==', username.toLowerCase())
+                where('username', '==', username.toLowerCase()),
+                limit(1) // ✅ Agregar limit para cumplir con Firestore Rules
             );
             const usernameSnapshot = await getDocs(usernameQuery);
 

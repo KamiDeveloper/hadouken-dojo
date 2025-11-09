@@ -55,10 +55,8 @@ const RootLayout = () => {
                 <Outlet />
             </div>
 
-            {/* Google One Tap - Flotante inteligente */}
             <GoogleOneTap />
 
-            {/* Modal de completar perfil - Bloqueante y persistente */}
             <CompleteProfileModal
                 isOpen={showModal}
                 onClose={handleModalClose}

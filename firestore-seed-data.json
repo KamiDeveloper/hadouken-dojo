@@ -1,0 +1,83 @@
+{
+  "categories": {
+    "piu": {
+      "name": "PIU (Pump It Up)",
+      "description": "Máquinas de baile coreanas con paneles de 5 botones",
+      "icon": "/assets/images/piu-logo.png",
+      "active": true,
+      "order": 1
+    },
+    "ps5": {
+      "name": "PS5",
+      "description": "Consolas PlayStation 5 con juegos populares",
+      "icon": "/assets/images/ps5-logo.png",
+      "active": true,
+      "order": 2
+    }
+  },
+  "machines": {
+    "piu-machine-1": {
+      "categoryId": "piu",
+      "name": "PIU Phoenix LX",
+      "description": "Máquina PIU Phoenix - Gabinete LX",
+      "icon": "/assets/images/piu-lx.png",
+      "color": "#EF4444",
+      "active": true,
+      "order": 1
+    },
+    "piu-machine-2": {
+      "categoryId": "piu",
+      "name": "PIU Phoenix TX",
+      "description": "Máquina PIU Phoenix - Gabinete TX",
+      "icon": "/assets/images/piu-tx.png",
+      "color": "#3B82F6",
+      "active": true,
+      "order": 2
+    },
+    "piu-machine-3": {
+      "categoryId": "piu",
+      "name": "PIU Prime 2",
+      "description": "Máquina PIU Prime 2",
+      "icon": "/assets/images/piu-prime2.png",
+      "color": "#10B981",
+      "active": false,
+      "order": 3
+    },
+    "ps5-1": {
+      "categoryId": "ps5",
+      "name": "PS5 #1",
+      "description": "PlayStation 5 - Tekken 8, Street Fighter 6",
+      "icon": "/assets/images/ps5-1.png",
+      "color": "#8B5CF6",
+      "active": true,
+      "order": 1
+    },
+    "ps5-2": {
+      "categoryId": "ps5",
+      "name": "PS5 #2",
+      "description": "PlayStation 5 - Tekken 8, Crash Nitro Racing",
+      "icon": "/assets/images/ps5-2.png",
+      "color": "#F59E0B",
+      "active": false,
+      "order": 2
+    }
+  },
+  "config": {
+    "reservations": {
+      "slotDuration": 60,
+      "openingTime": "10:00",
+      "closingTime": "22:00",
+      "daysOfWeek": [1, 2, 3, 4, 5],
+      "maxSlotsPerDay": 2,
+      "maxSlotsPerWeek": 5,
+      "maxWeeksInAdvance": 4,
+      "minHoursToCancel": 2,
+      "allowBackToBackBooking": true,
+      "strikesForBan": 3,
+      "banDurationDays": 7,
+      "strikeExpirationDays": 30,
+      "sendReminderEmail": true,
+      "reminderHoursBefore": 24
+    }
+  }
+}

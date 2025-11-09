@@ -64,9 +64,11 @@ function AppContent() {
 
 function App() {
   return (
+
     <LoadingProvider>
       <AppContent />
     </LoadingProvider>
+
   )
 }
 

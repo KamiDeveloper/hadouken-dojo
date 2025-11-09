@@ -42,7 +42,7 @@ const UserDropdown = () => {
                     y: 0,
                     scale: 1,
                     duration: 0.2,
-                    ease: 'power2.out'
+                    ease: 'power2.out',
                 }
             );
         }
@@ -132,7 +132,7 @@ const UserDropdown = () => {
             {isOpen && (
                 <div
                     ref={menuRef}
-                    className="absolute right-0 mt-3 w-64 glass-container rounded-2xl border border-white/10 shadow-2xl overflow-hidden z-50"
+                    className="absolute right-0 mt-3 w-64 semitransparent-bg rounded-2xl border border-white/10 shadow-2xl overflow-hidden z-50"
                     style={{ opacity: 0 }}
                 >
                     {/* Header con info del usuario */}

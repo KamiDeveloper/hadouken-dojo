@@ -1,5 +1,5 @@
 import logo from '/assets/images/logoland.webp'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import HamburguerMenu from './HamburguerMenu'
@@ -8,6 +8,9 @@ import { useAuth } from '../../context/AuthContext'
 
 const NavBar = () => {
     const { user } = useAuth();
+    const location = useLocation();
+    const isGetStarted = location.pathname === '/getstarted';
+
     useGSAP(() => {
         const navTween = gsap.timeline({
             scrollTrigger: {
@@ -49,11 +52,13 @@ const NavBar = () => {
                 <div className="logo">
                     <img className='logo-image' src={logo} alt="Logo" />
                 </div>
-                <div className="nav-links md:flex hidden">
+                <div className={`nav-links md:flex hidden ${isGetStarted ? '!text-white' : ''}`}>
                     <NavLink to="/">Inicio</NavLink>
                     <NavLink to="/info">Información</NavLink>
                     <NavLink to="/reservations">Reservas</NavLink>
-                    <NavLink to="/system">Sistema</NavLink>
+                    {user?.role === 'admin' && (
+                        <NavLink to="/system">Sistema</NavLink>
+                    )}
                 </div>
                 <div className="nav-buttons">
                     {user ? (

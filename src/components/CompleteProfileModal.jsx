@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useAuth } from '../context/AuthContext';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 import { db } from '../config/firebase';
 import toast from 'react-hot-toast';
 import gsap from 'gsap';
@@ -76,7 +76,11 @@ const CompleteProfileModal = ({ isOpen, onClose }) => {
             setIsCheckingUsername(true);
             try {
                 const usersRef = collection(db, 'users');
-                const q = query(usersRef, where('username', '==', username.toLowerCase()));
+                const q = query(
+                    usersRef,
+                    where('username', '==', username.toLowerCase()),
+                    limit(1) // ✅ Agregar limit para cumplir con Firestore Rules
+                );
                 const snapshot = await getDocs(q);
 
                 const available = snapshot.empty;

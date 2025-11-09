@@ -1,18 +1,168 @@
-rules_version='2'
-
+rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // ============================================
+    // HELPER FUNCTIONS
+    // ============================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() &&
+             get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function notBanned() {
+      let user = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return user.bannedUntil == null || user.bannedUntil < request.time;
+    }
+
+    function hasValidProfile() {
+      let user = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+      return user.username != null && user.displayName != null;
+    }
+
+    // ============================================
+    // USERS COLLECTION
+    // ============================================
+    
+    match /users/{userId} {
+      // Leer documento específico: solo el propio usuario o admins
+      allow get: if isOwner(userId) || isAdmin();
+
+      // ✅ Permitir queries limitados para verificar disponibilidad de username
+      // Necesario para Complete Profile Modal y búsquedas
+      // Limitado a queries con máximo 10 resultados para prevenir abuso
+      allow list: if isAuthenticated() && request.query.limit <= 10;
+
+      // Crear: solo durante signup/complete profile (auth.uid == userId)
+      // Validar campos requeridos y valores seguros
+      allow create: if isAuthenticated() 
+                    && request.auth.uid == userId
+                    && request.resource.data.role == 'user'
+                    && request.resource.data.strikes == 0
+                    && request.resource.data.email == request.auth.token.email
+                    && request.resource.data.username is string
+                    && request.resource.data.username.size() >= 3
+                    && request.resource.data.username.size() <= 20;
+
+      // Actualizar: solo el usuario (no puede cambiar role ni strikes)
+      allow update: if isOwner(userId)
+                    && request.resource.data.role == resource.data.role
+                    && request.resource.data.strikes == resource.data.strikes;
+
+      // Admin puede actualizar todo (incluso role y strikes)
+      allow update: if isAdmin();
+
+      // Delete: solo admin (pero mejor no permitir)
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // CATEGORIES COLLECTION (Read-only for users)
+    // ============================================
+    
+    match /categories/{categoryId} {
+      // Leer: cualquier usuario autenticado
+      allow read: if isAuthenticated();
+      
+      // Escribir: solo admins
+      allow write: if isAdmin();
+    }
+
+    // ============================================
+    // MACHINES COLLECTION (Read-only for users)
+    // ============================================
+    
+    match /machines/{machineId} {
+      // Leer: cualquier usuario autenticado
+      allow read: if isAuthenticated();
+      
+      // Escribir: solo admins
+      allow write: if isAdmin();
+    }
+
+    // ============================================
+    // CONFIG COLLECTION (Read-only for users)
+    // ============================================
+    
+    match /config/{configId} {
+      // Leer: cualquier usuario autenticado
+      allow read: if isAuthenticated();
+      
+      // Escribir: solo admins
+      allow write: if isAdmin();
+    }
+
+    // ============================================
+    // BOOKINGS COLLECTION
+    // ============================================
+    
+    match /bookings/{bookingId} {
+      // Leer: cualquier usuario autenticado puede ver todas las reservas
+      // (necesario para mostrar disponibilidad en calendario)
+      allow read: if isAuthenticated();
+
+      // Crear reserva:
+      // - Usuario autenticado
+      // - No baneado
+      // - Perfil completo (username, displayName)
+      // - El userId debe ser el del usuario autenticado
+      // - Status debe ser 'active' al crear
+      // - Debe incluir todos los campos requeridos
+      allow create: if isAuthenticated()
+                    && notBanned()
+                    && hasValidProfile()
+                    && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.status == 'active'
+                    && request.resource.data.keys().hasAll([
+                      'userId', 'machineId', 'categoryId', 'weekId',
+                      'startTime', 'endTime', 'status', 'createdAt'
+                    ])
+                    && request.resource.data.startTime < request.resource.data.endTime;
+
+      // Cancelar reserva (cambiar status a 'cancelled'):
+      // - Solo el dueño de la reserva o admin
+      // - Solo si status actual es 'active'
+      // - Solo puede cambiar: status a 'cancelled', cancelledAt, cancelledBy
+      allow update: if (isOwner(resource.data.userId) || isAdmin())
+                    && resource.data.status == 'active'
+                    && request.resource.data.status == 'cancelled'
+                    && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'cancelledAt', 'cancelledBy'])
+                    && request.resource.data.cancelledBy == request.auth.uid;
+
+      // Admin puede actualizar cualquier campo
+      allow update: if isAdmin();
+
+      // Delete: solo admin (preferible usar update para cancelar)
+      allow delete: if isAdmin();
+    }
+
+    // ============================================
+    // BLOCKED_SLOTS COLLECTION (Admin only)
+    // ============================================
+    
+    match /blocked_slots/{slotId} {
+      // Leer: cualquier usuario autenticado
+      allow read: if isAuthenticated();
+      
+      // Escribir: solo admins
+      allow write: if isAdmin();
+    }
+
+    // ============================================
+    // DENY ALL OTHER COLLECTIONS
+    // ============================================
+    
     match /{document=**} {
-      // This rule allows anyone with your database reference to view, edit,
-      // and delete all data in your database. It is useful for getting
-      // started, but it is configured to expire after 30 days because it
-      // leaves your app open to attackers. At that time, all client
-      // requests to your database will be denied.
-      //
-      // Make sure to write security rules for your app before that time, or
-      // else all client requests to your database will be denied until you
-      // update your rules.
-      allow read, write: if request.time < timestamp.date(2025, 12, 3);
+      allow read, write: if false;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import gsap from 'gsap';
+import Lightning from '../components/ui/backgrounds/Lightning';
 
 // Schemas de validación
 const loginSchema = z.object({
@@ -27,9 +28,16 @@ const signupSchema = z.object({
     path: ["confirmPassword"],
 });
 
+const LOGIN_MAX_WIDTH = '28rem';
+const SIGNUP_MAX_WIDTH = '56rem';
+
 const GetStarted = () => {
     const [activeTab, setActiveTab] = useState('login');
     const [isLoading, setIsLoading] = useState(false);
+    const [isWideLayout, setIsWideLayout] = useState(() => {
+        if (typeof window === 'undefined') return false;
+        return window.matchMedia('(min-width: 768px)').matches;
+    });
     const { loginWithEmail, signupWithEmail, loginWithGoogle, user } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -37,7 +45,11 @@ const GetStarted = () => {
     // Refs para animaciones
     const containerRef = useRef(null);
     const tabIndicatorRef = useRef(null);
-    const formRef = useRef(null);
+    const formsWrapperRef = useRef(null);
+    const loginFormRef = useRef(null);
+    const signupFormRef = useRef(null);
+    const formTimelineRef = useRef(null);
+    const hasAnimatedRef = useRef(false);
 
     // Redirigir si ya está autenticado
     useEffect(() => {
@@ -57,15 +69,71 @@ const GetStarted = () => {
         }
     }, []);
 
-    // Animación al cambiar tabs
     useEffect(() => {
-        if (formRef.current) {
-            gsap.fromTo(formRef.current,
-                { opacity: 0, x: activeTab === 'login' ? -20 : 20 },
-                { opacity: 1, x: 0, duration: 0.5, ease: 'power2.out' }
-            );
+        if (typeof window === 'undefined') return;
+        const mediaQuery = window.matchMedia('(min-width: 768px)');
+        const handleChange = (event) => setIsWideLayout(event.matches);
+
+        setIsWideLayout(mediaQuery.matches);
+
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener('change', handleChange);
+            return () => mediaQuery.removeEventListener('change', handleChange);
         }
-    }, [activeTab]);
+
+        mediaQuery.addListener(handleChange);
+        return () => mediaQuery.removeListener(handleChange);
+    }, []);
+
+    // Animación al cambiar tabs
+    useLayoutEffect(() => {
+        const container = containerRef.current;
+        const form = formsWrapperRef.current;
+
+        if (!container || !form) return;
+
+        if (formTimelineRef.current) {
+            formTimelineRef.current.kill();
+        }
+
+        const isSignUp = activeTab === 'signup';
+        const targetWidth = isSignUp ? SIGNUP_MAX_WIDTH : LOGIN_MAX_WIDTH;
+
+        const timeline = gsap.timeline({ defaults: { ease: 'power2.inOut' } });
+
+        timeline.set(form, { opacity: 0, y: isSignUp ? 16 : -16 });
+
+        if (isWideLayout && hasAnimatedRef.current) {
+            timeline.to(container, {
+                maxWidth: targetWidth,
+                duration: 0.45
+            }, 0);
+        } else {
+            gsap.set(container, { maxWidth: isWideLayout ? targetWidth : '100%' });
+        }
+
+        timeline.to(form, {
+            opacity: 1,
+            y: 0,
+            duration: 0.35,
+            ease: 'power2.out'
+        }, isWideLayout && hasAnimatedRef.current ? '-=0.18' : 0);
+
+        timeline.call(() => {
+            const activeForm = activeTab === 'login' ? loginFormRef.current : signupFormRef.current;
+            if (activeForm) {
+                const targetHeight = activeForm.scrollHeight;
+                gsap.to(formsWrapperRef.current, { height: targetHeight, duration: 0.3, ease: 'power2.out' });
+            }
+        }, null, '+=0.01');
+
+        formTimelineRef.current = timeline;
+        hasAnimatedRef.current = true;
+
+        return () => {
+            timeline.kill();
+        };
+    }, [activeTab, isWideLayout]);
 
     // Forms
     const loginForm = useForm({
@@ -172,11 +240,21 @@ const GetStarted = () => {
     };
 
     return (
-        <div className="min-h-screen w-full flex items-center justify-center px-4 py-20 relative overflow-hidden bg-linear-to-br from-[var(--color-dark-red)] to-[var(--color-dark-blue)]" >
-            {/* Fondo con gradiente radial */}
+        <div className="min-h-screen w-full flex items-center justify-center px-4 py-20 relative overflow-hidden">
+
+            <div className='absolute w-full h-full' >
+                <Lightning
+                    hue={220}
+                    xOffset={0}
+                    speed={1}
+                    intensity={0.5}
+                    size={1}
+                />
+            </div>
+
             <div className="fixed inset-0" />
 
-            <div ref={containerRef} className="w-full max-w-md">
+            <div ref={containerRef} className="w-full mx-auto">
                 {/* Logo */}
                 <div className="text-center mb-8">
                     <img
@@ -240,133 +318,147 @@ const GetStarted = () => {
                     </div>
 
                     {/* Formularios */}
-                    <div ref={formRef}>
-                        {activeTab === 'login' ? (
-                            <form onSubmit={loginForm.handleSubmit(onLoginSubmit)} className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray mb-2">
-                                        Email
-                                    </label>
-                                    <input
-                                        {...loginForm.register('email')}
-                                        type="email"
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
-                                        placeholder="tu@email.com"
-                                    />
-                                    {loginForm.formState.errors.email && (
-                                        <p className="text-light-red text-xs mt-1">{loginForm.formState.errors.email.message}</p>
-                                    )}
-                                </div>
+                    <div
+                        ref={formsWrapperRef}
+                        className="relative overflow-hidden"
+                    >
+                        <form
+                            ref={loginFormRef}
+                            onSubmit={loginForm.handleSubmit(onLoginSubmit)}
+                            className={`absolute inset-x-0 top-0 w-full space-y-4 transition-all duration-300 ${activeTab === 'login' ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}
+                            aria-hidden={activeTab !== 'login'}
+                        >
+                            <div>
+                                <label className="block text-sm font-medium text-gray mb-2">
+                                    Email
+                                </label>
+                                <input
+                                    {...loginForm.register('email')}
+                                    type="email"
+                                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
+                                    placeholder="tu@email.com"
+                                />
+                                {loginForm.formState.errors.email && (
+                                    <p className="text-light-red text-xs mt-1">{loginForm.formState.errors.email.message}</p>
+                                )}
+                            </div>
 
-                                <div>
-                                    <label className="block text-sm font-medium text-gray mb-2">
-                                        Contraseña
-                                    </label>
-                                    <input
-                                        {...loginForm.register('password')}
-                                        type="password"
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
-                                        placeholder="••••••••"
-                                    />
-                                    {loginForm.formState.errors.password && (
-                                        <p className="text-light-red text-xs mt-1">{loginForm.formState.errors.password.message}</p>
-                                    )}
-                                </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray mb-2">
+                                    Contraseña
+                                </label>
+                                <input
+                                    {...loginForm.register('password')}
+                                    type="password"
+                                    className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
+                                    placeholder="••••••••"
+                                />
+                                {loginForm.formState.errors.password && (
+                                    <p className="text-light-red text-xs mt-1">{loginForm.formState.errors.password.message}</p>
+                                )}
+                            </div>
 
+                            <button
+                                type="submit"
+                                disabled={isLoading}
+                                className="w-full py-3 px-4 bg-medium-blue text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                            >
+                                {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+                            </button>
+                        </form>
+
+                        <form
+                            ref={signupFormRef}
+                            onSubmit={signupForm.handleSubmit(onSignupSubmit)}
+                            className={`absolute inset-x-0 top-0 w-full space-y-6 transition-all duration-300 ${activeTab === 'signup' ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 translate-y-4 pointer-events-none'}`}
+                            aria-hidden={activeTab !== 'signup'}
+                        >
+                            <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-6 md:gap-y-5">
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray mb-2">
+                                            Nombre Completo
+                                        </label>
+                                        <input
+                                            {...signupForm.register('displayName')}
+                                            type="text"
+                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
+                                            placeholder="Juan Pérez"
+                                        />
+                                        {signupForm.formState.errors.displayName && (
+                                            <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.displayName.message}</p>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray mb-2">
+                                            Nombre de Usuario
+                                        </label>
+                                        <input
+                                            {...signupForm.register('username')}
+                                            type="text"
+                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
+                                            placeholder="usuario123"
+                                        />
+                                        {signupForm.formState.errors.username && (
+                                            <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.username.message}</p>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray mb-2">
+                                            Email
+                                        </label>
+                                        <input
+                                            {...signupForm.register('email')}
+                                            type="email"
+                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
+                                            placeholder="tu@email.com"
+                                        />
+                                        {signupForm.formState.errors.email && (
+                                            <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.email.message}</p>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray mb-2">
+                                            Contraseña
+                                        </label>
+                                        <input
+                                            {...signupForm.register('password')}
+                                            type="password"
+                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
+                                            placeholder="••••••••"
+                                        />
+                                        {signupForm.formState.errors.password && (
+                                            <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.password.message}</p>
+                                        )}
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray mb-2">
+                                            Confirmar Contraseña
+                                        </label>
+                                        <input
+                                            {...signupForm.register('confirmPassword')}
+                                            type="password"
+                                            className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
+                                            placeholder="••••••••"
+                                        />
+                                        {signupForm.formState.errors.confirmPassword && (
+                                            <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.confirmPassword.message}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="flex justify-center">
                                 <button
                                     type="submit"
                                     disabled={isLoading}
-                                    className="w-full py-3 px-4 bg-medium-blue text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
-                                >
-                                    {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-                                </button>
-                            </form>
-                        ) : (
-                            <form onSubmit={signupForm.handleSubmit(onSignupSubmit)} className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-gray mb-2">
-                                        Nombre Completo
-                                    </label>
-                                    <input
-                                        {...signupForm.register('displayName')}
-                                        type="text"
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
-                                        placeholder="Juan Pérez"
-                                    />
-                                    {signupForm.formState.errors.displayName && (
-                                        <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.displayName.message}</p>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray mb-2">
-                                        Nombre de Usuario
-                                    </label>
-                                    <input
-                                        {...signupForm.register('username')}
-                                        type="text"
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
-                                        placeholder="usuario123"
-                                    />
-                                    {signupForm.formState.errors.username && (
-                                        <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.username.message}</p>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray mb-2">
-                                        Email
-                                    </label>
-                                    <input
-                                        {...signupForm.register('email')}
-                                        type="email"
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
-                                        placeholder="tu@email.com"
-                                    />
-                                    {signupForm.formState.errors.email && (
-                                        <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.email.message}</p>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray mb-2">
-                                        Contraseña
-                                    </label>
-                                    <input
-                                        {...signupForm.register('password')}
-                                        type="password"
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
-                                        placeholder="••••••••"
-                                    />
-                                    {signupForm.formState.errors.password && (
-                                        <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.password.message}</p>
-                                    )}
-                                </div>
-
-                                <div>
-                                    <label className="block text-sm font-medium text-gray mb-2">
-                                        Confirmar Contraseña
-                                    </label>
-                                    <input
-                                        {...signupForm.register('confirmPassword')}
-                                        type="password"
-                                        className="w-full px-4 py-3 bg-black/40 border border-white/10 rounded-xl text-white placeholder-gray/50 focus:outline-none focus:border-light-red focus:ring-2 focus:ring-light-red/20 transition-all"
-                                        placeholder="••••••••"
-                                    />
-                                    {signupForm.formState.errors.confirmPassword && (
-                                        <p className="text-light-red text-xs mt-1">{signupForm.formState.errors.confirmPassword.message}</p>
-                                    )}
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    disabled={isLoading}
-                                    className="w-full py-3 px-4 bg-medium-blue text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed mt-6"
+                                    className="w-full md:w-[24rem] py-3 px-8 bg-medium-blue text-white rounded-xl font-semibold hover:shadow-lg hover:shadow-light-red/50 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
                                     {isLoading ? 'Creando cuenta...' : 'Crear Cuenta'}
                                 </button>
-                            </form>
-                        )}
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

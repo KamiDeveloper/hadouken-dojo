@@ -131,7 +131,9 @@ const HamburguerMenu = () => {
                         <NavLink to="/" onClick={toggleMenu}>Inicio</NavLink>
                         <NavLink to="/info" onClick={toggleMenu}>Información</NavLink>
                         <NavLink to="/reservations" onClick={toggleMenu}>Reservas</NavLink>
-                        <NavLink to="/system" onClick={toggleMenu}>Sistema</NavLink>
+                        {user?.role === 'admin' && (
+                            <NavLink to="/system" onClick={toggleMenu}>Sistema</NavLink>
+                        )}
                     </ul>
                 </nav>
             </div>
