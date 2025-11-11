@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Sitemap (crear después del deploy)
+# Sitemap: https://hadouken-dojo.vercel.app/sitemap.xml
+
+# Disallow admin routes
+Disallow: /system-management
+Disallow: /login
+Disallow: /signup

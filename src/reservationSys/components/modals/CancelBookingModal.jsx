@@ -86,29 +86,29 @@ export default function CancelBookingModal({
             {/* Modal container */}
             <div
                 className="
-          relative w-full max-w-md
-          bg-gray-800 border border-gray-700
-          rounded-2xl shadow-[0_20px_25px_rgba(0,0,0,0.7)]
-          animate-fade-in
-        "
+            relative w-full max-w-md
+            res-bg-secondary res-border-primary border
+            res-rounded-2xl shadow-[0_20px_25px_rgba(0,0,0,0.7)]
+            animate-fade-in
+            "
                 style={{
                     animation: 'fade-in 200ms ease-out, modal-scale 200ms ease-out',
                 }}
             >
                 {/* Header */}
-                <div className="flex items-start justify-between p-6 border-b border-gray-700">
+                <div className="flex items-start justify-between p-6 border-b res-border-primary">
                     <div className="flex-1">
-                        <h2 id="cancel-modal-title" className="text-2xl font-bold text-gray-50 mb-2">
+                        <h2 id="cancel-modal-title" className="text-2xl font-bold res-text-primary mb-2">
                             Cancelar Reserva
                         </h2>
                         {/* Machine info */}
                         <div className="flex items-center gap-2">
                             <div
-                                className="w-3 h-3 rounded-full border-2 border-white shadow-sm"
+                                className="w-3 h-3 res-rounded-full border-2 border-white shadow-sm"
                                 style={{ backgroundColor: machineColor }}
                                 aria-hidden="true"
                             />
-                            <span className="text-base text-gray-300">{machineName}</span>
+                            <span className="text-base res-text-secondary">{machineName}</span>
                         </div>
                     </div>
 
@@ -117,8 +117,8 @@ export default function CancelBookingModal({
                         onClick={onClose}
                         disabled={isCancelling}
                         className="
-              p-2 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-gray-700
-              transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500
+              p-2 res-rounded-lg res-text-tertiary hover:res-text-secondary hover:res-bg-tertiary
+              res-transition-base focus:outline-none focus:ring-2 focus:ring-gray-500
               disabled:opacity-50 disabled:cursor-not-allowed
             "
                         aria-label="Cerrar modal"
@@ -130,7 +130,7 @@ export default function CancelBookingModal({
                 {/* Body */}
                 <div className="p-6">
                     {/* Warning message */}
-                    <div className="flex gap-3 p-4 bg-amber-900/20 border border-amber-500/30 rounded-lg mb-6">
+                    <div className="flex gap-3 p-4 bg-amber-900/20 border border-amber-500/30 res-rounded-lg mb-6">
                         <ExclamationTriangleIcon className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" />
                         <div className="flex-1">
                             <p className="text-amber-200 font-medium mb-1">
@@ -144,29 +144,29 @@ export default function CancelBookingModal({
 
                     {/* Booking details */}
                     <div className="space-y-3 mb-6">
-                        <div className="flex justify-between items-center py-2 border-b border-gray-700">
-                            <span className="text-gray-400 text-sm">Fecha:</span>
-                            <span className="text-gray-200 font-medium">
+                        <div className="flex justify-between items-center py-2 border-b res-border-primary">
+                            <span className="res-text-tertiary text-sm">Fecha:</span>
+                            <span className="res-text-secondary font-medium">
                                 {formatDate(startTime)}
                             </span>
                         </div>
 
-                        <div className="flex justify-between items-center py-2 border-b border-gray-700">
-                            <span className="text-gray-400 text-sm">Hora:</span>
-                            <span className="text-gray-200 font-medium">
+                        <div className="flex justify-between items-center py-2 border-b res-border-primary">
+                            <span className="res-text-tertiary text-sm">Hora:</span>
+                            <span className="res-text-secondary font-medium">
                                 {formatTime(startTime)} - {formatTime(endTime)}
                             </span>
                         </div>
 
                         <div className="flex justify-between items-center py-2">
-                            <span className="text-gray-400 text-sm">Duración:</span>
-                            <span className="text-gray-200 font-medium">1 hora</span>
+                            <span className="res-text-tertiary text-sm">Duración:</span>
+                            <span className="res-text-secondary font-medium">1 hora</span>
                         </div>
                     </div>
 
                     {/* Error message */}
                     {error && (
-                        <div className="flex gap-3 p-4 bg-red-900/20 border border-red-500/30 rounded-lg mb-6">
+                        <div className="flex gap-3 p-4 bg-red-900/20 border border-red-500/30 res-rounded-lg mb-6">
                             <ExclamationTriangleIcon className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                             <div className="flex-1">
                                 <p className="text-red-200 text-sm font-medium mb-1">Error al cancelar</p>
@@ -182,10 +182,10 @@ export default function CancelBookingModal({
                             onClick={onClose}
                             disabled={isCancelling}
                             className="
-                flex-1 px-4 py-3 rounded-lg
-                bg-gray-700 hover:bg-gray-600
-                text-gray-200 font-medium
-                transition-colors
+                flex-1 px-4 py-3 res-rounded-lg
+                res-bg-tertiary hover:res-bg-secondary
+                res-text-secondary font-medium
+                res-transition-base
                 focus:outline-none focus:ring-2 focus:ring-gray-500
                 disabled:opacity-50 disabled:cursor-not-allowed
               "
@@ -198,18 +198,18 @@ export default function CancelBookingModal({
                             onClick={onConfirm}
                             disabled={isCancelling}
                             className="
-                flex-1 px-4 py-3 rounded-lg
+                flex-1 px-4 py-3 res-rounded-lg
                 bg-red-600 hover:bg-red-700
                 text-white font-medium
                 flex items-center justify-center gap-2
-                transition-colors
+                res-transition-base
                 focus:outline-none focus:ring-2 focus:ring-red-500
                 disabled:opacity-50 disabled:cursor-not-allowed
               "
                         >
                             {isCancelling ? (
                                 <>
-                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white res-rounded-full animate-spin" />
                                     <span>Cancelando...</span>
                                 </>
                             ) : (

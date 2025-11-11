@@ -25,14 +25,15 @@ import toast from 'react-hot-toast';
  * 
  * @param {Object} bookingData - Datos de la reserva
  * @param {string} bookingData.userId - ID del usuario
+ * @param {string} bookingData.username - Username del usuario (para mostrar en slots)
  * @param {string} bookingData.machineId - ID de la máquina
  * @param {string} bookingData.categoryId - ID de la categoría
  * @param {Array} bookingData.slots - Array de slots { startTime, endTime }
  * @returns {Promise<Object>} - { success: boolean, bookingIds: string[], errors: string[] }
  */
-async function createBookingBatch({ userId, machineId, categoryId, slots }) {
+async function createBookingBatch({ userId, username, machineId, categoryId, slots }) {
     // Validar inputs
-    if (!userId || !machineId || !categoryId || !slots || slots.length === 0) {
+    if (!userId || !username || !machineId || !categoryId || !slots || slots.length === 0) {
         throw new Error('Datos incompletos para crear la reserva');
     }
 
@@ -47,6 +48,7 @@ async function createBookingBatch({ userId, machineId, categoryId, slots }) {
 
         const bookingData = {
             userId,
+            username, // ✅ DENORMALIZACIÓN: Username para mostrar en slots sin queries adicionales
             machineId,
             categoryId,
             weekId, // CRÍTICO para queries O(1)
@@ -89,7 +91,7 @@ export function useCreateBooking(options = {}) {
 
         // Pre-submit validation
         onMutate: async (variables) => {
-            const { slots, userId, machineId } = variables;
+            const { slots, userId, username, machineId } = variables;
 
             // 1. Validar con BookingValidator
             const validation = BookingValidator.validateBooking(
@@ -121,6 +123,7 @@ export function useCreateBooking(options = {}) {
                         .map((slot, index) => ({
                             id: `temp-${Date.now()}-${index}`,
                             userId,
+                            username, // ✅ Incluir username en optimistic update
                             machineId,
                             categoryId: variables.categoryId,
                             weekId,
@@ -217,17 +220,19 @@ export function useCreateSingleBooking(options = {}) {
 
     return {
         ...createBooking,
-        mutate: ({ userId, machineId, categoryId, slot }) => {
+        mutate: ({ userId, username, machineId, categoryId, slot }) => {
             createBooking.mutate({
                 userId,
+                username,
                 machineId,
                 categoryId,
                 slots: [slot],
             });
         },
-        mutateAsync: async ({ userId, machineId, categoryId, slot }) => {
+        mutateAsync: async ({ userId, username, machineId, categoryId, slot }) => {
             return createBooking.mutateAsync({
                 userId,
+                username,
                 machineId,
                 categoryId,
                 slots: [slot],

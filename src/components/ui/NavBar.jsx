@@ -9,7 +9,7 @@ import { useAuth } from '../../context/AuthContext'
 const NavBar = () => {
     const { user } = useAuth();
     const location = useLocation();
-    const isGetStarted = location.pathname === '/getstarted';
+    const isHome = location.pathname === '/';
 
     useGSAP(() => {
         const navTween = gsap.timeline({
@@ -52,7 +52,7 @@ const NavBar = () => {
                 <div className="logo">
                     <img className='logo-image' src={logo} alt="Logo" />
                 </div>
-                <div className={`nav-links md:flex hidden ${isGetStarted ? '!text-white' : ''}`}>
+                <div className={`nav-links md:flex hidden ${!isHome ? '!text-white' : ''}`}>
                     <NavLink to="/">Inicio</NavLink>
                     <NavLink to="/info">Información</NavLink>
                     <NavLink to="/reservations">Reservas</NavLink>

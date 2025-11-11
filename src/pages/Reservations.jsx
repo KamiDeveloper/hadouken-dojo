@@ -251,6 +251,7 @@ export default function Reservations() {
         try {
             await createBookingMutation.mutateAsync({
                 userId: user.uid,
+                username: user.username, // ✅ Pasar username para denormalización
                 machineId: selectedMachineId,
                 categoryId: selectedMachineData?.categoryId || '',
                 slots: selectedSlots,
@@ -306,7 +307,7 @@ export default function Reservations() {
 
     return (
         <ErrorBoundary>
-            <div className="min-h-screen bg-gray-900 flex flex-col">
+            <div className="min-h-screen res-bg-primary flex flex-col">
                 {/* Main layout */}
                 <div className="flex-1 flex w-[100dvw]">
                     {/* Sidebar (desktop visible, mobile hidden - drawer renderizado en portal) */}

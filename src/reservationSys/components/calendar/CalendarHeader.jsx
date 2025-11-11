@@ -49,19 +49,18 @@ export default function CalendarHeader({
         : '';
 
     return (
-        <div className="flex-shrink-0 mt-10 border-b border-gray-800 bg-gray-850 p-6">
-            <div className='hidden lg:flex absolute top-0 left-0 bg-gray-700/90 h-16 w-full' />
+        <div className="flex-shrink-0 mt-10 border-b res-border-primary res-bg-secondary res-rounded-2xl p-6">
             {/* Top row: Machine name + selected count */}
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     {/* Color indicator */}
                     <div
-                        className="w-4 h-4 rounded-full border-2 border-white shadow-lg"
+                        className="w-4 h-4 res-rounded-full border-2 border-white res-shadow-lg"
                         style={{ backgroundColor: machineColor }}
                         aria-hidden="true"
                     />
 
-                    <h2 className="text-2xl font-bold text-gray-50">
+                    <h2 className="text-2xl font-bold res-text-primary">
                         {machineName}
                     </h2>
                 </div>
@@ -69,12 +68,12 @@ export default function CalendarHeader({
                 {/* Selected slots indicator */}
                 {selectedCount > 0 && (
                     <div className="flex items-center gap-3">
-                        <span className="text-sm text-gray-400">
+                        <span className="text-sm res-text-tertiary">
                             {selectedCount} {selectedCount === 1 ? 'slot seleccionado' : 'slots seleccionados'}
                         </span>
                         <button
                             onClick={onClearSelection}
-                            className="p-2 rounded-lg bg-gray-800 hover:bg-gray-700 text-gray-400 hover:text-gray-200 transition-all focus:outline-none focus:ring-2 focus:ring-red-500"
+                            className="p-2 res-rounded-lg res-bg-secondary hover:res-bg-tertiary res-text-tertiary hover:res-text-secondary res-transition-fast focus:outline-none focus:ring-2 focus:ring-red-500"
                             aria-label="Limpiar selección"
                         >
                             <XMarkIcon className="w-5 h-5" />
@@ -87,8 +86,8 @@ export default function CalendarHeader({
             <div className="flex items-center justify-between">
                 {/* Week range display */}
                 <div className="flex items-center gap-3">
-                    <CalendarIcon className="w-5 h-5 text-gray-400" />
-                    <span className="text-lg font-medium text-gray-300">
+                    <CalendarIcon className="w-5 h-5 res-text-tertiary" />
+                    <span className="text-lg font-medium res-text-secondary">
                         {weekRange}
                     </span>
                 </div>
@@ -100,10 +99,10 @@ export default function CalendarHeader({
                         onClick={() => onNavigate('prev')}
                         disabled={!canNavigatePrev}
                         className={`
-              p-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500
+              p-2 res-rounded-lg res-transition-fast focus:outline-none focus:ring-2 focus:ring-blue-500
               ${canNavigatePrev
-                                ? 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-gray-100'
-                                : 'bg-gray-800 text-gray-600 cursor-not-allowed opacity-50'
+                                ? 'res-bg-secondary hover:res-bg-tertiary res-text-secondary hover:res-text-primary'
+                                : 'res-bg-secondary res-text-muted cursor-not-allowed opacity-50'
                             }
             `}
                         aria-label="Semana anterior"
@@ -114,7 +113,7 @@ export default function CalendarHeader({
                     {/* Today button */}
                     <button
                         onClick={onToday}
-                        className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-all focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
+                        className="px-4 py-2 res-rounded-lg res-btn-secondary focus:ring-offset-2 focus:ring-offset-gray-900"
                     >
                         Hoy
                     </button>
@@ -124,10 +123,10 @@ export default function CalendarHeader({
                         onClick={() => onNavigate('next')}
                         disabled={!canNavigateNext}
                         className={`
-              p-2 rounded-lg transition-all focus:outline-none focus:ring-2 focus:ring-blue-500
+              p-2 res-rounded-lg res-transition-fast focus:outline-none focus:ring-2 focus:ring-blue-500
               ${canNavigateNext
-                                ? 'bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-gray-100'
-                                : 'bg-gray-800 text-gray-600 cursor-not-allowed opacity-50'
+                                ? 'res-bg-secondary hover:res-bg-tertiary res-text-secondary hover:res-text-primary'
+                                : 'res-bg-secondary res-text-muted cursor-not-allowed opacity-50'
                             }
             `}
                         aria-label="Siguiente semana"

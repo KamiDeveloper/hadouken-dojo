@@ -135,25 +135,25 @@ export default function CategorySidebar({
     const sidebarContent = (
         <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-700">
-                <h2 className="text-xl font-bold text-gray-50">Categorías</h2>
+            <div className="flex items-center justify-between p-4 border-b res-border-primary">
+                <h2 className="text-xl font-bold res-text-primary">Categorías</h2>
                 {/* Close button solo visible en mobile */}
                 <button
                     onClick={onMobileClose}
-                    className="lg:hidden p-2 rounded-lg hover:bg-gray-700 transition-colors"
+                    className="lg:hidden p-2 res-rounded-lg hover:res-bg-tertiary res-transition-fast"
                     aria-label="Cerrar menú"
                 >
-                    <XMarkIcon className="w-6 h-6 text-gray-400" />
+                    <XMarkIcon className="w-6 h-6 res-text-tertiary" />
                 </button>
             </div>
 
             {/* Categories list */}
-            <div className="flex-shrink-0 p-4 space-y-2 border-b border-gray-700">
+            <div className="flex-shrink-0 p-4 space-y-2 border-b res-border-primary">
                 {categoriesLoading ? (
                     // Skeleton loaders
                     <>
-                        <div className="h-16 bg-gray-700 rounded-lg animate-pulse" />
-                        <div className="h-16 bg-gray-700 rounded-lg animate-pulse" />
+                        <div className="h-16 res-bg-tertiary res-rounded-lg animate-pulse" />
+                        <div className="h-16 res-bg-tertiary res-rounded-lg animate-pulse" />
                     </>
                 ) : (
                     categories.map((category) => (
@@ -172,15 +172,15 @@ export default function CategorySidebar({
             <div className="flex-1 overflow-y-auto p-4 space-y-2">
                 {activeCategoryId && (
                     <>
-                        <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">
+                        <h3 className="text-sm font-semibold res-text-tertiary uppercase tracking-wide mb-3">
                             Máquinas
                         </h3>
                         {machinesLoading ? (
                             // Skeleton loaders
                             <>
-                                <div className="h-12 bg-gray-700 rounded-lg animate-pulse ml-4" />
-                                <div className="h-12 bg-gray-700 rounded-lg animate-pulse ml-4" />
-                                <div className="h-12 bg-gray-700 rounded-lg animate-pulse ml-4" />
+                                <div className="h-12 res-bg-tertiary res-rounded-lg animate-pulse ml-4" />
+                                <div className="h-12 res-bg-tertiary res-rounded-lg animate-pulse ml-4" />
+                                <div className="h-12 res-bg-tertiary res-rounded-lg animate-pulse ml-4" />
                             </>
                         ) : machines.length > 0 ? (
                             machines.map((machine) => (
@@ -193,7 +193,7 @@ export default function CategorySidebar({
                                 />
                             ))
                         ) : (
-                            <p className="text-gray-500 text-sm ml-4">
+                            <p className="res-text-muted text-sm ml-4">
                                 No hay máquinas disponibles en esta categoría.
                             </p>
                         )}
@@ -207,7 +207,7 @@ export default function CategorySidebar({
         <>
             {/* Desktop sidebar - Fixed 280px */}
             <aside
-                className="mt-19 hidden lg:block w-[280px] h-[91dvh] bg-gray-800 border-r border-gray-700 shadow-xl rounded-l-2xl overflow-hidden"
+                className="mt-19 hidden lg:block w-[280px] h-[91dvh] res-bg-secondary border-r res-border-primary res-shadow-xl res-rounded-2xl overflow-hidden"
                 aria-label="Sidebar de categorías"
             >
                 {sidebarContent}
@@ -225,7 +225,7 @@ export default function CategorySidebar({
 
                     {/* Drawer */}
                     <aside
-                        className="lg:hidden fixed inset-y-0 left-0 w-[280px] max-w-[80vw] bg-gray-800 border-r border-gray-700 shadow-2xl z-50 animate-slide-in"
+                        className="lg:hidden fixed inset-y-0 left-0 w-[280px] max-w-[80vw] res-bg-secondary border-r res-border-primary shadow-2xl z-50 animate-slide-in"
                         aria-label="Menú de categorías"
                     >
                         {sidebarContent}

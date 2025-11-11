@@ -63,10 +63,10 @@ class ErrorBoundary extends Component {
             // UI de fallback dark mode
             return (
                 <div className="min-h-screen w-full flex items-center justify-center bg-[var(--reservations-bg-primary)] px-4">
-                    <div className="max-w-md w-full bg-[var(--reservations-bg-secondary)] rounded-2xl border border-[var(--reservations-border-primary)] p-8 text-center">
+                    <div className="max-w-md w-full bg-[var(--reservations-bg-secondary)] res-rounded-2xl border border-[var(--reservations-border-primary)] p-8 text-center">
                         {/* Icono de error */}
                         <div className="flex justify-center mb-6">
-                            <div className="rounded-full bg-red-900/20 p-4">
+                            <div className="res-rounded-full bg-red-900/20 p-4">
                                 <XCircleIcon className="h-16 w-16 text-red-500" />
                             </div>
                         </div>
@@ -83,13 +83,13 @@ class ErrorBoundary extends Component {
 
                         {/* Detalles del error (solo en desarrollo) */}
                         {import.meta.env.DEV && this.state.error && (
-                            <div className="mb-6 p-4 bg-[var(--reservations-bg-primary)] rounded-lg border border-[var(--reservations-border-secondary)] text-left">
+                            <div className="mb-6 p-4 bg-[var(--reservations-bg-primary)] res-rounded-lg border border-[var(--reservations-border-secondary)] text-left">
                                 <p className="text-xs font-mono text-red-400 mb-2 break-words">
                                     {this.state.error.toString()}
                                 </p>
                                 {this.state.errorInfo && (
                                     <details className="text-xs text-[var(--reservations-text-muted)] mt-2">
-                                        <summary className="cursor-pointer hover:text-[var(--reservations-text-tertiary)] transition-colors">
+                                        <summary className="cursor-pointer hover:text-[var(--reservations-text-tertiary)] res-transition-base">
                                             Ver stack trace
                                         </summary>
                                         <pre className="mt-2 overflow-x-auto whitespace-pre-wrap text-[10px]">
@@ -105,7 +105,7 @@ class ErrorBoundary extends Component {
                             {/* Botón Reintentar */}
                             <button
                                 onClick={this.handleReset}
-                                className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+                                className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 res-rounded-lg res-transition-base"
                             >
                                 <ArrowPathIcon className="h-5 w-5" />
                                 Reintentar
@@ -114,7 +114,7 @@ class ErrorBoundary extends Component {
                             {/* Botón Volver al Inicio */}
                             <button
                                 onClick={this.handleGoHome}
-                                className="flex-1 flex items-center justify-center gap-2 bg-[var(--reservations-bg-tertiary)] hover:bg-gray-600 text-[var(--reservations-text-primary)] font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+                                className="flex-1 flex items-center justify-center gap-2 bg-[var(--reservations-bg-tertiary)] hover:bg-gray-600 text-[var(--reservations-text-primary)] font-semibold py-3 px-6 res-rounded-lg res-transition-base"
                             >
                                 <HomeIcon className="h-5 w-5" />
                                 Ir al Inicio

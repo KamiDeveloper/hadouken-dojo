@@ -1,31 +1,10 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
-import { useGSAP } from "@gsap/react"
-import gsap from "gsap"
 import { useAuth } from '../../context/AuthContext'
 
 const HamburguerMenu = () => {
     const { user, logout } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-
-    useGSAP(() => {
-        const menuTween = gsap.timeline({
-            scrollTrigger: {
-                trigger: document.body,
-                start: "+=700 top top",
-                end: "+=300",
-                scrub: true,
-            }
-        })
-        menuTween
-            .to('.mobile-menu-img', {
-                backgroundColor: 'var(--color-white)',
-                borderRadius: '5px',
-                duration: 0.5,
-                opacity: 0.9,
-                ease: 'power4.out'
-            })
-    }, [])
 
     const toggleMenu = () => {
         setIsOpen(!isOpen)

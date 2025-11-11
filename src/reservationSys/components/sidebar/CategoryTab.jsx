@@ -36,12 +36,12 @@ export default function CategoryTab({ category, isActive, onClick, onHover }) {
             onClick={onClick}
             onMouseEnter={handleMouseEnter}
             className={`
-        w-full flex items-center gap-4 p-4 rounded-lg
-        transition-all duration-150 ease-out
+        w-full flex items-center gap-4 p-4 res-rounded-lg
+        res-transition-fast
         border-l-[3px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800
         ${isActive
-                    ? 'bg-gray-700 border-blue-500 shadow-lg shadow-blue-500/20'
-                    : 'bg-transparent border-transparent hover:bg-gray-700/50'
+                    ? 'res-bg-tertiary border-blue-500 res-shadow-lg shadow-blue-500/20'
+                    : 'bg-transparent border-transparent hover:res-bg-tertiary/50'
                 }
       `}
             aria-pressed={isActive}
@@ -58,8 +58,8 @@ export default function CategoryTab({ category, isActive, onClick, onHover }) {
                     />
                 ) : (
                     // Fallback si no hay imagen o falló la carga
-                    <div className="w-12 h-12 bg-gray-600 rounded-lg flex items-center justify-center">
-                        <span className="text-2xl font-bold text-gray-300">
+                    <div className="w-12 h-12 res-bg-tertiary res-rounded-lg flex items-center justify-center">
+                        <span className="text-2xl font-bold res-text-secondary">
                             {category.name.charAt(0).toUpperCase()}
                         </span>
                     </div>
@@ -71,7 +71,7 @@ export default function CategoryTab({ category, isActive, onClick, onHover }) {
                 <h3
                     className={`
             text-base font-semibold transition-colors
-            ${isActive ? 'text-gray-50' : 'text-gray-400'}
+            ${isActive ? 'res-text-primary' : 'res-text-tertiary'}
           `}
                 >
                     {category.name}
@@ -80,18 +80,13 @@ export default function CategoryTab({ category, isActive, onClick, onHover }) {
                     <p
                         className={`
               text-xs mt-0.5 transition-colors
-              ${isActive ? 'text-gray-300' : 'text-gray-500'}
+              ${isActive ? 'res-text-secondary' : 'res-text-muted'}
             `}
                     >
                         {category.description}
                     </p>
                 )}
             </div>
-
-            {/* Active indicator (optional visual cue) */}
-            {isActive && (
-                <div className="flex-shrink-0 w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-            )}
         </button>
     );
 }

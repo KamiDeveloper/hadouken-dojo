@@ -115,15 +115,19 @@ service cloud.firestore {
       // - No baneado
       // - Perfil completo (username, displayName)
       // - El userId debe ser el del usuario autenticado
+      // - El username debe ser string válido (3-20 caracteres)
       // - Status debe ser 'active' al crear
       // - Debe incluir todos los campos requeridos
       allow create: if isAuthenticated()
                     && notBanned()
                     && hasValidProfile()
                     && request.resource.data.userId == request.auth.uid
+                    && request.resource.data.username is string
+                    && request.resource.data.username.size() >= 3
+                    && request.resource.data.username.size() <= 20
                     && request.resource.data.status == 'active'
                     && request.resource.data.keys().hasAll([
-                      'userId', 'machineId', 'categoryId', 'weekId',
+                      'userId', 'username', 'machineId', 'categoryId', 'weekId',
                       'startTime', 'endTime', 'status', 'createdAt'
                     ])
                     && request.resource.data.startTime < request.resource.data.endTime;

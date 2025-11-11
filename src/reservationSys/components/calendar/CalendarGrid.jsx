@@ -61,10 +61,10 @@ export default function CalendarGrid({
                 {[...Array(5)].map((_, i) => (
                     <div key={i} className="space-y-3">
                         {/* Skeleton header */}
-                        <div className="h-16 bg-gray-800 rounded-lg animate-pulse" />
+                        <div className="h-16 res-bg-secondary res-rounded-lg animate-pulse" />
                         {/* Skeleton slots */}
                         {[...Array(8)].map((_, j) => (
-                            <div key={j} className="h-16 bg-gray-800 rounded-lg animate-pulse" />
+                            <div key={j} className="h-16 res-bg-secondary res-rounded-lg animate-pulse" />
                         ))}
                     </div>
                 ))}
@@ -75,7 +75,7 @@ export default function CalendarGrid({
     if (workDays.length === 0) {
         return (
             <div className="flex items-center justify-center h-96">
-                <p className="text-gray-500 text-center">
+                <p className="res-text-muted text-center">
                     No hay días laborables configurados para esta semana.
                 </p>
             </div>

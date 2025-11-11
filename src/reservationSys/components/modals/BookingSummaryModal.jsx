@@ -104,9 +104,9 @@ export default function BookingSummaryModal({
             {/* Modal container */}
             <div
                 className="
-          relative w-full max-w-2xl max-h-[90vh] overflow-hidden
-          bg-gray-800 border border-gray-700
-          rounded-2xl shadow-[0_20px_25px_rgba(0,0,0,0.7)]
+          relative w-full max-w-2xl max-h-[90vh] overflow-hidden backdrop-blur-md
+          res-bg-secondary res-border-primary border
+          res-rounded-2xl shadow-[0_20px_25px_rgba(0,0,0,0.7)]
           animate-fade-in
         "
                 style={{
@@ -114,19 +114,19 @@ export default function BookingSummaryModal({
                 }}
             >
                 {/* Header */}
-                <div className="flex items-start justify-between p-6 border-b border-gray-700">
+                <div className="flex items-start justify-between p-6 border-b res-border-primary">
                     <div className="flex-1">
-                        <h2 id="modal-title" className="text-2xl font-bold text-gray-50 mb-2">
+                        <h2 id="modal-title" className="text-2xl font-bold res-text-primary mb-2">
                             Confirmar Reserva
                         </h2>
                         {/* Machine info */}
                         <div className="flex items-center gap-2">
                             <div
-                                className="w-3 h-3 rounded-full border-2 border-white shadow-sm"
+                                className="w-3 h-3 res-rounded-full border-2 border-white shadow-sm"
                                 style={{ backgroundColor: machineColor }}
                                 aria-hidden="true"
                             />
-                            <span className="text-base text-gray-300">{machineName}</span>
+                            <span className="text-base res-text-secondary">{machineName}</span>
                         </div>
                     </div>
 
@@ -135,8 +135,8 @@ export default function BookingSummaryModal({
                         onClick={onClose}
                         disabled={isConfirming}
                         className="
-              p-2 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-gray-700
-              transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500
+              p-2 res-rounded-lg res-text-tertiary hover:res-text-secondary hover:res-bg-tertiary
+              res-transition-base focus:outline-none focus:ring-2 focus:ring-gray-500
               disabled:opacity-50 disabled:cursor-not-allowed
             "
                         aria-label="Cerrar modal"
@@ -149,21 +149,21 @@ export default function BookingSummaryModal({
                 <div className="overflow-y-auto max-h-[calc(90vh-200px)] p-6">
                     {/* Summary stats */}
                     <div className="grid grid-cols-3 gap-4 mb-6">
-                        <div className="bg-gray-900 rounded-lg p-4 text-center">
+                        <div className="res-bg-primary res-rounded-lg p-4 text-center">
                             <div className="text-3xl font-bold text-blue-400">{stats.count}</div>
-                            <div className="text-sm text-gray-400 mt-1">
+                            <div className="text-sm res-text-tertiary mt-1">
                                 {stats.count === 1 ? 'Slot' : 'Slots'}
                             </div>
                         </div>
-                        <div className="bg-gray-900 rounded-lg p-4 text-center">
+                        <div className="res-bg-primary res-rounded-lg p-4 text-center">
                             <div className="text-3xl font-bold text-emerald-400">{stats.dateCount}</div>
-                            <div className="text-sm text-gray-400 mt-1">
+                            <div className="text-sm res-text-tertiary mt-1">
                                 {stats.dateCount === 1 ? 'Fecha' : 'Fechas'}
                             </div>
                         </div>
-                        <div className="bg-gray-900 rounded-lg p-4 text-center">
+                        <div className="res-bg-primary res-rounded-lg p-4 text-center">
                             <div className="text-3xl font-bold text-amber-400">{stats.duration}h</div>
-                            <div className="text-sm text-gray-400 mt-1">Duración</div>
+                            <div className="text-sm res-text-tertiary mt-1">Duración</div>
                         </div>
                     </div>
 
@@ -173,7 +173,7 @@ export default function BookingSummaryModal({
                             {warnings.map((warning, index) => (
                                 <div
                                     key={index}
-                                    className="flex items-start gap-3 p-4 bg-amber-900/30 border-l-4 border-amber-500 rounded-lg"
+                                    className="flex items-start gap-3 p-4 bg-amber-900/30 border-l-4 border-amber-500 res-rounded-lg"
                                 >
                                     <ExclamationTriangleIcon className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                                     <p className="text-sm text-amber-400">{warning.message}</p>
@@ -184,7 +184,7 @@ export default function BookingSummaryModal({
 
                     {/* Slots grouped by date */}
                     <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-gray-300 mb-3">
+                        <h3 className="text-lg font-semibold res-text-secondary mb-3">
                             Horarios seleccionados
                         </h3>
 
@@ -192,13 +192,13 @@ export default function BookingSummaryModal({
                             const sortedSlots = sortSlotsByTime(slots);
 
                             return (
-                                <div key={dateStr} className="bg-gray-900 rounded-lg p-4">
+                                <div key={dateStr} className="res-bg-primary res-rounded-lg p-4">
                                     {/* Date header */}
-                                    <div className="flex items-center justify-between mb-3 pb-2 border-b border-gray-700">
-                                        <h4 className="text-base font-semibold text-gray-200">
+                                    <div className="flex items-center justify-between mb-3 pb-2 border-b res-border-primary">
+                                        <h4 className="text-base font-semibold res-text-secondary">
                                             {dateStr}
                                         </h4>
-                                        <span className="text-sm text-gray-400">
+                                        <span className="text-sm res-text-tertiary">
                                             {slots.length} {slots.length === 1 ? 'slot' : 'slots'}
                                         </span>
                                     </div>
@@ -208,15 +208,15 @@ export default function BookingSummaryModal({
                                         {sortedSlots.map((slot, index) => (
                                             <div
                                                 key={index}
-                                                className="flex items-center justify-between p-3 bg-gray-800 rounded-lg"
+                                                className="flex items-center justify-between p-3 res-bg-secondary res-rounded-lg"
                                             >
                                                 <div className="flex items-center gap-3">
                                                     <CheckCircleIcon className="w-5 h-5 text-blue-400" />
-                                                    <span className="text-gray-300">
+                                                    <span className="res-text-secondary">
                                                         {formatTime(slot.startTime)} - {formatTime(slot.endTime)}
                                                     </span>
                                                 </div>
-                                                <span className="text-sm text-gray-500">
+                                                <span className="text-sm res-text-muted">
                                                     {Math.round(
                                                         (slot.endTime.getTime() - slot.startTime.getTime()) / (1000 * 60)
                                                     )}{' '}
@@ -232,7 +232,7 @@ export default function BookingSummaryModal({
 
                     {/* Error message */}
                     {error && (
-                        <div className="mt-6 p-4 bg-red-900/30 border border-red-700 rounded-lg">
+                        <div className="mt-6 p-4 bg-red-900/30 border border-red-700 res-rounded-lg">
                             <div className="flex items-start gap-3">
                                 <ExclamationTriangleIcon className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
                                 <div className="flex-1">
@@ -247,16 +247,16 @@ export default function BookingSummaryModal({
                 </div>
 
                 {/* Footer - Actions */}
-                <div className="flex flex-col sm:flex-row gap-3 p-6 border-t border-gray-700 bg-gray-850">
+                <div className="flex flex-col sm:flex-row gap-3 p-6 border-t res-border-primary bg-gray-850">
                     {/* Cancel button */}
                     <button
                         onClick={onClose}
                         disabled={isConfirming}
                         className="
-              flex-1 px-6 py-3 rounded-lg font-medium
-              bg-gray-700 hover:bg-gray-600 text-gray-200
-              border border-gray-600
-              transition-all duration-150
+              flex-1 px-6 py-3 res-rounded-lg font-medium
+              res-bg-tertiary hover:res-bg-secondary res-text-secondary
+              res-border-secondary border
+              res-transition-fast
               focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800
               disabled:opacity-50 disabled:cursor-not-allowed
             "
@@ -270,14 +270,14 @@ export default function BookingSummaryModal({
                             onClick={onRetry}
                             disabled={isConfirming}
                             className="
-                flex-1 px-6 py-3 rounded-lg font-semibold
+                flex-1 px-6 py-3 res-rounded-lg font-semibold
                 bg-amber-600 hover:bg-amber-700 active:bg-amber-800
                 text-white
-                transition-all duration-150
+                res-transition-fast
                 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 focus:ring-offset-gray-800
                 disabled:opacity-50 disabled:cursor-not-allowed
                 flex items-center justify-center gap-2
-                shadow-lg hover:shadow-xl
+                res-shadow-lg hover:res-shadow-xl
               "
                         >
                             <ExclamationTriangleIcon className="w-5 h-5" />
@@ -288,14 +288,14 @@ export default function BookingSummaryModal({
                             onClick={onConfirm}
                             disabled={isConfirming || selectedSlots.length === 0}
                             className="
-                flex-1 px-6 py-3 rounded-lg font-semibold
+                flex-1 px-6 py-3 res-rounded-lg font-semibold
                 bg-blue-600 hover:bg-blue-700 active:bg-blue-800
                 text-white
-                transition-all duration-150
+                res-transition-fast
                 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800
                 disabled:opacity-50 disabled:cursor-not-allowed
                 flex items-center justify-center gap-2
-                shadow-lg hover:shadow-xl
+                res-shadow-lg hover:res-shadow-xl
               "
                         >
                             {isConfirming ? (

@@ -68,7 +68,7 @@ export default function BookingBar({
         <div
             className="
         fixed bottom-0 left-0 lg:left-[280px] right-0
-        bg-gray-800 border-t-2 border-gray-700
+        res-bg-secondary border-t-2 res-border-primary backdrop-blur-md
         shadow-[0_-4px_6px_rgba(0,0,0,0.3)]
         px-6 py-4
         z-40
@@ -82,14 +82,14 @@ export default function BookingBar({
                 <div className="flex-1 flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     {/* Selection count */}
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                        <span className="text-lg font-semibold text-gray-100">
+                        <div className="w-2 h-2 res-rounded-full bg-blue-500 animate-pulse" />
+                        <span className="text-lg font-semibold res-text-primary">
                             {stats.count} {stats.count === 1 ? 'slot seleccionado' : 'slots seleccionados'}
                         </span>
                     </div>
 
                     {/* Date count */}
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <div className="flex items-center gap-2 text-sm res-text-tertiary">
                         <span>•</span>
                         <span>
                             {stats.dateCount} {stats.dateCount === 1 ? 'fecha' : 'fechas'}
@@ -97,7 +97,7 @@ export default function BookingBar({
                     </div>
 
                     {/* Duration */}
-                    <div className="flex items-center gap-2 text-sm text-gray-400">
+                    <div className="flex items-center gap-2 text-sm res-text-tertiary">
                         <span>•</span>
                         <span>{stats.duration} {stats.duration === 1 ? 'hora' : 'horas'} total</span>
                     </div>
@@ -106,7 +106,7 @@ export default function BookingBar({
                 {/* Middle section: Warnings (if any) */}
                 {warnings.length > 0 && (
                     <div className="flex-shrink-0">
-                        <div className="flex items-start gap-2 px-3 py-2 bg-amber-900/30 border border-amber-700 rounded-lg">
+                        <div className="flex items-start gap-2 px-3 py-2 bg-amber-900/30 border border-amber-700 res-rounded-lg">
                             <ExclamationTriangleIcon className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                             <div className="flex flex-col gap-1">
                                 {warnings.map((warning, index) => (
@@ -126,10 +126,10 @@ export default function BookingBar({
                         onClick={onClear}
                         disabled={isConfirming}
                         className="
-              px-4 py-2 rounded-lg
-              text-gray-400 hover:text-gray-200
-              bg-gray-700 hover:bg-gray-600
-              transition-all duration-150
+              px-4 py-2 res-rounded-lg
+              res-text-tertiary hover:res-text-secondary
+              res-bg-tertiary hover:res-bg-secondary
+              res-transition-fast
               focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-800
               disabled:opacity-50 disabled:cursor-not-allowed
               flex items-center gap-2
@@ -145,14 +145,14 @@ export default function BookingBar({
                         onClick={onConfirm}
                         disabled={isConfirming || selectedSlots.length === 0}
                         className="
-              px-6 py-2 rounded-lg font-semibold
+              px-6 py-2 res-rounded-lg font-semibold
               bg-blue-600 hover:bg-blue-700 active:bg-blue-800
               text-white
-              transition-all duration-150
+              res-transition-fast
               focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800
               disabled:opacity-50 disabled:cursor-not-allowed
               flex items-center gap-2
-              shadow-lg hover:shadow-xl
+              res-shadow-lg hover:res-shadow-xl
               min-w-[160px] justify-center
             "
                         aria-label="Confirmar reserva"
@@ -194,10 +194,10 @@ export default function BookingBar({
 
             {/* Detailed breakdown (collapsible on mobile, always visible on desktop) */}
             {stats.dateCount > 1 && (
-                <div className="mt-3 pt-3 border-t border-gray-700">
+                <div className="mt-3 pt-3 border-t res-border-primary">
                     <div className="max-w-7xl mx-auto">
                         <details className="lg:open">
-                            <summary className="text-sm text-gray-400 cursor-pointer hover:text-gray-300 lg:cursor-default">
+                            <summary className="text-sm res-text-tertiary cursor-pointer hover:res-text-secondary lg:cursor-default">
                                 Desglose por fecha
                             </summary>
                             <div className="mt-2 flex flex-wrap gap-3">
@@ -214,9 +214,9 @@ export default function BookingBar({
                                     return (
                                         <div
                                             key={dateStr}
-                                            className="flex items-center gap-2 text-sm bg-gray-700 px-3 py-1.5 rounded-full"
+                                            className="flex items-center gap-2 text-sm res-bg-tertiary px-3 py-1.5 res-rounded-full"
                                         >
-                                            <span className="text-gray-300">{dateStr}</span>
+                                            <span className="res-text-secondary">{dateStr}</span>
                                             <span className={`font-semibold ${warningColor}`}>
                                                 {count}/{config?.maxSlotsPerDay || '∞'}
                                             </span>

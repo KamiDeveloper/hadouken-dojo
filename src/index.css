@@ -76,6 +76,7 @@ body {
         #hamburger-menu {
             @apply !ml-5;
 
+
             img {
                 @apply !select-all !pointer-events-auto
             }
@@ -425,17 +426,33 @@ body {
     }
 }
 
-/* Glassmorphism container */
+/* ============================================
+   GLASSMORPHISM & BACKDROP UTILITIES
+   ============================================ */
+
+/* Glassmorphism container - Con fallback para navegadores sin soporte */
 .glass-container {
     background: rgba(1, 1, 1, 0.1);
-    backdrop-filter: blur(20px);
+    /* Prefijo webkit primero para Safari/iOS */
     -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+
+    /* Fallback para navegadores que no soportan backdrop-filter */
+    @supports not (backdrop-filter: blur(20px)) {
+        background: rgba(1, 1, 1, 0.85);
+    }
 }
 
 .semitransparent-bg {
     background-color: rgba(0, 0, 0, 0.76);
-    backdrop-filter: blur(10px);
+    /* Prefijo webkit primero para Safari/iOS */
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+
+    /* Fallback para navegadores que no soportan backdrop-filter */
+    @supports not (backdrop-filter: blur(10px)) {
+        background-color: rgba(0, 0, 0, 0.92);
+    }
 }
 
 /* Animación de pulso para elementos importantes */
@@ -456,10 +473,10 @@ body {
    ============================================ */
 :root {
     /* Base Backgrounds */
-    --reservations-bg-primary: #111827;
-    /* Gray 900 - Calendar main */
-    --reservations-bg-secondary: #1F2937;
-    /* Gray 800 - Sidebar, Modal, BookingBar */
+    --reservations-bg-primary: #101010;
+    /* - Calendar main */
+    --reservations-bg-secondary: #1a1a1a52;
+    /* - Sidebar, Modal, BookingBar */
     --reservations-bg-tertiary: #374151;
     /* Gray 700 - Hover states, borders */
 
@@ -504,7 +521,7 @@ body {
     /* Red 900 */
     --slot-booked-border: #EF4444;
     /* Red 500 */
-    --slot-booked-text: #FCA5A5;
+    --slot-booked-text: #aea5fc;
     /* Red 300 */
 
     /* Slot States - My Booking */
@@ -524,7 +541,7 @@ body {
     /* Gray 500 */
 
     /* Accent Colors */
-    --accent-blue: #3B82F6;
+    --accent-blue: #000000;
     /* Blue 500 */
     --accent-emerald: #10B981;
     /* Emerald 500 */
@@ -541,52 +558,269 @@ body {
     --shadow-booking-bar: 0 -4px 6px rgba(0, 0, 0, 0.3);
     --shadow-sidebar: 0 10px 25px rgba(0, 0, 0, 0.3);
     --shadow-modal: 0 20px 25px rgba(0, 0, 0, 0.7);
+
+    /* Border Radius */
+    --radius-sm: 0.1875rem;
+    /* 6px - small elements */
+    --radius-md: 0.25rem;
+    /* 8px - default */
+    --radius-lg: 0.375rem;
+    /* 12px - cards, buttons */
+    --radius-xl: 0.5rem;
+    /* 16px - modals, containers */
+    --radius-2xl: 0.75rem;
+    /* 24px - large sections */
+    --radius-full: 9999px;
+    /* pills, badges, dots */
+
+    /* Interactive States */
+    --hover-lift: -4px;
+    --hover-scale: 1.02;
+    --active-scale: 0.95;
+
+    /* Transitions */
+    --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Utility classes for Reservations System */
 @utility reservations-sidebar {
     @apply bg-[var(--reservations-bg-secondary)] border border-[var(--reservations-border-primary)];
     box-shadow: var(--shadow-sidebar);
+    border-radius: var(--radius-2xl);
 }
 
 @utility reservations-calendar {
-    @apply bg-[var(--reservations-bg-primary)] rounded-2xl;
+    @apply bg-[var(--reservations-bg-primary)];
+    border-radius: var(--radius-2xl);
 }
 
-@utility slot-available {
+/* ============================================
+   BACKGROUND UTILITIES
+   ============================================ */
+@utility res-bg-primary {
+    background-color: var(--reservations-bg-primary);
+}
+
+@utility res-bg-secondary {
+    background-color: var(--reservations-bg-secondary);
+}
+
+@utility res-bg-tertiary {
+    background-color: var(--reservations-bg-tertiary);
+}
+
+/* ============================================
+   TEXT COLOR UTILITIES
+   ============================================ */
+@utility res-text-primary {
+    color: var(--reservations-text-primary);
+}
+
+@utility res-text-secondary {
+    color: var(--reservations-text-secondary);
+}
+
+@utility res-text-tertiary {
+    color: var(--reservations-text-tertiary);
+}
+
+@utility res-text-muted {
+    color: var(--reservations-text-muted);
+}
+
+/* ============================================
+   BORDER UTILITIES
+   ============================================ */
+@utility res-border-primary {
+    border-color: var(--reservations-border-primary);
+}
+
+@utility res-border-secondary {
+    border-color: var(--reservations-border-secondary);
+}
+
+/* ============================================
+   BORDER RADIUS UTILITIES
+   ============================================ */
+@utility res-rounded-sm {
+    border-radius: var(--radius-sm);
+}
+
+@utility res-rounded-md {
+    border-radius: var(--radius-md);
+}
+
+@utility res-rounded-lg {
+    border-radius: var(--radius-lg);
+}
+
+@utility res-rounded-xl {
+    border-radius: var(--radius-xl);
+}
+
+@utility res-rounded-2xl {
+    border-radius: var(--radius-2xl);
+}
+
+@utility res-rounded-full {
+    border-radius: var(--radius-full);
+}
+
+/* ============================================
+   SHADOW UTILITIES
+   ============================================ */
+@utility res-shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+@utility res-shadow-md {
+    box-shadow: var(--shadow-md);
+}
+
+@utility res-shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+@utility res-shadow-xl {
+    box-shadow: var(--shadow-xl);
+}
+
+/* ============================================
+   ACCENT COLOR UTILITIES
+   ============================================ */
+@utility res-accent-blue {
+    color: var(--accent-blue);
+}
+
+@utility res-bg-accent-blue {
+    background-color: var(--accent-blue);
+}
+
+@utility res-accent-emerald {
+    color: var(--accent-emerald);
+}
+
+@utility res-accent-amber {
+    color: var(--accent-amber);
+}
+
+@utility res-accent-red {
+    color: var(--accent-red);
+}
+
+/* ============================================
+   BUTTON UTILITIES (Sin pseudo-clases en @utility)
+   ============================================ */
+.res-btn-primary {
+    background-color: var(--accent-blue);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.res-btn-primary:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+}
+
+.res-btn-secondary {
+    background-color: var(--reservations-bg-tertiary);
+    color: var(--reservations-text-secondary);
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.res-btn-secondary:hover {
+    background-color: var(--reservations-border-primary);
+}
+
+.res-btn-danger {
+    background-color: var(--accent-red);
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: var(--radius-lg);
+    font-weight: 600;
+    transition: all var(--transition-fast);
+}
+
+.res-btn-danger:hover {
+    filter: brightness(1.1);
+}
+
+
+/* ============================================
+   SLOT STATE UTILITIES (Clases CSS sin @utility para pseudo-clases)
+   ============================================ */
+.slot-available {
     background-color: var(--slot-available-bg);
     border: 1px solid var(--slot-available-border);
     color: var(--slot-available-text);
-
-    &:hover {
-        background-color: var(--slot-available-hover);
-    }
+    border-radius: var(--radius-lg);
 }
 
-@utility slot-selected {
+.slot-available:hover {
+    background-color: var(--slot-available-hover);
+}
+
+.slot-selected {
     background-color: var(--slot-selected-bg);
     border: 2px solid var(--slot-selected-border);
     color: var(--slot-selected-text);
     box-shadow: 0 0 0 3px var(--slot-selected-glow);
+    border-radius: var(--radius-lg);
 }
 
-@utility slot-booked {
+.slot-booked {
     background-color: var(--slot-booked-bg);
     border: 1px solid var(--slot-booked-border);
     color: var(--slot-booked-text);
+    border-radius: var(--radius-lg);
 }
 
-@utility slot-mine {
+.slot-mine {
     background-color: var(--slot-mine-bg);
     border: 1px solid var(--slot-mine-border);
     color: var(--slot-mine-text);
+    border-radius: var(--radius-lg);
 }
 
-@utility slot-disabled {
+.slot-disabled {
     background-color: var(--slot-disabled-bg);
     border: 1px solid var(--slot-disabled-border);
     color: var(--slot-disabled-text);
     opacity: 0.5;
+    border-radius: var(--radius-lg);
+}
+
+/* ============================================
+   INTERACTIVE UTILITIES (Clases CSS sin @utility para pseudo-clases)
+   ============================================ */
+.res-interactive {
+    transition: all var(--transition-fast);
+    cursor: pointer;
+}
+
+.res-interactive:hover {
+    transform: translateY(var(--hover-lift));
+}
+
+.res-interactive:active {
+    transform: scale(var(--active-scale));
+}
+
+
+@utility res-transition-fast {
+    transition: all var(--transition-fast);
+}
+
+@utility res-transition-base {
+    transition: all var(--transition-base);
 }
 
 /* Animations for Reservations */
@@ -681,4 +915,51 @@ body {
             var(--reservations-bg-tertiary) 50%,
             var(--reservations-bg-secondary) 100%);
     background-size: 2000px 100%;
+}
+
+/* ============================================
+   BACKDROP UTILITIES (Tailwind v4 Compatible)
+   ============================================ */
+@layer utilities {
+
+    /* Asegurar que backdrop-blur funcione con prefijos en producción */
+    .backdrop-blur-none {
+        -webkit-backdrop-filter: blur(0);
+        backdrop-filter: blur(0);
+    }
+
+    .backdrop-blur-sm {
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+    }
+
+    .backdrop-blur {
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+    }
+
+    .backdrop-blur-md {
+        -webkit-backdrop-filter: blur(12px);
+        backdrop-filter: blur(12px);
+    }
+
+    .backdrop-blur-lg {
+        -webkit-backdrop-filter: blur(16px);
+        backdrop-filter: blur(16px);
+    }
+
+    .backdrop-blur-xl {
+        -webkit-backdrop-filter: blur(24px);
+        backdrop-filter: blur(24px);
+    }
+
+    .backdrop-blur-2xl {
+        -webkit-backdrop-filter: blur(40px);
+        backdrop-filter: blur(40px);
+    }
+
+    .backdrop-blur-3xl {
+        -webkit-backdrop-filter: blur(64px);
+        backdrop-filter: blur(64px);
+    }
 }

@@ -83,11 +83,11 @@ export default function MobileFooterSelector({
     };
 
     return (
-        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 bg-gray-800 border-t border-gray-700 shadow-2xl">
+        <div className="lg:hidden fixed bottom-0 left-0 right-0 z-30 res-bg-secondary backdrop-blur-md border-t res-border-primary shadow-2xl">
             {/* Fila 1: Categorías */}
-            <div className="border-b border-gray-700">
+            <div className="border-b res-border-primary">
                 <div className="px-3 py-2">
-                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
+                    <p className="text-xs font-semibold res-text-tertiary uppercase tracking-wide mb-2">
                         Categoría
                     </p>
                     <div
@@ -101,9 +101,9 @@ export default function MobileFooterSelector({
                         {isLoading ? (
                             // Skeleton loaders
                             <>
-                                <div className="flex-shrink-0 w-24 h-9 bg-gray-700 rounded-full animate-pulse" />
-                                <div className="flex-shrink-0 w-24 h-9 bg-gray-700 rounded-full animate-pulse" />
-                                <div className="flex-shrink-0 w-24 h-9 bg-gray-700 rounded-full animate-pulse" />
+                                <div className="flex-shrink-0 w-24 h-9 res-bg-tertiary res-rounded-full animate-pulse" />
+                                <div className="flex-shrink-0 w-24 h-9 res-bg-tertiary res-rounded-full animate-pulse" />
+                                <div className="flex-shrink-0 w-24 h-9 res-bg-tertiary res-rounded-full animate-pulse" />
                             </>
                         ) : (
                             categories.map((category) => {
@@ -114,12 +114,12 @@ export default function MobileFooterSelector({
                                         data-category-id={category.id}
                                         onClick={() => handleCategoryClick(category.id)}
                                         className={`
-                                            flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium
-                                            transition-all duration-200 ease-out
+                                            flex-shrink-0 px-4 py-2 res-rounded-full text-sm font-medium
+                                            res-transition-base
                                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800
                                             ${isActive
-                                                ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
-                                                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                                ? 'res-bg-accent-blue text-white res-shadow-lg shadow-blue-500/30'
+                                                : 'res-bg-tertiary res-text-secondary hover:res-bg-tertiary/70'
                                             }
                                         `}
                                         aria-pressed={isActive}
@@ -135,7 +135,7 @@ export default function MobileFooterSelector({
 
             {/* Fila 2: Máquinas */}
             <div className="px-3 py-2">
-                <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
+                <p className="text-xs font-semibold res-text-tertiary uppercase tracking-wide mb-2">
                     Máquina
                 </p>
                 <div
@@ -149,9 +149,9 @@ export default function MobileFooterSelector({
                     {isLoading ? (
                         // Skeleton loaders
                         <>
-                            <div className="flex-shrink-0 w-32 h-9 bg-gray-700 rounded-full animate-pulse" />
-                            <div className="flex-shrink-0 w-32 h-9 bg-gray-700 rounded-full animate-pulse" />
-                            <div className="flex-shrink-0 w-32 h-9 bg-gray-700 rounded-full animate-pulse" />
+                            <div className="flex-shrink-0 w-32 h-9 res-bg-tertiary res-rounded-full animate-pulse" />
+                            <div className="flex-shrink-0 w-32 h-9 res-bg-tertiary res-rounded-full animate-pulse" />
+                            <div className="flex-shrink-0 w-32 h-9 res-bg-tertiary res-rounded-full animate-pulse" />
                         </>
                     ) : machines.length > 0 ? (
                         machines.map((machine) => {
@@ -165,14 +165,14 @@ export default function MobileFooterSelector({
                                     onClick={() => handleMachineClick(machine)}
                                     disabled={!isActive}
                                     className={`
-                                        flex-shrink-0 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium
-                                        transition-all duration-200 ease-out
+                                        flex-shrink-0 flex items-center gap-2 px-4 py-2 res-rounded-full text-sm font-medium
+                                        res-transition-base
                                         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800
                                         ${isSelected
-                                            ? 'text-white shadow-lg'
+                                            ? 'text-white res-shadow-lg'
                                             : isActive
-                                                ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                                                : 'bg-gray-700/50 text-gray-500 cursor-not-allowed'
+                                                ? 'res-bg-tertiary res-text-secondary hover:res-bg-tertiary/70'
+                                                : 'res-bg-tertiary/50 res-text-muted cursor-not-allowed'
                                         }
                                     `}
                                     style={
@@ -188,7 +188,7 @@ export default function MobileFooterSelector({
                                 >
                                     {/* Color dot */}
                                     <div
-                                        className="w-2 h-2 rounded-full"
+                                        className="w-2 h-2 res-rounded-full"
                                         style={{
                                             backgroundColor: isSelected ? 'white' : machine.color,
                                         }}
@@ -198,7 +198,7 @@ export default function MobileFooterSelector({
                             );
                         })
                     ) : (
-                        <p className="text-sm text-gray-500 py-2">
+                        <p className="text-sm res-text-muted py-2">
                             No hay máquinas disponibles
                         </p>
                     )}

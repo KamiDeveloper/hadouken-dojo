@@ -109,17 +109,17 @@ export default function CalendarDayColumn({
             {/* Day header */}
             <div
                 className={`
-          flex-shrink-0 p-4 rounded-t-lg text-center transition-colors
+          flex-shrink-0 p-4 rounded-t-lg text-center res-transition-base
           ${isCurrentDay
-                        ? 'bg-blue-900 border-2 border-blue-500'
-                        : 'bg-gray-800 border border-gray-700'
+                        ? 'bg-gray-800 border-2 border-gray-600'
+                        : 'res-bg-secondary res-border-primary border'
                     }
         `}
             >
                 <div
                     className={`
             text-sm font-semibold uppercase tracking-wide
-            ${isCurrentDay ? 'text-blue-200' : 'text-gray-400'}
+            ${isCurrentDay ? 'text-blue-200' : 'res-text-tertiary'}
           `}
                 >
                     {dayName}
@@ -127,7 +127,7 @@ export default function CalendarDayColumn({
                 <div
                     className={`
             text-2xl font-bold mt-1
-            ${isCurrentDay ? 'text-white' : 'text-gray-50'}
+            ${isCurrentDay ? 'text-white' : 'res-text-primary'}
           `}
                 >
                     {dayNumber}
@@ -135,7 +135,7 @@ export default function CalendarDayColumn({
                 <div
                     className={`
             text-xs uppercase
-            ${isCurrentDay ? 'text-blue-300' : 'text-gray-500'}
+            ${isCurrentDay ? 'text-blue-300' : 'res-text-muted'}
           `}
                 >
                     {monthName}
@@ -143,7 +143,7 @@ export default function CalendarDayColumn({
             </div>
 
             {/* Slots list */}
-            <div className="flex-1 overflow-y-auto space-y-2 p-2 bg-gray-800/50 rounded-b-lg border border-t-0 border-gray-700">
+            <div className="flex-1 overflow-y-auto space-y-2 p-2 res-bg-secondary/50 rounded-b-lg res-border-primary border border-t-0">
                 {daySlots.map((slot, index) => (
                     <TimeSlot
                         key={`${slot.startTime.toISOString()}-${index}`}
@@ -164,7 +164,7 @@ export default function CalendarDayColumn({
 
                 {daySlots.length === 0 && (
                     <div className="flex items-center justify-center h-full py-8">
-                        <p className="text-gray-500 text-sm text-center">
+                        <p className="res-text-muted text-sm text-center">
                             No hay horarios disponibles
                         </p>
                     </div>

@@ -38,13 +38,13 @@ export default function MachineItem({
             onClick={onClick}
             disabled={!isActive}
             className={`
-        w-full flex items-center gap-3 p-3 pl-6 rounded-lg
-        transition-all duration-150 ease-out
+        w-full flex items-center gap-3 p-3 pl-6 res-rounded-lg
+        res-transition-fast
         border-l-[3px] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800
         ${isSelected
-                    ? `bg-gray-700 shadow-md`
+                    ? `res-bg-tertiary res-shadow-md`
                     : isActive
-                        ? 'bg-transparent hover:bg-gray-700/50'
+                        ? 'bg-transparent hover:res-bg-tertiary/50'
                         : 'bg-transparent opacity-60 cursor-not-allowed'
                 }
         ${isActive ? 'focus:ring-gray-500' : ''}
@@ -59,13 +59,13 @@ export default function MachineItem({
             {/* Color dot indicator */}
             <div className="flex-shrink-0 relative">
                 <div
-                    className="w-3 h-3 rounded-full border-2 border-white shadow-sm"
+                    className="w-3 h-3 res-rounded-full border-2 border-white shadow-sm"
                     style={{ backgroundColor: machine.color }}
                     aria-hidden="true"
                 />
                 {isSelected && (
                     <div
-                        className="absolute inset-0 w-3 h-3 rounded-full animate-ping opacity-75"
+                        className="absolute inset-0 w-3 h-3 res-rounded-full animate-ping opacity-75"
                         style={{ backgroundColor: machine.color }}
                         aria-hidden="true"
                     />
@@ -89,7 +89,7 @@ export default function MachineItem({
                 <h4
                     className={`
             text-sm font-medium transition-colors truncate
-            ${isSelected ? 'text-gray-50' : isActive ? 'text-gray-300' : 'text-gray-500'}
+            ${isSelected ? 'res-text-primary' : isActive ? 'res-text-secondary' : 'res-text-muted'}
           `}
                 >
                     {machine.name}
@@ -98,7 +98,7 @@ export default function MachineItem({
                     <p
                         className={`
               text-xs mt-0.5 transition-colors truncate
-              ${isSelected ? 'text-gray-400' : 'text-gray-500'}
+              ${isSelected ? 'res-text-tertiary' : 'res-text-muted'}
             `}
                     >
                         {machine.description}
@@ -108,7 +108,7 @@ export default function MachineItem({
 
             {/* Badge: Inactive status */}
             {!isActive && (
-                <span className="flex-shrink-0 px-2 py-0.5 text-xs font-medium rounded-full bg-gray-700 text-gray-400 border border-gray-600">
+                <span className="flex-shrink-0 px-2 py-0.5 text-xs font-medium res-rounded-full res-bg-tertiary res-text-tertiary border res-border-secondary">
                     Inactivo
                 </span>
             )}
@@ -116,7 +116,7 @@ export default function MachineItem({
             {/* Badge: Selection count (solo si hay selecciones) */}
             {isActive && selectionCount > 0 && (
                 <span
-                    className="flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold text-white shadow-md"
+                    className="flex-shrink-0 w-6 h-6 flex items-center justify-center res-rounded-full text-xs font-bold text-white res-shadow-md"
                     style={{ backgroundColor: machine.color }}
                     aria-label={`${selectionCount} slots seleccionados`}
                 >

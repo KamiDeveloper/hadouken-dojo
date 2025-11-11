@@ -124,11 +124,11 @@ export default function CalendarView({
     // Si no hay máquina seleccionada, mostrar mensaje
     if (!machineId) {
         return (
-            <div className="flex-1 flex items-center justify-center bg-gray-900 rounded-2xl p-24 min-h-[600px]">
+            <div className="flex-1 flex items-center justify-center res-bg-primary res-rounded-2xl p-24 min-h-[600px]res-rounded-lg">
                 <div className="text-center max-w-md ">
-                    <div className="w-20 h-20 mx-auto mb-6 bg-gray-800 rounded-full flex items-center justify-center">
+                    <div className="w-20 h-20 mx-auto mb-6 res-bg-secondary res-rounded-full flex items-center justify-center">
                         <svg
-                            className="w-10 h-10 text-gray-600"
+                            className="w-10 h-10 res-text-muted"
                             fill="none"
                             stroke="currentColor"
                             viewBox="0 0 24 24"
@@ -141,10 +141,10 @@ export default function CalendarView({
                             />
                         </svg>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-300 mb-2">
+                    <h3 className="text-xl font-semibold res-text-secondary mb-2">
                         Selecciona una máquina
                     </h3>
-                    <p className="text-gray-500">
+                    <p className="res-text-muted">
                         Elige una máquina del menú lateral para ver su calendario de disponibilidad.
                     </p>
                 </div>
@@ -153,7 +153,7 @@ export default function CalendarView({
     }
 
     return (
-        <div className="flex-1 flex flex-col bg-gray-900 rounded-2xl overflow-hidden min-h-[600px]">
+        <div className="flex-1 flex flex-col res-bg-primary res-rounded-2xl overflow-hidden min-h-[600px]">
             {/* Header del calendario */}
             <CalendarHeader
                 machineName={machineName}

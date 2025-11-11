@@ -31,15 +31,15 @@ const TimeSlot = memo(function TimeSlot({ slot, machineColor, onClick, userId })
         switch (status) {
             case 'available':
                 return {
-                    container: 'slot-available cursor-pointer hover:bg-emerald-800 active:scale-95',
-                    text: 'text-emerald-300',
-                    border: 'border-emerald-500',
+                    container: 'slot-available cursor-pointer active:scale-95',
+                    text: '',
+                    border: '',
                     icon: null,
                 };
 
             case 'selected':
                 return {
-                    container: 'slot-selected cursor-pointer hover:bg-blue-800 active:scale-95 shadow-lg shadow-blue-500/20',
+                    container: 'slot-selected cursor-pointer active:scale-95 res-shadow-lg shadow-blue-500/20',
                     text: 'text-blue-300',
                     border: 'border-blue-500 border-2',
                     icon: null,
@@ -55,7 +55,7 @@ const TimeSlot = memo(function TimeSlot({ slot, machineColor, onClick, userId })
 
             case 'mine':
                 return {
-                    container: 'slot-mine cursor-pointer hover:bg-amber-800',
+                    container: 'slot-mine cursor-pointer',
                     text: 'text-amber-300',
                     border: 'border-amber-500',
                     icon: <UserIcon className="w-4 h-4" />,
@@ -64,16 +64,16 @@ const TimeSlot = memo(function TimeSlot({ slot, machineColor, onClick, userId })
             case 'past':
                 return {
                     container: 'slot-disabled cursor-not-allowed',
-                    text: 'text-gray-500',
-                    border: 'border-gray-600',
+                    text: 'res-text-muted',
+                    border: 'res-border-secondary',
                     icon: null,
                 };
 
             default:
                 return {
-                    container: 'bg-gray-800 cursor-default',
-                    text: 'text-gray-400',
-                    border: 'border-gray-700',
+                    container: 'res-bg-secondary cursor-default',
+                    text: 'res-text-tertiary',
+                    border: 'res-border-primary',
                     icon: null,
                 };
         }
@@ -103,9 +103,9 @@ const TimeSlot = memo(function TimeSlot({ slot, machineColor, onClick, userId })
             onKeyDown={handleKeyDown}
             disabled={!isInteractive}
             className={`
-        w-full min-h-[60px] p-3 rounded-lg
+        w-full min-h-[60px] p-3 res-rounded-lg
         flex items-center justify-between gap-2
-        border transition-all duration-150 ease-out
+        border res-transition-fast
         focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800
         ${statusClasses.container}
         ${statusClasses.border}
@@ -116,22 +116,20 @@ const TimeSlot = memo(function TimeSlot({ slot, machineColor, onClick, userId })
             aria-disabled={!isInteractive}
         >
             {/* Time info */}
-            <div className="flex-1 text-left">
+            <div className="flex-1 text-left flex">
                 <div className={`text-sm font-semibold ${statusClasses.text}`}>
                     {startTimeStr}
                 </div>
-                <div className="text-xs text-gray-500">
-                    {endTimeStr}
-                </div>
+
 
                 {/* Booking info (si aplica) */}
                 {booking && status === 'booked' && (
-                    <div className="text-xs text-red-400 mt-1 truncate">
-                        Reservado
+                    <div className="text-xs text-red-400 mt-1 truncate ml-3">
+                        @{booking.username || 'Usuario'}
                     </div>
                 )}
                 {booking && status === 'mine' && (
-                    <div className="text-xs text-amber-400 mt-1 truncate">
+                    <div className="text-xs text-amber-400 mt-1 truncate ml-3">
                         Tu reserva
                     </div>
                 )}
@@ -148,8 +146,8 @@ const TimeSlot = memo(function TimeSlot({ slot, machineColor, onClick, userId })
             {status === 'selected' && (
                 <div className="flex-shrink-0">
                     <div className="relative w-3 h-3">
-                        <div className="absolute inset-0 rounded-full bg-blue-500" />
-                        <div className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-75" />
+                        <div className="absolute inset-0 res-rounded-full bg-blue-500" />
+                        <div className="absolute inset-0 res-rounded-full bg-blue-500 animate-ping opacity-75" />
                     </div>
                 </div>
             )}
