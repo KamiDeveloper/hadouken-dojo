@@ -105,7 +105,7 @@ export default function CalendarDayColumn({
     }, [date, timeSlots, config, existingBookings, machineId, userId, isSlotSelected]);
 
     return (
-        <div className="flex flex-col min-h-[400px] max-h-[calc(100vh-300px)]">
+        <div className="flex flex-col min-h-[400px] max-h-[calc(100vh-100px)]">
             {/* Day header */}
             <div
                 className={`
