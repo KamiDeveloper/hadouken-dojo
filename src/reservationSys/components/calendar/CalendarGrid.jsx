@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { isToday } from 'date-fns';
+import { isToday, format } from 'date-fns';
 import { motion, AnimatePresence } from 'framer-motion';
 import CalendarDayColumn from './CalendarDayColumn';
 import FloatingDaysSidebar from './FloatingDaysSidebar';
@@ -163,9 +163,10 @@ export default function CalendarGrid({
             {/* ============================================
                 DESKTOP VIEW - Grid de 7 columnas (sin cambios)
                 ============================================ */}
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="popLayout">
                 <motion.div
-                    key={`desktop-${machineId}-${weekDates[0]?.toISOString()}`}
+                    key={`desktop-${machineId}-${weekDates[0] ? format(weekDates[0], 'yyyy-MM-dd') : 'loading'}`}
+                    layoutId={`desktop-grid-${machineId}`}
                     className="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-7 gap-4 auto-rows-min md:overflow-hidden"
                     variants={contentVariants}
                     initial="initial"
@@ -196,10 +197,11 @@ export default function CalendarGrid({
                 ============================================ */}
             <div className="md:hidden max-w-[75dvw]">
                 {/* Día seleccionado (full width) */}
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="popLayout">
                     {selectedDate && (
                         <motion.div
-                            key={`mobile-${machineId}-${selectedDate.toISOString()}`}
+                            key={`mobile-${machineId}-${format(selectedDate, 'yyyy-MM-dd')}`}
+                            layoutId={`mobile-day-${machineId}`}
                             variants={contentVariants}
                             initial="initial"
                             animate="animate"
