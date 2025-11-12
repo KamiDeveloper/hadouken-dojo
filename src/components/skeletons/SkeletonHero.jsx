@@ -1,5 +1,3 @@
-import React from 'react';
-
 const SkeletonHero = () => {
     return (
         <section className="skeleton-hero relative h-screen w-full overflow-hidden bg-black">

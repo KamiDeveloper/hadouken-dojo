@@ -380,13 +380,6 @@ export default function MobileFooterSelector({
                     )}
                 </AnimatePresence>
             </motion.div>
-
-            {/* Hide scrollbar CSS inline */}
-            <style jsx>{`
-                .scrollbar-hide::-webkit-scrollbar {
-                    display: none;
-                }
-            `}</style>
         </>
     );
 }

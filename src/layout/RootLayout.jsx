@@ -2,15 +2,22 @@ import { NavBar } from '../components/ui/NavBar'
 import { Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
+import { useMediaQuery } from 'react-responsive'
 import CompleteProfileModal from '../components/CompleteProfileModal'
 import GoogleOneTap from '../components/GoogleOneTap'
 import Lenis from 'lenis'
 
 const RootLayout = () => {
     const { user } = useAuth();
+    const isMobile = useMediaQuery({ maxWidth: 767 }); // ✅ Detectar móvil
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
+        // ✅ OPTIMIZACIÓN: No usar Lenis en móvil (ahorra recursos)
+        if (isMobile) {
+            return;
+        }
+
         const lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -31,7 +38,7 @@ const RootLayout = () => {
         return () => {
             lenis.destroy()
         }
-    }, [])
+    }, [isMobile]) // ✅ Dependencia de isMobile
 
     // Mostrar modal si el usuario necesita completar perfil
     useEffect(() => {

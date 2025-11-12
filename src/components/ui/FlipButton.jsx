@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import { useMediaQuery } from 'react-responsive';
 
 const DEFAULT_SPAN_CLASS_NAME =
     'absolute inset-0 flex items-center justify-center rounded-lg';
@@ -37,10 +38,18 @@ const FlipButton = ({
     from = 'top',
     ...props
 }) => {
+    const shouldReduceMotion = useReducedMotion(); // ✅ Detecta preferencias
+    const isMobile = useMediaQuery({ maxWidth: 767 }); // ✅ Detecta móvil
+
     const isVertical = from === 'top' || from === 'bottom';
     const rotateAxis = isVertical ? 'rotateX' : 'rotateY';
     const frontOffset = from === 'top' || from === 'left' ? '50%' : '-50%';
     const backOffset = from === 'top' || from === 'left' ? '-50%' : '50%';
+
+    // ✅ Simplificar transición en móvil o con reducedMotion
+    const optimizedTransition = shouldReduceMotion || isMobile
+        ? { duration: 0.2 }
+        : transition;
 
     /**
      * Build animation variant object
@@ -70,35 +79,47 @@ const FlipButton = ({
         <motion.button
             data-slot="flip-button"
             initial="initial"
-            whileHover="hover"
+            whileHover={isMobile ? undefined : "hover"} // ✅ No hover en móvil
             whileTap={{ scale: 0.95 }}
             className={cn(
                 'relative inline-block h-10 px-4 py-2 text-sm font-medium cursor-pointer perspective-[1000px] focus:outline-none',
                 className,
             )}
+            style={{
+                willChange: 'transform', // ✅ GPU hint
+                transform: 'translateZ(0)', // ✅ GPU acceleration
+            }}
             {...props}
         >
             <motion.span
                 data-slot="flip-button-front"
                 variants={frontVariants}
-                transition={transition}
+                transition={optimizedTransition}
                 className={cn(
                     DEFAULT_SPAN_CLASS_NAME,
                     'bg-muted text-black dark:text-white',
                     frontClassName,
                 )}
+                style={{
+                    willChange: 'transform, opacity', // ✅ GPU hint
+                    backfaceVisibility: 'hidden',
+                }}
             >
                 {frontText}
             </motion.span>
             <motion.span
                 data-slot="flip-button-back"
                 variants={backVariants}
-                transition={transition}
+                transition={optimizedTransition}
                 className={cn(
                     DEFAULT_SPAN_CLASS_NAME,
                     'bg-primary text-primary-foreground',
                     backClassName,
                 )}
+                style={{
+                    willChange: 'transform, opacity', // ✅ GPU hint
+                    backfaceVisibility: 'hidden',
+                }}
             >
                 {typeof backText === 'string' ? backText : backText}
             </motion.span>

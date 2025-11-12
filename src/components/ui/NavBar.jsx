@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import logo from '/assets/images/logoland.webp';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useMediaQuery } from 'react-responsive'; // ✅ Import agregado
 import HamburguerMenu from './HamburguerMenu';
 import UserDropdown from './UserDropdown';
 import { useAuth } from '../../context/AuthContext';
@@ -10,12 +11,17 @@ const NavBar = () => {
     const { user } = useAuth();
     const location = useLocation();
     const isHome = location.pathname === '/';
+    const isMobile = useMediaQuery({ maxWidth: 767 }); // ✅ Detectar móvil
     const [isScrolled, setIsScrolled] = useState(false);
 
     // ✅ Framer Motion scroll tracking - SIEMPRE llamar hooks
     const { scrollY } = useScroll();
-    const backgroundOpacity = useTransform(scrollY, [0, 300], [0, 0.35]);
-    const backdropBlur = useTransform(scrollY, [0, 300], [0, 10]);
+
+    // ✅ OPTIMIZACIÓN: Rangos más cortos en móvil para mejor performance
+    const scrollRange = isMobile ? [0, 150] : [0, 300];
+
+    const backgroundOpacity = useTransform(scrollY, scrollRange, [0, 0.35]);
+    const backdropBlur = useTransform(scrollY, scrollRange, [0, 10]);
 
     // ✅ Convertir MotionValues a strings para uso condicional
     const backgroundColor = useTransform(
@@ -29,11 +35,19 @@ const NavBar = () => {
 
     // Track scroll state
     useEffect(() => {
+        let ticking = false;
+
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    setIsScrolled(window.scrollY > 50);
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true }); // ✅ Passive listener
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -47,6 +61,14 @@ const NavBar = () => {
         },
         tap: { scale: 0.95 }
     };
+
+    // ✅ OPTIMIZACIÓN: Simplificar animaciones en móvil
+    const linkVariantsMobile = {
+        initial: { scale: 1 },
+        tap: { scale: 0.95 }
+    };
+
+    const activeVariants = isMobile ? linkVariantsMobile : linkVariants;
 
     // Determinar color de texto basado en ruta y scroll
     const getLinkColor = () => {
@@ -81,9 +103,9 @@ const NavBar = () => {
                 {/* Navigation Links */}
                 <div className="nav-links md:flex hidden">
                     <motion.div
-                        variants={linkVariants}
+                        variants={activeVariants}
                         initial="initial"
-                        whileHover="hover"
+                        whileHover={isMobile ? undefined : "hover"}
                         whileTap="tap"
                     >
                         <NavLink
@@ -95,9 +117,9 @@ const NavBar = () => {
                     </motion.div>
 
                     <motion.div
-                        variants={linkVariants}
+                        variants={activeVariants}
                         initial="initial"
-                        whileHover="hover"
+                        whileHover={isMobile ? undefined : "hover"}
                         whileTap="tap"
                     >
                         <NavLink
@@ -109,9 +131,9 @@ const NavBar = () => {
                     </motion.div>
 
                     <motion.div
-                        variants={linkVariants}
+                        variants={activeVariants}
                         initial="initial"
-                        whileHover="hover"
+                        whileHover={isMobile ? undefined : "hover"}
                         whileTap="tap"
                     >
                         <NavLink
@@ -124,9 +146,9 @@ const NavBar = () => {
 
                     {user?.role === 'admin' && (
                         <motion.div
-                            variants={linkVariants}
+                            variants={activeVariants}
                             initial="initial"
-                            whileHover="hover"
+                            whileHover={isMobile ? undefined : "hover"}
                             whileTap="tap"
                         >
                             <NavLink

@@ -1,53 +1,94 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { useMediaQuery } from 'react-responsive'
 import RotatingText from './RotatingText'
 import { useAuth } from '../../context/AuthContext'
 import { NavLink } from 'react-router-dom';
 import { FlipButton } from '../ui/FlipButton';
 import { getVideoSrc } from '../../config/videos';
+import { useLoading } from '../../context/LoadingContext';
 
 const Hero = () => {
 
     const { user } = useAuth();
+    const { isLoading } = useLoading(); // Skeleton loading state
     const isMobile = useMediaQuery({ maxWidth: 767 })
     const videoRef = useRef(null)
+    const [videoReady, setVideoReady] = useState(false)
+    const [shouldAutoplay, setShouldAutoplay] = useState(false)
 
+    // ✅ OPTIMIZACIÓN 1: Cargar video DESPUÉS del skeleton (evita doble carga)
     useEffect(() => {
-        if (videoRef.current) {
+        if (!isLoading && videoRef.current && !videoReady) {
+            const video = videoRef.current;
+
+            const handleLoadedData = () => {
+                setVideoReady(true);
+            };
+
+            video.addEventListener('loadeddata', handleLoadedData);
+            video.load(); // Iniciar carga del video
+
+            return () => {
+                video.removeEventListener('loadeddata', handleLoadedData);
+            };
+        }
+    }, [isLoading, videoReady]);
+
+    // ✅ OPTIMIZACIÓN 2: Delay autoplay para que React termine de hidratar
+    useEffect(() => {
+        if (videoReady && videoRef.current) {
+            const timer = setTimeout(() => {
+                setShouldAutoplay(true);
+                videoRef.current?.play().catch(err => {
+                    console.log('Autoplay prevented:', err);
+                });
+            }, 300); // 300ms delay para hidratación
+
+            return () => clearTimeout(timer);
+        }
+    }, [videoReady]);
+
+    // ✅ OPTIMIZACIÓN 3: IntersectionObserver mejorado
+    useEffect(() => {
+        if (videoRef.current && shouldAutoplay) {
             videoRef.current.playbackRate = 1.0
 
             const observer = new IntersectionObserver(
                 ([entry]) => {
                     if (entry.isIntersecting) {
-                        videoRef.current?.play()
+                        videoRef.current?.play().catch(() => { });
                     } else {
                         videoRef.current?.pause()
                     }
                 },
-                { threshold: 0.25 }
+                {
+                    threshold: 0.5, // ✅ 50% visible (antes 25%)
+                    rootMargin: '0px 0px -100px 0px' // ✅ Delay para scroll rápido
+                }
             )
 
             observer.observe(videoRef.current)
 
             return () => observer.disconnect()
         }
-    }, [])
+    }, [shouldAutoplay])
 
     return (
         <div id="hero">
             <video
                 ref={videoRef}
-                autoPlay
                 muted
                 loop
                 playsInline
-                preload="metadata" // Cambiar de auto a metadata para cargar menos datos
+                preload="none" // ✅ No carga hasta que se necesite (antes "metadata")
                 className="hero-video"
                 aria-hidden="true"
-                loading="lazy"
-                // Optimizaciones adicionales
                 disablePictureInPicture
                 controlsList="nodownload"
+                style={{
+                    opacity: videoReady ? 1 : 0,
+                    transition: 'opacity 0.5s ease-in-out'
+                }}
             >
                 <source
                     src={getVideoSrc('hero', isMobile)}

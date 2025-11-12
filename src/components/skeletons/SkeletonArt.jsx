@@ -1,5 +1,3 @@
-import React from 'react';
-
 const SkeletonArt = () => {
     return (
         <section className="skeleton-art py-20 px-6 bg-black">

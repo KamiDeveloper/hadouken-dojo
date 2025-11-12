@@ -6,6 +6,8 @@
     src: url('/assets/fonts/tarrget.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
+    /* ✅ Evita FOIT, muestra fallback inmediato */
 }
 
 @font-face {
@@ -13,6 +15,8 @@
     src: url('/assets/fonts/tarrget3dital.ttf') format('truetype');
     font-weight: normal;
     font-style: italic;
+    font-display: swap;
+    /* ✅ Evita FOIT, muestra fallback inmediato */
 }
 
 @theme {
@@ -119,6 +123,16 @@ body {
 
         .hero-video {
             @apply absolute top-0 left-0 w-full h-full object-cover z-0;
+
+            /* ✅ GPU Acceleration para video (optimización crítica móvil) */
+            will-change: transform, opacity;
+            transform: translateZ(0) scale(1.001);
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            -webkit-transform: translateZ(0) scale(1.001);
+
+            /* ✅ Smooth transition de opacity */
+            transition: opacity 0.5s ease-in-out;
         }
 
         .hero-gradient {
@@ -954,8 +968,21 @@ body {
         backdrop-filter: blur(40px);
     }
 
-    .backdrop-blur-3xl {
-        -webkit-backdrop-filter: blur(64px);
-        backdrop-filter: blur(64px);
+    .backdrop-blur-2xl {
+        -webkit-backdrop-filter: blur(40px);
+        backdrop-filter: blur(40px);
+    }
+
+    /* Hide scrollbar utility */
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, Opera */
     }
 }

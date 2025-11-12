@@ -13,7 +13,8 @@ const useAssetLoader = (isMobile = false) => {
 
     useEffect(() => {
         // Obtener el video correcto según el dispositivo (solo 1 se descarga)
-        const heroVideoSrc = getVideoSrc('hero', isMobile);
+        // ⚠️ NO precargamos el video aquí, se carga lazy en Hero.jsx
+        // const heroVideoSrc = getVideoSrc('hero', isMobile);
 
         // Lista de todos los assets críticos a precargar
         const assets = {
@@ -25,7 +26,7 @@ const useAssetLoader = (isMobile = false) => {
                 '/assets/images/art_3.webp'
             ],
             videos: [
-                heroVideoSrc // Solo carga el video del dispositivo actual
+                // ✅ Video se carga lazy en Hero, no aquí (evita doble descarga)
             ],
             fonts: [
                 '/assets/fonts/tarrget.ttf',
@@ -86,7 +87,9 @@ const useAssetLoader = (isMobile = false) => {
         const loadFont = (fontName, src) => {
             return new Promise((resolve) => {
                 if ('fonts' in document) {
-                    const font = new FontFace(fontName, `url(${src})`);
+                    const font = new FontFace(fontName, `url(${src})`, {
+                        display: 'swap' // ✅ No bloquear rendering
+                    });
                     font.load()
                         .then((loadedFont) => {
                             document.fonts.add(loadedFont);

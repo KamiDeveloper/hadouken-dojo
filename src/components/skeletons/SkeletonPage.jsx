@@ -1,4 +1,3 @@
-import React from 'react';
 import SkeletonNavBar from '../skeletons/SkeletonNavBar';
 import SkeletonHero from '../skeletons/SkeletonHero';
 import SkeletonArt from '../skeletons/SkeletonArt';
