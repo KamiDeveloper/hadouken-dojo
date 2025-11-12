@@ -78,7 +78,7 @@ export default function CancelBookingModal({
         >
             {/* Backdrop overlay */}
             <div
-                className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+                className="absolute inset-0 bg-black/75 !backdrop-blur-sm"
                 onClick={!isCancelling ? onClose : undefined}
                 aria-hidden="true"
             />
@@ -87,6 +87,7 @@ export default function CancelBookingModal({
             <div
                 className="
             relative w-full max-w-md
+            !backdrop-blur-md
             res-bg-secondary res-border-primary border
             res-rounded-2xl shadow-[0_20px_25px_rgba(0,0,0,0.7)]
             animate-fade-in

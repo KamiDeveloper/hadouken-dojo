@@ -96,7 +96,7 @@ export default function BookingSummaryModal({
         >
             {/* Backdrop overlay */}
             <div
-                className="absolute inset-0 bg-black/75 backdrop-blur-sm"
+                className="absolute inset-0 bg-black/75 !backdrop-blur-sm"
                 onClick={!isConfirming ? onClose : undefined}
                 aria-hidden="true"
             />
@@ -104,7 +104,7 @@ export default function BookingSummaryModal({
             {/* Modal container */}
             <div
                 className="
-          relative w-full max-w-2xl max-h-[90vh] overflow-hidden backdrop-blur-md
+          relative w-full max-w-2xl max-h-[90vh] overflow-hidden !backdrop-blur-md
           res-bg-secondary res-border-primary border
           res-rounded-2xl shadow-[0_20px_25px_rgba(0,0,0,0.7)]
           animate-fade-in
