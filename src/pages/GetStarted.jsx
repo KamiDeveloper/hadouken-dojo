@@ -268,7 +268,7 @@ const GetStarted = () => {
                 </div>
 
                 {/* Contenedor con glassmorphism */}
-                <div className="glass-container rounded-3xl p-8 border border-white/10 shadow-2xl">
+                <div className="bg-black/30 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl">
                     {/* Tabs */}
                     <div className="relative mb-8">
                         <div className="grid grid-cols-2 gap-2 bg-black/40 rounded-2xl p-1 relative">

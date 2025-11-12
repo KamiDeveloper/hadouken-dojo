@@ -54,45 +54,51 @@ body {
 }
 
 @layer components {
-    #navbar {
-        @apply flex h-16 w-full fixed z-50 justify-center items-center;
+    #navbar .nav-container {
+        @apply flex justify-between items-center w-3/4 lg:w-2/3;
+    }
 
-        .nav-container {
-            @apply flex justify-between items-center w-3/4 lg:w-2/3;
-        }
+    #navbar .logo-image {
+        @apply h-12 select-none pointer-events-none;
+    }
 
-        .logo-image {
-            @apply h-12 select-none pointer-events-none;
-        }
+    #navbar .nav-links {
+        @apply flex gap-6 text-base font-bold tracking-wider uppercase;
+    }
 
-        .nav-links {
-            @apply flex gap-4 text-shadow-current text-base text-[var(--color-black)] font-bold tracking-wider uppercase;
-        }
+    #navbar .nav-links a {
+        @apply relative pb-1 transition-colors duration-200;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
 
-        .nav-links a.active {
-            @apply !text-[var(--color-white)];
-        }
+    #navbar .nav-links a.active {
+        color: var(--color-white) !important;
+    }
 
-        #hamburger-menu {
-            @apply !ml-5;
+    #navbar .nav-links a.active::after {
+        content: '';
+        @apply absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[var(--color-light-red)] to-[var(--color-medium-red)];
+        box-shadow: 0 0 8px rgba(242, 53, 6, 0.6);
+    }
 
+    #hamburger-menu {
+        @apply !ml-5;
+    }
 
-            img {
-                @apply !select-all !pointer-events-auto
-            }
+    #hamburger-menu img {
+        @apply !select-all !pointer-events-auto;
+    }
 
-            .nav-links-mobile {
-                @apply uppercase font-bold text-[var(--color-white)] flex flex-col items-stretch pt-8 px-4 gap-2;
-            }
+    #hamburger-menu .nav-links-mobile {
+        @apply uppercase font-bold text-[var(--color-white)] flex flex-col items-stretch pt-8 px-4 gap-2;
+    }
 
-            .nav-links-mobile a {
-                @apply !px-6 !py-4 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-2 border border-transparent;
-            }
+    #hamburger-menu .nav-links-mobile a {
+        @apply !px-6 !py-4 rounded-lg transition-all duration-200 hover:bg-white/10 hover:translate-x-2 border border-transparent;
+    }
 
-            .nav-links-mobile a.active {
-                @apply bg-gradient-to-r from-[var(--color-dark-red)] to-[var(--color-dark-red)]/80 border-l-4 shadow-lg translate-x-1;
-            }
-        }
+    #hamburger-menu .nav-links-mobile a.active {
+        @apply bg-gradient-to-r from-[var(--color-dark-red)] to-[var(--color-dark-red)]/80 border-l-4 shadow-lg translate-x-1;
     }
 
     #main-app-container {
@@ -427,33 +433,23 @@ body {
 }
 
 /* ============================================
-   GLASSMORPHISM & BACKDROP UTILITIES
+   BACKDROP UTILITIES (Tailwind v4 Compatible)
    ============================================ */
-
-/* Glassmorphism container - Con fallback para navegadores sin soporte */
-.glass-container {
-    background: rgba(1, 1, 1, 0.1);
-    /* Prefijo webkit primero para Safari/iOS */
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-
-    /* Fallback para navegadores que no soportan backdrop-filter */
-    @supports not (backdrop-filter: blur(20px)) {
-        background: rgba(1, 1, 1, 0.85);
-    }
+@utility backdrop-blur {
+    /* 
+      Esto le indica a Tailwind que genere todas las utilidades de backdrop-blur
+      (ej. backdrop-blur-sm, backdrop-blur-md, etc.) usando la escala de 
+      desenfoque predeterminada. También aplicará automáticamente el prefijo
+      -webkit-backdrop-filter para compatibilidad con Safari.
+    */
+    backdrop-filter: blur(var(--blur));
 }
 
-.semitransparent-bg {
-    background-color: rgba(0, 0, 0, 0.76);
-    /* Prefijo webkit primero para Safari/iOS */
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-
-    /* Fallback para navegadores que no soportan backdrop-filter */
-    @supports not (backdrop-filter: blur(10px)) {
-        background-color: rgba(0, 0, 0, 0.92);
-    }
-}
+/* 
+  Las clases personalizadas .glass-container y .semitransparent-bg se han eliminado.
+  En su lugar, compone las utilidades de Tailwind directamente en tu JSX. Por ejemplo:
+  className="bg-black/50 backdrop-blur-md"
+*/
 
 /* Animación de pulso para elementos importantes */
 @keyframes pulse-glow {

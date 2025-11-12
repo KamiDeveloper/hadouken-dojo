@@ -24,7 +24,7 @@ const Model = React.memo(({ mouseX }) => {
     const { scene } = useGLTF('/assets/models/PIU.glb')
 
     // Rotación inicial semi-lateral (30 grados en Y)
-    const initialRotation = Math.PI / 6 // 30 grados
+    const initialRotation = Math.PI / 2.7 // 30 grados
 
     // Configurar materiales y sombras del modelo - OPTIMIZADO
     useEffect(() => {
@@ -82,7 +82,7 @@ const Model = React.memo(({ mouseX }) => {
             ref={modelRef}
             object={scene}
             scale={0.5}
-            position={[0, -1.5, 0]}
+            position={[-0.20, -1.5, 0]}
             rotation={[0, initialRotation, 0]}
         />
     )
@@ -182,7 +182,7 @@ const ThreeScene = () => {
                 position: 'absolute',
                 right: 0,
                 top: 0,
-                width: '50%',
+                width: '100%',
                 height: '100vh',
                 backgroundColor: '#010101',
                 zIndex: 1
@@ -191,6 +191,7 @@ const ThreeScene = () => {
             <Canvas
                 shadows
                 style={{ background: '#010101' }}
+                className=' mt-10 md:mt-0'
                 dpr={[1, 2]} // Limitar pixel ratio para mejor performance
                 performance={{ min: 0.5 }} // Adaptive performance
                 gl={{

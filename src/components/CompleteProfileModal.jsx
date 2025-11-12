@@ -166,7 +166,7 @@ const CompleteProfileModal = ({ isOpen, onClose }) => {
         >
             <div
                 ref={contentRef}
-                className="w-full max-w-md glass-container rounded-3xl p-8 border border-white/10 shadow-2xl"
+                className="w-full max-w-md bg-black/30 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-2xl"
                 style={{ opacity: 0 }}
             >
                 {/* Header */}

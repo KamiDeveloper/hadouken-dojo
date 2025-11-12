@@ -71,7 +71,7 @@ export default function CancelBookingModal({
 
     return (
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
             role="dialog"
             aria-modal="true"
             aria-labelledby="cancel-modal-title"

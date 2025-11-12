@@ -12,8 +12,8 @@ const MaskedArt = () => {
             scrollTrigger: {
                 trigger: '#masked-section',
                 start,
-                end: 'bottom center',
-                scrub: 3,
+                end: '+=3000 center',
+                scrub: 1,
                 pin: true,
                 // Optimizaciones de performance
                 fastScrollEnd: true,
