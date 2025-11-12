@@ -126,10 +126,10 @@ body {
 
             /* ✅ GPU Acceleration para video (optimización crítica móvil) */
             will-change: transform, opacity;
-            transform: translateZ(0) scale(1.001);
+            transform: translateZ(0) scale(1);
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
-            -webkit-transform: translateZ(0) scale(1.001);
+            -webkit-transform: translateZ(0) scale(1);
 
             /* ✅ Smooth transition de opacity */
             transition: opacity 0.5s ease-in-out;
