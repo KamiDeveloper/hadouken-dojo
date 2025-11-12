@@ -120,9 +120,7 @@ const GoogleOneTap = () => {
     const handleGoogleLogin = async () => {
         try {
             // Mostrar loading toast
-            const loadingToast = toast.loading('Iniciando sesión con Google...', {
-                icon: '🔄',
-            });
+            const loadingToast = toast.loading('Iniciando sesión con Google...');
 
             // Llamar al método de login existente
             const result = await loginWithGoogle();
@@ -132,13 +130,11 @@ const GoogleOneTap = () => {
 
             if (result?.needsProfileCompletion) {
                 toast.success('¡Bienvenido! Completa tu perfil para continuar', {
-                    icon: '🥋',
                     duration: 4000,
                 });
                 // El modal se mostrará automáticamente
             } else {
                 toast.success('¡Bienvenido de nuevo!', {
-                    icon: '👋',
                     duration: 3000,
                 });
 
@@ -161,7 +157,6 @@ const GoogleOneTap = () => {
                 : 'Error al iniciar sesión con Google';
 
             toast.error(errorMessage, {
-                icon: '❌',
                 duration: 3000,
             });
         }
@@ -173,7 +168,6 @@ const GoogleOneTap = () => {
         setShouldShow(false);
         markAsDismissed();
         toast('Puedes iniciar sesión desde el menú', {
-            icon: '',
             duration: 2000,
         });
     };

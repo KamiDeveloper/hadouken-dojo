@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
-import { Toaster } from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 import { startOfWeek, startOfToday, format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -69,7 +68,7 @@ export default function Reservations() {
         {
             enabled: !!selectedMachineId,
             realtime: true,
-            showToasts: true, // ✅ Ahora SÍ mostrar toasts (solo hay 1 listener)
+            showToasts: true,
         }
     );
 
@@ -382,46 +381,6 @@ export default function Reservations() {
                     machineColor={selectedMachineData?.color || '#3B82F6'}
                     isCancelling={cancelBookingMutation.isPending}
                     error={cancelBookingMutation.error?.message || null}
-                />
-
-                {/* Toast notifications container */}
-                <Toaster
-                    position="bottom-right"
-                    toastOptions={{
-                        // Dark mode styling
-                        style: {
-                            background: '#1F2937', // Gray 800
-                            color: '#F9FAFB', // Gray 50
-                            border: '1px solid #374151', // Gray 700
-                            borderRadius: '12px',
-                            padding: '16px',
-                            fontSize: '14px',
-                            maxWidth: '400px',
-                        },
-                        // Success toast
-                        success: {
-                            duration: 4000,
-                            iconTheme: {
-                                primary: '#10B981', // Emerald 500
-                                secondary: '#F9FAFB',
-                            },
-                        },
-                        // Error toast
-                        error: {
-                            duration: 5000,
-                            iconTheme: {
-                                primary: '#EF4444', // Red 500
-                                secondary: '#F9FAFB',
-                            },
-                        },
-                        // Loading toast
-                        loading: {
-                            iconTheme: {
-                                primary: '#3B82F6', // Blue 500
-                                secondary: '#F9FAFB',
-                            },
-                        },
-                    }}
                 />
             </div>
         </ErrorBoundary>

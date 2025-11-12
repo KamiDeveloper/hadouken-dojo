@@ -165,8 +165,7 @@ export function useCreateBooking(options = {}) {
             toast.success(
                 `¡Reserva confirmada! ${data.bookingIds.length} slot${data.bookingIds.length === 1 ? '' : 's'} reservado${data.bookingIds.length === 1 ? '' : 's'}`,
                 {
-                    duration: 4000,
-                    icon: '✅',
+                    duration: 4000
                 }
             );
 
@@ -195,8 +194,7 @@ export function useCreateBooking(options = {}) {
             const errorMessage = error.message || 'Error al crear la reserva';
 
             toast.error(errorMessage, {
-                duration: 5000,
-                icon: '❌',
+                duration: 5000
             });
 
             // 3. Callback custom

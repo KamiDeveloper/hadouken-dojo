@@ -31,22 +31,32 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <App />
       <Toaster
-        position="top-right"
+        position="bottom-center"
         toastOptions={{
           duration: 4000,
+          className: 'res-bg-secondary res-text-primary res-border-primary res-rounded-xl',
           style: {
-            background: '#333',
-            color: '#fff',
+            border: '1px solid',
+            padding: '16px',
+            fontSize: '14px',
+            maxWidth: '400px',
           },
           success: {
             iconTheme: {
-              primary: '#10b981',
+              primary: '#10b981', // Emerald 500
               secondary: '#fff',
             },
           },
           error: {
+            duration: 5000,
             iconTheme: {
-              primary: '#ef4444',
+              primary: '#ef4444', // Red 500
+              secondary: '#fff',
+            },
+          },
+          loading: {
+            iconTheme: {
+              primary: '#3B82F6', // Blue 500
               secondary: '#fff',
             },
           },

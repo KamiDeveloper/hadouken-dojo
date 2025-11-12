@@ -133,7 +133,6 @@ export function useWeeklyBookings(machineId, weekStartDate, options = {}) {
                     const newBookings = bookings.filter((b) => !previousIds.has(b.id));
                     if (newBookings.length > 0) {
                         toast('Nueva reserva detectada', {
-                            icon: '📅',
                             duration: 3000,
                         });
                     }
@@ -144,7 +143,6 @@ export function useWeeklyBookings(machineId, weekStartDate, options = {}) {
                     );
                     if (removedBookings.length > 0) {
                         toast('Reserva cancelada', {
-                            icon: '🗑️',
                             duration: 3000,
                         });
                     }

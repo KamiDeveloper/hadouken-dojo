@@ -125,8 +125,7 @@ export function useCancelBooking(options = {}) {
 
             // 2. Toast de éxito
             toast.success('Reserva cancelada correctamente', {
-                duration: 3000,
-                icon: '✅',
+                duration: 3000
             });
 
             // 3. Callback custom
@@ -166,8 +165,7 @@ export function useCancelBooking(options = {}) {
             const errorMessage = error.message || 'Error al cancelar la reserva';
 
             toast.error(errorMessage, {
-                duration: 5000,
-                icon: '❌',
+                duration: 5000
             });
 
             // 3. Callback custom
@@ -244,8 +242,7 @@ export function useCancelMultipleBookings(options = {}) {
             }
 
             toast.success(`${data.cancelledCount} reservas canceladas`, {
-                duration: 3000,
-                icon: '✅',
+                duration: 3000
             });
 
             onSuccess?.(data, variables);
@@ -255,8 +252,7 @@ export function useCancelMultipleBookings(options = {}) {
             console.error('Error cancelling multiple bookings:', error);
 
             toast.error(error.message || 'Error al cancelar reservas', {
-                duration: 5000,
-                icon: '❌',
+                duration: 5000
             });
 
             onError?.(error, variables);
