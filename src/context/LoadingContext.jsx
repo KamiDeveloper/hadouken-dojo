@@ -1,4 +1,5 @@
 import React, { createContext, useContext } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import useAssetLoader from '../hooks/useAssetLoader';
 
 // Crear el contexto
@@ -7,9 +8,11 @@ const LoadingContext = createContext(null);
 /**
  * Provider que maneja el estado de carga global
  * Usa el hook useAssetLoader internamente y provee el estado a toda la app
+ * Detecta automáticamente el dispositivo para cargar el video correcto
  */
 export const LoadingProvider = ({ children }) => {
-    const { isLoading, progress, loadedAssets } = useAssetLoader();
+    const isMobile = useMediaQuery({ maxWidth: 767 });
+    const { isLoading, progress, loadedAssets } = useAssetLoader(isMobile);
 
     return (
         <LoadingContext.Provider value={{ isLoading, progress, loadedAssets }}>

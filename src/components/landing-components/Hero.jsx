@@ -1,13 +1,15 @@
 import { useRef, useEffect } from 'react'
+import { useMediaQuery } from 'react-responsive'
 import RotatingText from './RotatingText'
 import { useAuth } from '../../context/AuthContext'
 import { NavLink } from 'react-router-dom';
 import { FlipButton } from '../ui/FlipButton';
+import { getVideoSrc } from '../../config/videos';
 
 const Hero = () => {
 
     const { user } = useAuth();
-
+    const isMobile = useMediaQuery({ maxWidth: 767 })
     const videoRef = useRef(null)
 
     useEffect(() => {
@@ -47,7 +49,10 @@ const Hero = () => {
                 disablePictureInPicture
                 controlsList="nodownload"
             >
-                <source src="/assets/videos/hero-video.mp4" type="video/mp4" />
+                <source
+                    src={getVideoSrc('hero', isMobile)}
+                    type="video/mp4"
+                />
             </video>
 
             <div className="hero-container">

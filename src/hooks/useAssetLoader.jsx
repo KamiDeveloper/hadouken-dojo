@@ -1,15 +1,20 @@
 import { useState, useEffect } from 'react';
+import { getVideoSrc } from '../config/videos';
 
 /**
  * Hook personalizado para precargar todos los assets críticos
  * Retorna el estado de carga y el progreso
+ * @param {boolean} isMobile - Si es dispositivo móvil (para cargar video correcto)
  */
-const useAssetLoader = () => {
+const useAssetLoader = (isMobile = false) => {
     const [isLoading, setIsLoading] = useState(true);
     const [progress, setProgress] = useState(0);
     const [loadedAssets, setLoadedAssets] = useState({});
 
     useEffect(() => {
+        // Obtener el video correcto según el dispositivo (solo 1 se descarga)
+        const heroVideoSrc = getVideoSrc('hero', isMobile);
+
         // Lista de todos los assets críticos a precargar
         const assets = {
             images: [
@@ -20,7 +25,7 @@ const useAssetLoader = () => {
                 '/assets/images/art_3.webp'
             ],
             videos: [
-                '/assets/videos/hero-video.mp4'
+                heroVideoSrc // Solo carga el video del dispositivo actual
             ],
             fonts: [
                 '/assets/fonts/tarrget.ttf',
@@ -164,7 +169,7 @@ const useAssetLoader = () => {
 
         loadAllAssets();
 
-    }, []);
+    }, [isMobile]); // Dependencia de isMobile para recargar si cambia
 
     return { isLoading, progress, loadedAssets };
 };
