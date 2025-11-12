@@ -194,7 +194,7 @@ export default function CalendarGrid({
             {/* ============================================
                 MOBILE VIEW - Un solo día visible + Barra lateral
                 ============================================ */}
-            <div className="md:hidden max-w-[20.5rem]">
+            <div className="md:hidden max-w-[75dvw]">
                 {/* Día seleccionado (full width) */}
                 <AnimatePresence mode="wait">
                     {selectedDate && (
