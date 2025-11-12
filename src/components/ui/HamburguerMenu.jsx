@@ -47,12 +47,12 @@ const HamburguerMenu = () => {
                                             e.target.style.display = 'none';
                                             e.target.nextElementSibling.style.display = 'flex';
                                         }}
-                                        className="w-12 h-12 rounded-full border-2 border-light-red object-cover"
+                                        className="w-12 h-12 rounded-full border-2 border-light-blue object-cover"
                                     />
                                 ) : null}
                                 <div
                                     style={{ display: user.photoURL ? 'none' : 'flex' }}
-                                    className="w-12 h-12 rounded-full border-2 border-light-red bg-gradient-to-br from-dark-red to-light-red items-center justify-center"
+                                    className="w-12 h-12 rounded-full border-2 border-light-blue bg-gradient-to-br from-dark-red to-light-red items-center justify-center"
                                 >
                                     <span className="text-white text-lg font-bold">
                                         {getInitial()}
