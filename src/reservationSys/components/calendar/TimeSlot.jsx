@@ -124,12 +124,12 @@ const TimeSlot = memo(function TimeSlot({ slot, machineColor, onClick, userId })
 
                 {/* Booking info (si aplica) */}
                 {booking && status === 'booked' && (
-                    <div className="text-xs text-red-400 mt-1 truncate ml-3">
+                    <div className="text-[0.60rem] text-red-400 mt-1 truncate ml-3 uppercase">
                         @{booking.username || 'Usuario'}
                     </div>
                 )}
                 {booking && status === 'mine' && (
-                    <div className="text-xs text-amber-400 mt-1 truncate ml-3">
+                    <div className="text-[0.60rem] text-amber-400 mt-1 truncate ml-3">
                         Tu reserva
                     </div>
                 )}

@@ -497,58 +497,58 @@ body {
     /* Gray 500 - Very muted */
 
     /* Slot States - Available */
-    --slot-available-bg: #065F46;
-    /* Emerald 900 */
-    --slot-available-border: #10B981;
-    /* Emerald 500 */
-    --slot-available-text: #6EE7B7;
-    /* Emerald 300 */
-    --slot-available-hover: #047857;
-    /* Emerald 800 */
+    --slot-available-bg: #0E4A39;
+    /* menos saturado que #065F46 */
+    --slot-available-border: #4FAE91;
+    /* tono jade suave */
+    --slot-available-text: #A9E3CA;
+    /* menta clara */
+    --slot-available-hover: #16604D;
+    /* verde bosque moderado */
 
     /* Slot States - Selected */
-    --slot-selected-bg: #1E3A8A;
-    /* Blue 900 */
-    --slot-selected-border: #3B82F6;
-    /* Blue 500 */
-    --slot-selected-text: #93C5FD;
-    /* Blue 300 */
-    --slot-selected-glow: rgba(59, 130, 246, 0.2);
-    /* Blue 500 at 20% opacity */
+    --slot-selected-bg: #2B4173;
+    /* azul grisáceo profundo */
+    --slot-selected-border: #6C91E0;
+    /* azul apagado */
+    --slot-selected-text: #B7D0F7;
+    /* azul pastel */
+    --slot-selected-glow: rgba(108, 145, 224, 0.2);
+    /* más neutro */
 
     /* Slot States - Booked (by others) */
-    --slot-booked-bg: #7F1D1D;
-    /* Red 900 */
-    --slot-booked-border: #EF4444;
-    /* Red 500 */
-    --slot-booked-text: #aea5fc;
-    /* Red 300 */
+    --slot-booked-bg: #5E2A2A;
+    /* burdeos oscuro */
+    --slot-booked-border: #C06A6A;
+    /* rojo terroso */
+    --slot-booked-text: #E6BEBE;
+    /* rosa grisáceo claro */
 
     /* Slot States - My Booking */
-    --slot-mine-bg: #78350F;
-    /* Amber 900 */
-    --slot-mine-border: #F59E0B;
-    /* Amber 500 */
-    --slot-mine-text: #FCD34D;
-    /* Amber 300 */
+    --slot-mine-bg: #5D3E1A;
+    /* marrón ámbar oscuro */
+    --slot-mine-border: #C58C3A;
+    /* dorado viejo */
+    --slot-mine-text: #F2D9A4;
+    /* crema dorada */
 
     /* Slot States - Disabled/Past */
-    --slot-disabled-bg: #1F2937;
-    /* Gray 800 */
-    --slot-disabled-border: #4B5563;
-    /* Gray 600 */
-    --slot-disabled-text: #6B7280;
-    /* Gray 500 */
+    --slot-disabled-bg: #252B34;
+    /* gris azulado oscuro */
+    --slot-disabled-border: #5E6671;
+    /* gris medio suave */
+    --slot-disabled-text: #8A929C;
+    /* gris claro elegante */
 
     /* Accent Colors */
-    --accent-blue: #000000;
-    /* Blue 500 */
-    --accent-emerald: #10B981;
-    /* Emerald 500 */
-    --accent-amber: #F59E0B;
-    /* Amber 500 */
-    --accent-red: #EF4444;
-    /* Red 500 */
+    --accent-blue: #6C91E0;
+    /* azul grisáceo suave */
+    --accent-emerald: #4FAE91;
+    /* verde jade apagado */
+    --accent-amber: #C58C3A;
+    /* dorado viejo */
+    --accent-red: #C06A6A;
+    /* rojo suave */
 
     /* Shadows */
     --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);

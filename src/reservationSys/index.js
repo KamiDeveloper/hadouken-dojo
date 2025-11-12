@@ -15,6 +15,7 @@ export { default as CalendarGrid } from './components/calendar/CalendarGrid';
 export { default as CalendarHeader } from './components/calendar/CalendarHeader';
 export { default as CalendarDayColumn } from './components/calendar/CalendarDayColumn';
 export { default as TimeSlot } from './components/calendar/TimeSlot';
+export { default as FloatingDaysSidebar } from './components/calendar/FloatingDaysSidebar';
 
 // ========================================
 // COMPONENTS - Sidebar

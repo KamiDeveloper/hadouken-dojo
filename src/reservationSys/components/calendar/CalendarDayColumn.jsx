@@ -109,8 +109,8 @@ export default function CalendarDayColumn({
             {/* Day header */}
             <div
                 className={`
-          flex-shrink-0 p-4 rounded-t-lg text-center res-transition-base
-          ${isCurrentDay
+            flex-shrink-0 p-4 rounded-t-lg text-center res-transition-base
+            ${isCurrentDay
                         ? 'bg-gray-800 border-2 border-gray-600'
                         : 'res-bg-secondary res-border-primary border'
                     }
@@ -120,7 +120,7 @@ export default function CalendarDayColumn({
                     className={`
             text-sm font-semibold uppercase tracking-wide
             ${isCurrentDay ? 'text-blue-200' : 'res-text-tertiary'}
-          `}
+            `}
                 >
                     {dayName}
                 </div>
@@ -128,15 +128,16 @@ export default function CalendarDayColumn({
                     className={`
             text-2xl font-bold mt-1
             ${isCurrentDay ? 'text-white' : 'res-text-primary'}
-          `}
+            `}
                 >
                     {dayNumber}
                 </div>
+                {/* Mes solo en desktop */}
                 <div
                     className={`
-            text-xs uppercase
+            text-xs uppercase hidden md:block
             ${isCurrentDay ? 'text-blue-300' : 'res-text-muted'}
-          `}
+            `}
                 >
                     {monthName}
                 </div>
