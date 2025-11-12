@@ -34,9 +34,11 @@ createRoot(document.getElementById('root')).render(
         position="bottom-center"
         toastOptions={{
           duration: 4000,
-          className: 'res-bg-secondary res-text-primary res-border-primary res-rounded-xl',
           style: {
-            border: '1px solid',
+            background: '#101010',
+            color: '#efefef',
+            border: '1px solid var(--color-border-primary)',
+            borderRadius: '12px',
             padding: '16px',
             fontSize: '14px',
             maxWidth: '400px',
