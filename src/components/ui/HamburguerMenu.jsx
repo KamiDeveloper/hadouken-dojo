@@ -24,7 +24,7 @@ const HamburguerMenu = () => {
 
     return (
         <div id="hamburger-menu" >
-            <img src="/assets/icons/hamburger.svg" alt="Menu" onClick={toggleMenu} className="lg:hidden mobile-menu-img !p-1 cursor-pointer" />
+            <img src="/assets/icons/hamburger.svg" alt="Menu" onClick={toggleMenu} className="lg:hidden mobile-menu-img cursor-pointer" />
             <div
                 onClick={toggleMenu}
                 className={`fixed lg:hidden inset-0 w-screen h-screen bg-black/60 transform ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} transition-opacity duration-300 ease-in-out z-40`}

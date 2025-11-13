@@ -58,35 +58,50 @@ body {
 }
 
 @layer components {
-    #navbar .nav-container {
+
+    /* ============================================
+       NAVBAR DESKTOP STYLES (768px+)
+       ============================================ */
+    #navbar-desktop .nav-container {
         @apply flex justify-between items-center w-3/4 lg:w-2/3;
     }
 
-    #navbar .logo-image {
+    #navbar-desktop .logo-image {
         @apply h-12 select-none pointer-events-none;
     }
 
-    #navbar .nav-links {
+    #navbar-desktop .nav-links {
         @apply flex gap-6 text-base font-bold tracking-wider uppercase;
     }
 
-    #navbar .nav-links a {
+    #navbar-desktop .nav-links a {
         @apply relative pb-1 transition-colors duration-200;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
     }
 
-    #navbar .nav-links a.active {
+    #navbar-desktop .nav-links a.active {
         color: var(--color-white) !important;
     }
 
-    #navbar .nav-links a.active::after {
+    #navbar-desktop .nav-links a.active::after {
         content: '';
         @apply absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-[var(--color-light-red)] to-[var(--color-medium-red)];
         box-shadow: 0 0 8px rgba(242, 53, 6, 0.6);
     }
 
+    /* ============================================
+       NAVBAR MOBILE STYLES (0-767px)
+       ============================================ */
+    #navbar-mobile .nav-container {
+        @apply flex justify-center !w-3/4 items-center;
+    }
+
+    #navbar-mobile .logo-image {
+        @apply h-12 select-none pointer-events-none;
+    }
+
     #hamburger-menu {
-        @apply !ml-5;
+        @apply fixed right-4 top-4 z-[100];
     }
 
     #hamburger-menu img {
@@ -209,18 +224,34 @@ body {
             grid-template-rows: repeat(3, 1fr);
             gap: 5px;
 
-            p {
-                @apply bottom-4 left-4 text-[var(--color-gray)] px-3 py-1 text-[0.5rem] md:text-2xl md:w-full h-full flex items-center justify-center mt-20;
+            .art-description {
+                @apply w-full h-full items-center justify-center lg:rounded-2xl rounded-sm;
             }
 
         }
 
         .description-1 {
-            grid-area: 1 / 5 / 2 / 6;
+            grid-area: 1 / 4 / 2 / 5;
         }
 
         .description-2 {
-            grid-area: 3 / 2 / 4 / 3;
+            grid-area: 1 / 5 / 2 / 6;
+        }
+
+        .description-3 {
+            @apply flex flex-col items-center justify-center h-full radial-gradient;
+            grid-area: 3 / 2 / 4 / 4;
+            text-align: center;
+
+            h2 {
+                @apply text-gradient-pro text-4xl;
+                font-family: var(--font-modern-negra);
+            }
+
+            p {
+                @apply text-white/90 mt-2;
+                font-family: var(--font-sans);
+            }
         }
 
         .art-img {
@@ -392,7 +423,7 @@ body {
 
 @utility radial-gradient {
     background: radial-gradient(circle at center,
-            #434343 0%,
+            #232323 0%,
             #000 50%,
             transparent 100%);
 }

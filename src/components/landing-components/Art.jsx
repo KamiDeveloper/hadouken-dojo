@@ -86,8 +86,20 @@ const Art = () => {
                     willChange: 'transform, opacity'
                 })
                 .fromTo('.description-1', {
-                    y: 100,
-                    x: -200,
+                    x: 300,
+                    opacity: 0,
+                    duration: 0.25,
+                    ease: 'power4.out',
+                    willChange: 'transform, opacity'
+                }, {
+                    x: 0,
+                    opacity: 0.9,
+                    duration: 0.25,
+                    ease: 'power4.out',
+                    willChange: 'transform, opacity'
+                },)
+                .fromTo('.description-2', {
+                    y: -300,
                     opacity: 0,
                     duration: 0.25,
                     ease: 'power4.out',
@@ -98,7 +110,7 @@ const Art = () => {
                     duration: 0.25,
                     ease: 'power4.out',
                     willChange: 'transform, opacity'
-                }, '<')
+                },)
                 .from('.art-image3', {
                     x: -600,
                     opacity: 0,
@@ -106,9 +118,8 @@ const Art = () => {
                     ease: 'power4.out',
                     willChange: 'transform, opacity'
                 })
-                .fromTo('.description-2', {
-                    y: 100,
-                    x: 200,
+                .fromTo('.description-3', {
+                    y: 300,
                     opacity: 0,
                     duration: 0.25,
                     ease: 'power4.out',
@@ -119,7 +130,7 @@ const Art = () => {
                     duration: 0.25,
                     ease: 'power4.out',
                     willChange: 'transform, opacity'
-                }, '<')
+                },)
         }
 
 
@@ -146,9 +157,13 @@ const Art = () => {
                             loading="lazy"
                             decoding="async"
                         />
-                        <p className="art-description description-1 hidden md:block">
-                            Rompe tus límites y compite con los mejores en todos los rincones del mundo.
-                        </p>
+                        <img
+                            className="art-description description-1 hidden md:block"
+                            src="/assets/images/art-image-secondary-1.jpg"
+                            alt="Rompe Tus Límites"
+                            loading="lazy"
+                            decoding="async"
+                        />
                         <img
                             src="/assets/images/art_2.webp"
                             alt="Gaming"
@@ -163,9 +178,19 @@ const Art = () => {
                             loading="lazy"
                             decoding="async"
                         />
-                        <p className="art-description description-2 hidden md:block">
-                            Demuestra de que estás hecho y alcanza la cima, no importa que tan grande sea el desafío.
-                        </p>
+                        <img
+                            className="art-description description-2 hidden md:block "
+                            src="/assets/images/art-image-secondary-2.jpg"
+                            alt="Alcanza la Cima"
+                            loading="lazy"
+                            decoding="async"
+                        />
+                        <div className="art-description description-3 hidden md:flex ">
+                            <h2>¡Jamás te Rindas!</h2>
+                            <p>
+                                En Hadouken Dojo, creemos que la perseverancia es la clave del éxito en el juego competitivo. Cada derrota es una oportunidad para aprender y mejorar. <br />¡Nunca te rindas en tu búsqueda de la grandeza!
+                            </p>
+                        </div>
                         <div className="art-image-overlay">
                         </div>
                     </div>
