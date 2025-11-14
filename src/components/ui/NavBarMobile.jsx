@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import logo from '/assets/images/logoland.webp';
+import logo from '/assets/images/images-mobile/logoland-mobile.webp';
 import { useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import HamburguerMenu from './HamburguerMenu';

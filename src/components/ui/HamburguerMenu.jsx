@@ -24,7 +24,7 @@ const HamburguerMenu = () => {
 
     return (
         <div id="hamburger-menu" >
-            <img src="/assets/icons/hamburger.svg" alt="Menu" onClick={toggleMenu} className="lg:hidden mobile-menu-img cursor-pointer" />
+            <img src="/assets/icons/hamburger.svg" alt="Menu" onClick={toggleMenu} className="lg:hidden mobile-menu-img" />
             <div
                 onClick={toggleMenu}
                 className={`fixed lg:hidden inset-0 w-screen h-screen bg-black/60 transform ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} transition-opacity duration-300 ease-in-out z-40`}
@@ -100,7 +100,7 @@ const HamburguerMenu = () => {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex justify-center w-full pb-5"><img src="/assets/images/logoland.webp" className="w-20 h-auto" alt="Hadouken Dojo Logo" /></div>
+                        <div className="flex justify-center w-full pb-5"><img src="/assets/images/images-mobile/logoland-mobile.webp" className="w-20 h-auto" alt="Hadouken Dojo Logo" /></div>
                     )}
                 </div>
 

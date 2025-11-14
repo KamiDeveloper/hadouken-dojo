@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext'
 import { NavLink } from 'react-router-dom';
 import { FlipButton } from '../ui/FlipButton';
 import { getVideoSrc } from '../../config/videos';
+import { getImageSrc } from '../../config/images';
 import { useLoading } from '../../context/LoadingContext';
 
 const Hero = () => {
@@ -100,7 +101,7 @@ const Hero = () => {
                 <div className="hero-gradient"></div>
                 <div className="hero-content">
                     <div className="biglogo">
-                        <img src="/assets/images/biglogo.webp" type="image/webp" alt="Big Logo" />
+                        <img src={getImageSrc('biglogo', isMobile)} type="image/webp" alt="Big Logo" />
                     </div>
                     <div className="hero-text">
                         <h1 className="hero-title">

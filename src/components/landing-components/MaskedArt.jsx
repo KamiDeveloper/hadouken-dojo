@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { useMediaQuery } from "react-responsive"
+import { getImageSrc } from "../../config/images"
 
 const MaskedArt = () => {
     const isMobile = useMediaQuery({ maxWidth: 767 })
@@ -89,7 +90,7 @@ const MaskedArt = () => {
                 <div className="content">
                     <div className="tekken-8-img">
                         <img
-                            src="assets/images/art-upper.jpg"
+                            src={getImageSrc('artUpper', isMobile)}
                             alt="Tekken Passion"
                             className="abs-center masked-img size-full object-contain"
                             loading="lazy"

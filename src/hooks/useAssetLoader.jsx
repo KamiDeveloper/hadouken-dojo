@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { getVideoSrc } from '../config/videos';
+import { getImageSrc } from '../config/images';
 
 /**
  * Hook personalizado para precargar todos los assets críticos
  * Retorna el estado de carga y el progreso
- * @param {boolean} isMobile - Si es dispositivo móvil (para cargar video correcto)
+ * @param {boolean} isMobile - Si es dispositivo móvil (para cargar imágenes correctas)
  */
 const useAssetLoader = (isMobile = false) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -12,18 +12,14 @@ const useAssetLoader = (isMobile = false) => {
     const [loadedAssets, setLoadedAssets] = useState({});
 
     useEffect(() => {
-        // Obtener el video correcto según el dispositivo (solo 1 se descarga)
-        // ⚠️ NO precargamos el video aquí, se carga lazy en Hero.jsx
-        // const heroVideoSrc = getVideoSrc('hero', isMobile);
-
-        // Lista de todos los assets críticos a precargar
+        // ✅ Cargar imágenes responsive según dispositivo (solo 1 versión se descarga)
         const assets = {
             images: [
                 '/assets/images/logoland.webp',
-                '/assets/images/biglogo.webp',
-                '/assets/images/art_1.webp',
-                '/assets/images/art_2.webp',
-                '/assets/images/art_3.webp'
+                getImageSrc('biglogo', isMobile),
+                getImageSrc('art1', isMobile),
+                getImageSrc('art2', isMobile),
+                getImageSrc('art3', isMobile)
             ],
             videos: [
                 // ✅ Video se carga lazy en Hero, no aquí (evita doble descarga)

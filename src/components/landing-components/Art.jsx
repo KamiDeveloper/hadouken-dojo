@@ -1,6 +1,7 @@
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { useMediaQuery } from "react-responsive"
+import { getImageSrc } from "../../config/images"
 
 const Art = () => {
 
@@ -151,7 +152,7 @@ const Art = () => {
                 <div className="art-container">
                     <div className="art-image-section">
                         <img
-                            src="/assets/images/art_1.webp"
+                            src={getImageSrc('art1', isMobile)}
                             alt="Gaming"
                             className="art-image1 art-img"
                             loading="lazy"
@@ -165,14 +166,14 @@ const Art = () => {
                             decoding="async"
                         />
                         <img
-                            src="/assets/images/art_2.webp"
+                            src={getImageSrc('art2', isMobile)}
                             alt="Gaming"
                             className="art-image2 art-img"
                             loading="lazy"
                             decoding="async"
                         />
                         <img
-                            src="/assets/images/art_3.webp"
+                            src={getImageSrc('art3', isMobile)}
                             alt="Gaming"
                             className="art-image3 art-img"
                             loading="lazy"
