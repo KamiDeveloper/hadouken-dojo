@@ -8,6 +8,7 @@ import Info from './pages/Info'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import RootLayout from './layout/RootLayout'
 import { LoadingProvider, useLoading } from './context/LoadingContext'
+import { ResponsiveProvider } from './context/ResponsiveContext'
 import SkeletonPage from './components/skeletons/SkeletonPage'
 import PrivateRoute from './components/PrivateRoute'
 import AdminRoute from './components/AdminRoute'
@@ -64,11 +65,11 @@ function AppContent() {
 
 function App() {
   return (
-
-    <LoadingProvider>
-      <AppContent />
-    </LoadingProvider>
-
+    <ResponsiveProvider>
+      <LoadingProvider>
+        <AppContent />
+      </LoadingProvider>
+    </ResponsiveProvider>
   )
 }
 

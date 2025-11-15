@@ -1,15 +1,17 @@
-import { useState, useEffect } from 'react';
 import logo from '/assets/images/logoland.webp';
 import { NavLink, useLocation } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import UserDropdown from './UserDropdown';
 import { useAuth } from '../../context/AuthContext';
+import { useScroll as useScrollHook } from '../../hooks/useScroll';
 
 const NavBarDesktop = () => {
     const { user } = useAuth();
     const location = useLocation();
     const isHome = location.pathname === '/';
-    const [isScrolled, setIsScrolled] = useState(false);
+
+    // ✅ Hook centralizado para scroll state
+    const { isScrolled } = useScrollHook(50);
 
     // Framer Motion scroll tracking
     const { scrollY } = useScroll();
@@ -26,24 +28,6 @@ const NavBarDesktop = () => {
         backdropBlur,
         (v) => `blur(${v}px)`
     );
-
-    // Track scroll state
-    useEffect(() => {
-        let ticking = false;
-
-        const handleScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    setIsScrolled(window.scrollY > 50);
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
 
     // Link hover variants
     const linkVariants = {

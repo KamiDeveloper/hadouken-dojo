@@ -2,21 +2,10 @@ import React, { useRef, useEffect, Suspense, useMemo, useCallback } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { useGLTF, PerspectiveCamera } from '@react-three/drei'
 import * as THREE from 'three'
+import { throttle } from "../../utils/performance";
 
 // Precargar el modelo GLTF para mejor performance
 useGLTF.preload('/assets/models/PIU.glb')
-
-// Throttle helper para optimizar eventos
-const throttle = (func, delay) => {
-    let lastCall = 0
-    return (...args) => {
-        const now = Date.now()
-        if (now - lastCall >= delay) {
-            lastCall = now
-            func(...args)
-        }
-    }
-}
 
 // Componente del modelo 3D con seguimiento del mouse - MEMOIZADO
 const Model = React.memo(({ mouseX }) => {

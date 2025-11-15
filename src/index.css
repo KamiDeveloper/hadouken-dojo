@@ -999,11 +999,6 @@ body {
         backdrop-filter: blur(40px);
     }
 
-    .backdrop-blur-2xl {
-        -webkit-backdrop-filter: blur(40px);
-        backdrop-filter: blur(40px);
-    }
-
     /* Hide scrollbar utility */
     .scrollbar-hide {
         -ms-overflow-style: none;

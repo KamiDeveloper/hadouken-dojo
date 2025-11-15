@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import { useIsMobile } from '../../context/ResponsiveContext'
 import RotatingText from './RotatingText'
 import { useAuth } from '../../context/AuthContext'
 import { NavLink } from 'react-router-dom';
@@ -12,7 +12,7 @@ const Hero = () => {
 
     const { user } = useAuth();
     const { isLoading } = useLoading(); // Skeleton loading state
-    const isMobile = useMediaQuery({ maxWidth: 767 })
+    const isMobile = useIsMobile()
     const videoRef = useRef(null)
     const [videoReady, setVideoReady] = useState(false)
     const [shouldAutoplay, setShouldAutoplay] = useState(false)

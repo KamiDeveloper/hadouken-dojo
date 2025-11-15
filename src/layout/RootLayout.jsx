@@ -2,14 +2,14 @@ import { NavBar } from '../components/ui/NavBar'
 import { Outlet } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
-import { useMediaQuery } from 'react-responsive'
+import { ResponsiveProvider, useIsMobile } from '../context/ResponsiveContext'
 import CompleteProfileModal from '../components/CompleteProfileModal'
 import GoogleOneTap from '../components/GoogleOneTap'
 import Lenis from 'lenis'
 
-const RootLayout = () => {
+const RootLayoutContent = () => {
     const { user } = useAuth();
-    const isMobile = useMediaQuery({ maxWidth: 767 }); // ✅ Detectar móvil
+    const isMobile = useIsMobile(); // ✅ Hook centralizado
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
@@ -71,5 +71,12 @@ const RootLayout = () => {
         </div>
     )
 }
+
+// Envolver con ResponsiveProvider
+const RootLayout = () => (
+    <ResponsiveProvider>
+        <RootLayoutContent />
+    </ResponsiveProvider>
+);
 
 export default RootLayout

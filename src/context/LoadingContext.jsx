@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { useMediaQuery } from 'react-responsive';
+import { useIsMobile } from './ResponsiveContext';
 import useAssetLoader from '../hooks/useAssetLoader';
 
 // Crear el contexto
@@ -11,7 +11,7 @@ const LoadingContext = createContext(null);
  * Detecta automáticamente el dispositivo para cargar el video correcto
  */
 export const LoadingProvider = ({ children }) => {
-    const isMobile = useMediaQuery({ maxWidth: 767 });
+    const isMobile = useIsMobile();
     const { isLoading, progress, loadedAssets } = useAssetLoader(isMobile);
 
     return (

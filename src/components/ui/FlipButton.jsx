@@ -1,17 +1,9 @@
 import { motion, useReducedMotion } from 'framer-motion';
-import { useMediaQuery } from 'react-responsive';
+import { useIsMobile } from '../../context/ResponsiveContext';
+import { cn } from '../../utils/classNames';
 
 const DEFAULT_SPAN_CLASS_NAME =
     'absolute inset-0 flex items-center justify-center rounded-lg';
-
-/**
- * Utility function to merge class names
- * @param {...string} classes - Classes to merge
- * @returns {string} - Merged class names
- */
-const cn = (...classes) => {
-    return classes.filter(Boolean).join(' ');
-};
 
 /**
  * FlipButton Component
@@ -39,7 +31,7 @@ const FlipButton = ({
     ...props
 }) => {
     const shouldReduceMotion = useReducedMotion(); // ✅ Detecta preferencias
-    const isMobile = useMediaQuery({ maxWidth: 767 }); // ✅ Detecta móvil
+    const isMobile = useIsMobile(); // ✅ Hook centralizado
 
     const isVertical = from === 'top' || from === 'bottom';
     const rotateAxis = isVertical ? 'rotateX' : 'rotateY';

@@ -1,11 +1,11 @@
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
-import { useMediaQuery } from "react-responsive"
+import { useIsMobile } from "../../context/ResponsiveContext"
 import { getImageSrc } from "../../config/images"
 
 const Art = () => {
 
-    const isMobile = useMediaQuery({ maxWidth: 767 })
+    const isMobile = useIsMobile()
 
     useGSAP(() => {
         const headerArtTimeline = gsap.timeline({

@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { startOfWeek, startOfToday, format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { useAuth } from '../context/AuthContext';
+import { useIsMobile } from '../context/ResponsiveContext';
 import { useConfig } from '../reservationSys/hooks/queries/useConfig';
 import { useCreateBooking } from '../reservationSys/hooks/mutations/useCreateBooking';
 import { useCancelBooking } from '../reservationSys/hooks/mutations/useCancelBooking';
@@ -21,7 +22,8 @@ import CancelBookingModal from '../reservationSys/components/modals/CancelBookin
  * Reservations - Página principal del sistema de reservas
  * 
  * Integra todos los componentes del sistema Calendar-First:
- * - CategorySidebar: Selección de categoría y máquina
+ * - CategorySidebar: Selección de categoría y máquina (Desktop)
+ * - MobileFooterSelector: Selector flotante (Mobile) - Conditional rendering
  * - CalendarView: Calendario con slots disponibles
  * - BookingBar: Barra flotante con resumen
  * - BookingSummaryModal: Modal de confirmación
@@ -32,6 +34,7 @@ export default function Reservations() {
     const { user } = useAuth();
     const queryClient = useQueryClient();
     const { data: config } = useConfig();
+    const isMobile = useIsMobile(); // ✅ Detectar móvil para conditional rendering
 
     // Estado local
     const [selectedMachineId, setSelectedMachineId] = useState(null);
@@ -309,14 +312,16 @@ export default function Reservations() {
             <div className="min-h-screen res-bg-primary flex flex-col">
                 {/* Main layout */}
                 <div className="flex-1 flex w-[100dvw]">
-                    {/* Sidebar (desktop visible, mobile hidden - drawer renderizado en portal) */}
-                    <CategorySidebar
-                        selectedMachineId={selectedMachineId}
-                        onMachineSelect={handleMachineSelect}
-                        machineSelectionCount={machineSelectionCount}
-                        isMobileOpen={false}
-                        onMobileClose={() => { }}
-                    />
+                    {/* ✅ OPTIMIZACIÓN: Sidebar solo en Desktop (conditional rendering) */}
+                    {!isMobile && (
+                        <CategorySidebar
+                            selectedMachineId={selectedMachineId}
+                            onMachineSelect={handleMachineSelect}
+                            machineSelectionCount={machineSelectionCount}
+                            isMobileOpen={false}
+                            onMobileClose={() => { }}
+                        />
+                    )}
 
                     {/* Main content area */}
                     <main className="flex-1 flex flex-col overflow-hidden p-4 lg:p-6 lg:pb-6 pb-32">
@@ -335,16 +340,18 @@ export default function Reservations() {
                     </main>
                 </div>
 
-                {/* ✅ NUEVO: Mobile Footer Selector (solo visible en móvil) */}
-                <MobileFooterSelector
-                    categories={categories}
-                    machines={machines}
-                    activeCategoryId={activeCategoryId}
-                    selectedMachineId={selectedMachineId}
-                    onCategorySelect={handleCategorySelect}
-                    onMachineSelect={handleMachineSelect}
-                    isLoading={categoriesLoading || machinesLoading}
-                />
+                {/* ✅ OPTIMIZACIÓN: Mobile Footer solo en Mobile (conditional rendering) */}
+                {isMobile && (
+                    <MobileFooterSelector
+                        categories={categories}
+                        machines={machines}
+                        activeCategoryId={activeCategoryId}
+                        selectedMachineId={selectedMachineId}
+                        onCategorySelect={handleCategorySelect}
+                        onMachineSelect={handleMachineSelect}
+                        isLoading={categoriesLoading || machinesLoading}
+                    />
+                )}
 
                 {/* Booking Bar - Fixed bottom (solo desktop, móvil usa espacio del footer) */}
                 <BookingBar

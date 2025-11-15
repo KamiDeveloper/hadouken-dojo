@@ -1,4 +1,4 @@
-import { useMediaQuery } from 'react-responsive';
+import { useIsMobile } from '../../context/ResponsiveContext';
 import NavBarDesktop from './NavBarDesktop';
 import NavBarMobile from './NavBarMobile';
 
@@ -12,7 +12,7 @@ import NavBarMobile from './NavBarMobile';
  * Desktop (768px+): Logo + Links animados + UserDropdown
  */
 const NavBar = () => {
-    const isMobile = useMediaQuery({ maxWidth: 767 });
+    const isMobile = useIsMobile();
 
     // Renderizado condicional: solo existe 1 componente en el DOM
     return isMobile ? <NavBarMobile /> : <NavBarDesktop />;

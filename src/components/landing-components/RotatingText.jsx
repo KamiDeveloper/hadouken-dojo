@@ -4,10 +4,7 @@ import {
     motion,
     useReducedMotion,
 } from 'motion/react';
-
-function cn(...classes) {
-    return classes.filter(Boolean).join(' ');
-}
+import { cn } from '../../utils/classNames';
 
 function RotatingText({
     text,
