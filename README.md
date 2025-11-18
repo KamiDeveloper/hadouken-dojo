@@ -1,126 +1,133 @@
-# Hadouken Dojo
+# Hadouken Dojo - Full Stack Project
 
-Aplicación web frontend construida con React y Vite, utilizando React Router para el enrutamiento. Esta app sigue una arquitectura Clean y expandible, separando las rutas públicas de las privadas para una mejor organización y reutilización de componentes.
+## Descripcion General
 
-## Arquitectura de Rutas
+Este proyecto es una aplicacion web Full Stack moderna y de alto rendimiento construida con el ecosistema de React. Integra una Landing Page inmersiva con experiencias 3D y animaciones avanzadas, junto con un robusto Sistema de Reservas y gestion de usuarios.
 
-La estructura de rutas se basa en principios de Clean Architecture, priorizando la separación de responsabilidades:
+La arquitectura esta diseñada para ser escalable, segura y optimizada, utilizando las ultimas tecnologias disponibles en el desarrollo web (React 19, TailwindCSS 4.1, Vite 7).
 
-- **Rutas públicas**: Accesibles sin autenticación (landing, login, signup).
-- **Rutas de aplicación**: Protegidas, accesibles solo después del login, con subrutas anidadas para expandibilidad.
+## Tech Stack
 
-Esto permite una navegación intuitiva, protección de rutas y facilidad para añadir nuevas funcionalidades sin refactorizar el código base.
+### Core & Build
 
-### Rutas Públicas
+- **Framework**: React 19
+- **Build Tool**: Vite 7 (con optimizacion de chunks manual)
+- **Lenguaje**: JavaScript (ESModules)
+- **Paquete Manager**: Bun
 
-Estas rutas son accesibles para todos los usuarios y no requieren autenticación.
+### Estilos & UI
 
-- `/` - **Landing Page**: Página de inicio principal, con información general sobre la app, llamadas a acción (como botones para login/signup) y navegación hacia otras secciones.
-- `/login` - **Login Page**: Formulario de inicio de sesión. Al autenticarse, redirige a `/app`.
-- `/signup` - **Signup Page**: Formulario de registro de nuevos usuarios. Después del registro, puede redirigir a `/login` o directamente a `/app`.
+- **CSS Engine**: TailwindCSS 4.1 (Configuracion nativa CSS-first con `@theme` y `@utility`)
+- **Fuentes**: Custom fonts (Tarrget, Modern Negra, Mona Sans)
+- **Iconos**: Heroicons
 
-### Rutas de la Aplicación (Privadas)
+### Animaciones & 3D
 
-Estas rutas están protegidas y requieren autenticación. Se anidan bajo `/app` para una estructura jerárquica y reutilizable. Usa un componente de protección de rutas (ej. `PrivateRoute`) para verificar el estado de autenticación antes de renderizar.
+- **GSAP**: ScrollTrigger para animaciones basadas en scroll.
+- **Framer Motion**: Transiciones de componentes y micro-interacciones.
+- **Three.js / React Three Fiber**: Experiencias 3D inmersivas en la Landing Page.
+- **Lenis**: Smooth scrolling para una experiencia premium.
 
-- `/app` - **Dashboard**: Página principal de la aplicación después del login. Muestra un resumen, widgets o navegación a subsecciones.
-- `/app/profile` - **Perfil de Usuario**: Gestión del perfil personal (editar datos, cambiar contraseña).
-- `/app/settings` - **Configuraciones**: Opciones generales de la app (tema, notificaciones, etc.).
-- `/app/projects` - **Proyectos**: Lista y gestión de proyectos (ejemplo de subpágina expandible; puedes añadir `/app/projects/:id` para detalles específicos).
-- `/app/analytics` - **Análisis**: Dashboard de métricas y reportes.
+### Backend & Data (Serverless)
 
-### Implementación en React Router
+- **Plataforma**: Firebase
+- **Base de Datos**: Cloud Firestore (NoSQL)
+- **Autenticacion**: Firebase Auth (Google OAuth)
+- **Backend Logic**: Cloud Functions
+- **Hosting**: Vercel (Frontend) / Firebase Hosting (Backend/Functions)
 
-Para implementar estas rutas, usa `BrowserRouter`, `Routes` y `Route` de `react-router-dom`. Ejemplo básico en `App.jsx`:
+### Estado & Data Fetching
 
-```jsx
-import { Routes, Route } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
-// ... otros imports
+- **Server State**: TanStack Query (React Query) v5
+- **Formularios**: React Hook Form + Zod (Validacion)
+- **Global State**: Context API (Auth, Loading, Responsive)
 
-function App() {
-  return (
-    <Routes>
-      {/* Rutas Públicas */}
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/signup" element={<SignupPage />} />
+## Estructura del Proyecto
 
-      {/* Rutas Privadas (protegidas) */}
-      <Route
-        path="/app"
-        element={
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/app/profile"
-        element={
-          <PrivateRoute>
-            <Profile />
-          </PrivateRoute>
-        }
-      />
-      {/* Añade más rutas aquí */}
-    </Routes>
-  );
-}
+```
+/
+├── src/
+│   ├── components/      # Componentes reutilizables UI
+│   ├── config/          # Configuracion de Firebase y servicios
+│   ├── context/         # Contextos globales (Auth, UI)
+│   ├── layout/          # Layouts principales (Root, etc.)
+│   ├── pages/           # Vistas principales (Home, Reservations, etc.)
+│   ├── reservationSys/  # Modulo independiente del Sistema de Reservas
+│   │   ├── components/  # Componentes especificos de reservas
+│   │   ├── hooks/       # Logica de negocio de reservas
+│   │   └── services/    # Capa de servicio para Firestore
+│   └── index.css        # Configuracion global de estilos y Tailwind 4
+├── functions/           # Cloud Functions (Backend)
+├── firestore.rules      # Reglas de seguridad de base de datos
+└── vite.config.js       # Configuracion de build y optimizacion
 ```
 
-- **Protección de Rutas**: Implementa un componente `PrivateRoute` que verifique si el usuario está autenticado (usando contexto o estado global). Si no, redirige a `/login`.
-- **Navegación**: Usa `<Link>` o `useNavigate` para transiciones suaves sin recargas.
-- **Expandibilidad**: Para añadir nuevas subrutas, simplemente agrega `<Route>` bajo `/app`. Separa componentes en carpetas como `pages/` y `components/` para mantener la arquitectura limpia.
+## Modulos Principales
 
-## Instalación y Ejecución
+### 1. Landing Page (/)
 
-1. Clona el repositorio y navega al directorio:
+- Experiencia visual de alto impacto.
+- Integracion de modelos 3D y video.
+- Diseño responsivo con enfoque "Mobile First" pero experiencia "Desktop Premium".
 
-   ```
-   git clone <url-del-repo>
-   cd hadouken-dojo
-   ```
+### 2. Sistema de Reservas (/reservations)
 
-2. Instala dependencias con Bun:
+- Modulo protegido (requiere autenticacion).
+- Gestion de slots de tiempo en tiempo real.
+- Feedback visual inmediato (Toast notifications).
+- Logica de negocio encapsulada en hooks personalizados.
 
-   ```
+### 3. Autenticacion & Perfil
+
+- Login social con Google.
+- Gestion de perfiles de usuario.
+- Rutas protegidas (`PrivateRoute`) y de administrador (`AdminRoute`).
+
+## Seguridad
+
+- **Autenticacion**: Manejada via Firebase Auth con persistencia de sesion.
+- **Base de Datos**: Reglas de seguridad (`firestore.rules`) para validar lectura/escritura basada en roles y propiedad del documento.
+- **Validacion**: Zod schemas para asegurar la integridad de los datos en el cliente antes de enviarlos.
+
+## Optimizacion (Highlights)
+
+- **Code Splitting**: Configuracion manual de chunks en Vite para separar vendors pesados (Three.js, Firebase).
+- **Assets**: Carga diferida y optimizacion de fuentes.
+- **Rendering**: Uso de `React.memo` y hooks optimizados para evitar re-renders innecesarios en el sistema de reservas.
+
+## Instalacion y Desarrollo
+
+1. **Instalar dependencias**:
+
+   ```bash
    bun install
    ```
 
-3. Ejecuta el servidor de desarrollo:
+2. **Variables de Entorno**:
+   Crear un archivo `.env.local` con las credenciales de Firebase:
 
+   ```env
+   VITE_API_KEY=...
+   VITE_AUTH_DOMAIN=...
+   VITE_PROJECT_ID=...
+   ...
    ```
-   bun run dev
+
+3. **Correr en desarrollo**:
+
+   ```bash
+   bun dev
    ```
 
-4. Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
+4. **Build para produccion**:
+   ```bash
+   bun build
+   ```
 
-## Scripts Disponibles
+## Despliegue
 
-- `bun run dev`: Inicia el servidor de desarrollo con HMR.
-- `bun run build`: Construye la app para producción.
-- `bun run lint`: Ejecuta ESLint para verificar el código.
-- `bun run preview`: Previsualiza la build de producción.
+El frontend esta configurado para desplegarse en **Vercel** (`vercel.json` incluido).
 
-## Tecnologías Utilizadas
-
-- **React**: Biblioteca para la interfaz de usuario.
-- **Vite**: Herramienta de build rápida.
-- **React Router**: Para enrutamiento del lado del cliente.
-- **ESLint**: Para linting y calidad de código.
-
-Esta estructura asegura que la app sea mantenible, escalable y fácil de extender. Si necesitas añadir más rutas o funcionalidades, ¡házmelo saber!
-
-
-Arquitectura actual:
-
-Frontend (React) → Vercel
-Backend (Functions) → Firebase Hosting
-Base de datos → Firestore
-Auth → Firebase Authentication
-Storage → Firebase Storage
+- **Build Command**: `bun run build`
+- **Output Directory**: `dist`
+- **Framework Preset**: Vite
