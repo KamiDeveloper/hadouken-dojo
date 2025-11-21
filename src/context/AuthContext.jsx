@@ -149,13 +149,13 @@ export const AuthProvider = ({ children }) => {
     /**
      * Registro con Email y Contraseña
      */
-    const signupWithEmail = async (email, password, userData) => {
+    const signupWithEmail = async (userData) => {
         try {
             setLoading(true);
             setError(null);
 
             // Crear usuario en Firebase Auth
-            const result = await createUserWithEmailAndPassword(auth, email, password);
+            const result = await createUserWithEmailAndPassword(auth, userData.email, userData.password);
 
             // Enviar email de verificación
             await sendEmailVerification(result.user);
@@ -164,7 +164,7 @@ export const AuthProvider = ({ children }) => {
             await setDoc(doc(db, 'users', result.user.uid), {
                 displayName: userData.displayName,
                 username: userData.username,
-                email: email,
+                email: userData.email,
                 photoURL: userData.photoURL || null,
                 phone: userData.phone || null,
                 role: 'user',
