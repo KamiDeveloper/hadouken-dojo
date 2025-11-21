@@ -233,7 +233,6 @@ const GetStarted = () => {
                 return;
             }
 
-            toast.success('¡Bienvenido!');
             const from = location.state?.from?.pathname || (result.role === 'admin' ? '/SystemManagement' : '/reservations');
             navigate(from, { replace: true });
         } catch (error) {

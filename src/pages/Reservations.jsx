@@ -36,6 +36,9 @@ export default function Reservations() {
     const { data: config } = useConfig();
     const isMobile = useIsMobile(); // ✅ Detectar móvil para conditional rendering
 
+    // ✅ FEATURE 3: Detectar si el usuario es admin
+    const isAdmin = user?.role === 'admin';
+
     // Estado local
     const [selectedMachineId, setSelectedMachineId] = useState(null);
     const [selectedMachineData, setSelectedMachineData] = useState(null);
@@ -336,6 +339,7 @@ export default function Reservations() {
                             onClearSelection={(clearFn) => setCalendarClearFn(() => clearFn)}
                             onCancelBookingClick={handleCancelBookingClick}
                             onWeekChange={handleWeekChange}
+                            isAdmin={isAdmin}
                         />
                     </main>
                 </div>

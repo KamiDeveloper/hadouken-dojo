@@ -7,7 +7,7 @@
  * @class BookingValidator
  */
 
-import { isBefore, isAfter, parseISO, addHours } from 'date-fns';
+import { isBefore, isAfter, parseISO, addHours, startOfWeek, startOfToday, addWeeks } from 'date-fns';
 
 class BookingValidator {
     /**
@@ -64,16 +64,38 @@ class BookingValidator {
 
     /**
      * Verifica si el usuario puede seleccionar un slot adicional
+     * ✅ FEATURE 3: Valida que usuario normal no seleccione slots fuera del rango permitido
      * 
      * @param {Object} slot - Slot a seleccionar
      * @param {Array} currentSelection - Slots ya seleccionados
-     * @param {Object} rules - Reglas de config (maxSlotsPerDay, maxSlotsPerWeek, etc.)
+     * @param {Object} rules - Reglas de config (maxSlotsPerDay, maxSlotsPerWeek, maxWeeksInAdvanceForUsers, etc.)
+     * @param {boolean} isAdmin - Si el usuario es admin (default: false)
      * @returns {Object} - { can: boolean, reason?: string }
      */
-    static canSelectSlot(slot, currentSelection = [], rules = {}) {
+    static canSelectSlot(slot, currentSelection = [], rules = {}, isAdmin = false) {
         // Verificar que el slot no esté en el pasado
         if (this.isPast(slot)) {
             return { can: false, reason: 'No puedes reservar slots en el pasado' };
+        }
+
+        // ✅ FEATURE 3: Usuarios normales solo pueden seleccionar slots dentro del rango permitido
+        if (!isAdmin && rules.maxWeeksInAdvanceForUsers !== undefined) {
+            const maxWeeksForUsers = rules.maxWeeksInAdvanceForUsers ?? 0;
+            const today = startOfToday();
+            const currentWeekStart = startOfWeek(today, { weekStartsOn: 1 });
+            const maxAllowedWeek = addWeeks(currentWeekStart, maxWeeksForUsers);
+
+            const slotDate = slot.startTime instanceof Date ? slot.startTime : parseISO(slot.startTime);
+            const slotWeekStart = startOfWeek(slotDate, { weekStartsOn: 1 });
+
+            if (slotWeekStart > maxAllowedWeek) {
+                return {
+                    can: false,
+                    reason: maxWeeksForUsers === 0
+                        ? 'Solo puedes reservar en la semana actual'
+                        : `Solo puedes reservar hasta ${maxWeeksForUsers} semana${maxWeeksForUsers === 1 ? '' : 's'} en adelante`
+                };
+            }
         }
 
         // Verificar que el slot no esté ya seleccionado

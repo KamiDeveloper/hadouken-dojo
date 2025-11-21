@@ -119,7 +119,17 @@ const Hero = () => {
                     </div>
                     <div className="acces-button absolute md:translate-y-90 translate-y-70 z-50">
                         {user ? (
-                            <div className="flex" />
+                            <div className="flex">
+                                <NavLink to="/reservations">
+                                    <FlipButton
+                                        frontText="Reserva Ya!"
+                                        backText={<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 15 15"><path fill="none" stroke="currentColor" d="M3.5 0v5m8-5v5M3 7.5h3m6 0H9m-6 3h3m3 0h3m-10.5-8h12a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1h-12a1 1 0 0 1-1-1v-10a1 1 0 0 1 1-1Z" /></svg>}
+                                        from="left"
+                                        frontClassName="bg-[var(--color-white)]/95 font-bold !text-[var(--color-black)] "
+                                        backClassName="bg-[var(--color-black)]/70 text-[var(--color-white)]"
+                                    />
+                                </NavLink>
+                            </div>
                         ) : (
                             <div className="flex">
                                 <NavLink to="/getstarted">

@@ -37,6 +37,7 @@ const DEFAULT_CONFIG = {
     maxWeeksInAdvance: 4,
     minHoursToCancel: 2,
     allowBackToBackBooking: true, // ✅ Permitir reservas consecutivas (mayoría de usuarios juega 2 horas)
+    maxWeeksInAdvanceForUsers: 0, // ✅ FEATURE 3: Usuarios normales solo ven semana actual (0 = solo actual, 1 = actual + siguiente)
     strikesForBan: 3,
     banDurationDays: 7,
     strikeExpirationDays: 30,

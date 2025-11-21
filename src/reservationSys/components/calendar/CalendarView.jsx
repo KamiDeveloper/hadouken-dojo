@@ -20,6 +20,7 @@ import CalendarGrid from './CalendarGrid';
  * @param {Object} props.config - Configuración de reservas (viene del padre)
  * @param {Array} props.existingBookings - Bookings existentes (viene del padre)
  * @param {boolean} props.bookingsLoading - Si los bookings están cargando
+ * @param {boolean} props.isAdmin - Si el usuario es admin (FEATURE 3)
  * 
  * @example
  * <CalendarView
@@ -32,6 +33,7 @@ import CalendarGrid from './CalendarGrid';
  *   onSlotsSelected={(slots) => console.log(slots)}
  *   onCancelBookingClick={(booking) => {}}
  *   onWeekChange={(week) => console.log(week)}
+ *   isAdmin={false}
  * />
  */
 export default function CalendarView({
@@ -45,13 +47,15 @@ export default function CalendarView({
     config, // ✅ OPT-001: Config recibido como prop (elimina useConfig duplicado)
     existingBookings = [], // ✅ NUEVO: Recibir bookings como prop
     bookingsLoading = false, // ✅ NUEVO: Estado de carga
+    isAdmin = false, // ✅ FEATURE 3: Si el usuario es admin
 }) {
     const { user } = useAuth();
     // ✅ OPT-001: useConfig() removido, ahora se recibe como prop
 
     // Hook de lógica del calendario (sin callbacks para evitar estado desincronizado)
     const calendarLogic = useCalendarLogic({
-        config,
+        rules: config, // ✅ FIX FEATURE 3: Pasar config como rules
+        isAdmin, // ✅ FEATURE 3: Pasar isAdmin para validación de navegación
     });
 
     const {
@@ -63,9 +67,13 @@ export default function CalendarView({
         navigateWeek,
         goToToday,
         isSlotSelected,
-        canNavigateNext,
-        canNavigatePrev,
+        canNavigateNext: canNavigateNextFn,
+        canNavigatePrev: canNavigatePrevFn,
     } = calendarLogic;
+
+    // ✅ FEATURE 3: Invocar las funciones para obtener valores booleanos
+    const canNavigateNext = canNavigateNextFn();
+    const canNavigatePrev = canNavigatePrevFn();
 
     // Sincronizar selectedSlots con el componente padre
     // Este useEffect se ejecuta DESPUÉS de que se actualiza el estado en useCalendarLogic
@@ -166,6 +174,7 @@ export default function CalendarView({
                 canNavigatePrev={canNavigatePrev}
                 selectedCount={selectedSlots.length}
                 onClearSelection={clearSelection}
+                isAdmin={isAdmin}
             />
 
             {/* Grid del calendario */}

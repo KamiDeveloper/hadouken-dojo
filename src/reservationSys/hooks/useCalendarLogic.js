@@ -25,6 +25,7 @@ import { countSlotsByDate, getUniqueDates, sortSlotsByTime } from '../../utils/b
  * @param {Function} options.onSlotSelected - Callback cuando se selecciona un slot
  * @param {Function} options.onSlotDeselected - Callback cuando se deselecciona un slot
  * @param {Function} options.onValidationError - Callback cuando hay error de validación
+ * @param {boolean} options.isAdmin - Si el usuario es admin (FEATURE 3)
  * 
  * @returns {Object} - Estado y funciones del calendario
  */
@@ -35,6 +36,7 @@ export function useCalendarLogic(options = {}) {
         onSlotSelected,
         onSlotDeselected,
         onValidationError,
+        isAdmin = false, // ✅ FEATURE 3: Recibir isAdmin
     } = options;
 
     // ============================================
@@ -132,7 +134,8 @@ export function useCalendarLogic(options = {}) {
             } else {
                 // SELECCIONAR
                 // Validar con BookingValidator
-                const validation = BookingValidator.canSelectSlot(slot, selectedSlots, rules);
+                // ✅ FEATURE 3: Pasar isAdmin para validación de rango de semanas
+                const validation = BookingValidator.canSelectSlot(slot, selectedSlots, rules, isAdmin);
 
                 if (!validation.can) {
                     // No se puede seleccionar, mostrar error
@@ -149,7 +152,7 @@ export function useCalendarLogic(options = {}) {
                 onSlotSelected?.(slot);
             }
         },
-        [selectedSlots, rules, onSlotSelected, onSlotDeselected, onValidationError]
+        [selectedSlots, rules, onSlotSelected, onSlotDeselected, onValidationError, isAdmin]
     );
 
     /**
@@ -250,31 +253,58 @@ export function useCalendarLogic(options = {}) {
 
     /**
      * Verifica si se puede navegar a la semana siguiente
-     * (basado en maxWeeksInAdvance)
+     * ✅ FEATURE 3: Admin puede ver hasta maxWeeksInAdvance (4 semanas default)
+     * ✅ FEATURE 3: Usuario normal solo puede ver hasta maxWeeksInAdvanceForUsers (0 = solo actual)
      * 
      * @returns {boolean} - true si se puede navegar
      */
     const canNavigateNext = useCallback(() => {
-        if (!rules.maxWeeksInAdvance) return true;
+        // Si no hay rules definido, permitir navegación por defecto
+        if (!rules || Object.keys(rules).length === 0) {
+            return true;
+        }
+
+        // Admin: Usar maxWeeksInAdvance (4 semanas por defecto)
+        if (isAdmin) {
+            if (!rules.maxWeeksInAdvance) return true;
+
+            const today = startOfToday();
+            const maxWeek = addWeeks(startOfWeek(today, { weekStartsOn: 1 }), rules.maxWeeksInAdvance);
+
+            return currentWeek < maxWeek;
+        }
+
+        // Usuario normal: Usar maxWeeksInAdvanceForUsers (0 por defecto = solo semana actual)
+        const maxWeeksForUsers = rules.maxWeeksInAdvanceForUsers ?? 0;
+
+        // Si es 0, solo puede ver la semana actual (no puede avanzar)
+        if (maxWeeksForUsers === 0) {
+            return false;
+        }
 
         const today = startOfToday();
-        const maxWeek = addWeeks(startOfWeek(today, { weekStartsOn: 1 }), rules.maxWeeksInAdvance);
+        const maxWeek = addWeeks(startOfWeek(today, { weekStartsOn: 1 }), maxWeeksForUsers);
 
         return currentWeek < maxWeek;
-    }, [currentWeek, rules.maxWeeksInAdvance]);
-
-    /**
+    }, [currentWeek, rules, isAdmin]);    /**
      * Verifica si se puede navegar a la semana anterior
-     * (no se puede ir antes de la semana actual)
+     * ✅ FEATURE 3: Usuarios normales solo pueden ver semana actual (no retroceder)
+     * ✅ FEATURE 3: Admin puede navegar libremente al pasado
      * 
      * @returns {boolean} - true si se puede navegar
      */
     const canNavigatePrev = useCallback(() => {
+        // Usuario normal: No puede navegar (ni adelante ni atrás)
+        if (!isAdmin) {
+            return false;
+        }
+
+        // Admin: Puede navegar al pasado libremente
         const today = startOfToday();
         const thisWeek = startOfWeek(today, { weekStartsOn: 1 });
 
         return currentWeek > thisWeek;
-    }, [currentWeek]);
+    }, [currentWeek, isAdmin]);
 
     // ============================================
     // RETURN

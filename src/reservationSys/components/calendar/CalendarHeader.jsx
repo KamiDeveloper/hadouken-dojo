@@ -16,6 +16,7 @@ import { formatWeekRange } from '../../../utils/dateHelpers';
  * @param {boolean} props.canNavigatePrev - Si se puede navegar a semana anterior
  * @param {number} props.selectedCount - Cantidad de slots seleccionados
  * @param {function} props.onClearSelection - Callback para limpiar selección
+ * @param {boolean} props.isAdmin - Si el usuario es admin (FEATURE 3)
  * 
  * @example
  * <CalendarHeader
@@ -29,6 +30,7 @@ import { formatWeekRange } from '../../../utils/dateHelpers';
  *   canNavigatePrev={true}
  *   selectedCount={3}
  *   onClearSelection={() => {}}
+ *   isAdmin={false}
  * />
  */
 export default function CalendarHeader({
@@ -42,6 +44,7 @@ export default function CalendarHeader({
     canNavigatePrev,
     selectedCount = 0,
     onClearSelection,
+    isAdmin = false, // ✅ FEATURE 3: Si el usuario es admin
 }) {
     // Formatear rango de semana
     const weekRange = weekDates.length > 0
@@ -93,47 +96,37 @@ export default function CalendarHeader({
                 </div>
 
                 {/* Navigation controls */}
-                <div className="flex items-center gap-2">
-                    {/* Previous week */}
-                    <button
-                        onClick={() => onNavigate('prev')}
-                        disabled={!canNavigatePrev}
-                        className={`
-              p-2 res-rounded-lg res-transition-fast focus:outline-none focus:ring-2 focus:ring-blue-500
-              ${canNavigatePrev
-                                ? 'res-bg-secondary hover:res-bg-tertiary res-text-secondary hover:res-text-primary'
-                                : 'res-bg-secondary res-text-muted cursor-not-allowed opacity-50'
-                            }
-            `}
-                        aria-label="Semana anterior"
-                    >
-                        <ChevronLeftIcon className="w-5 h-5" />
-                    </button>
+                {isAdmin && (
+                    <div className="flex items-center gap-2">
 
-                    {/* Today button */}
-                    <button
-                        onClick={onToday}
-                        className="px-4 py-2 res-rounded-lg res-btn-secondary focus:ring-offset-2 focus:ring-offset-gray-900"
-                    >
-                        Hoy
-                    </button>
+                        {/* just a spacer for alignment */}
+                        <div className="w-6" />
 
-                    {/* Next week */}
-                    <button
-                        onClick={() => onNavigate('next')}
-                        disabled={!canNavigateNext}
-                        className={`
+                        {/* Today button */}
+                        <button
+                            onClick={onToday}
+                            className="px-4 py-2 res-rounded-lg res-btn-secondary focus:ring-offset-2 focus:ring-offset-gray-900"
+                        >
+                            Hoy
+                        </button>
+
+                        {/* Next week */}
+                        <button
+                            onClick={() => onNavigate('next')}
+                            disabled={!canNavigateNext}
+                            className={`
               p-2 res-rounded-lg res-transition-fast focus:outline-none focus:ring-2 focus:ring-blue-500
               ${canNavigateNext
-                                ? 'res-bg-secondary hover:res-bg-tertiary res-text-secondary hover:res-text-primary'
-                                : 'res-bg-secondary res-text-muted cursor-not-allowed opacity-50'
-                            }
+                                    ? 'res-bg-secondary hover:res-bg-tertiary res-text-secondary hover:res-text-primary'
+                                    : 'res-bg-secondary res-text-muted cursor-not-allowed opacity-50'
+                                }
             `}
-                        aria-label="Siguiente semana"
-                    >
-                        <ChevronRightIcon className="w-5 h-5" />
-                    </button>
-                </div>
+                            aria-label="Siguiente semana"
+                        >
+                            <ChevronRightIcon className="w-5 h-5" />
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
