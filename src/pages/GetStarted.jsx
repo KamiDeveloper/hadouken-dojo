@@ -223,6 +223,11 @@ const GetStarted = () => {
         try {
             const result = await loginWithGoogle();
 
+            // Si el usuario canceló o cerró la ventana, no hacer nada
+            if (result.cancelled) {
+                return;
+            }
+
             if (result.needsProfileCompletion) {
                 toast.success('¡Casi listo! Completa tu perfil');
                 return;
@@ -232,8 +237,12 @@ const GetStarted = () => {
             const from = location.state?.from?.pathname || (result.role === 'admin' ? '/SystemManagement' : '/reservations');
             navigate(from, { replace: true });
         } catch (error) {
-            console.error('Error en Google login:', error);
-            toast.error('Error al iniciar con Google');
+            // Solo mostrar error si no es cancelación
+            if (error.code !== 'auth/popup-closed-by-user' &&
+                error.code !== 'auth/cancelled-popup-request') {
+                console.error('Error en Google login:', error);
+                toast.error('Error al iniciar con Google');
+            }
         } finally {
             setIsLoading(false);
         }

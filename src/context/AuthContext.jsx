@@ -108,9 +108,24 @@ export const AuthProvider = ({ children }) => {
             toast.success('¡Bienvenido de nuevo!');
             return { needsProfileCompletion: false };
         } catch (err) {
-            console.error('Error en login con Google:', err);
-            setError(err.message);
-            toast.error('Error al iniciar sesión con Google');
+            // Manejar casos específicos de cancelación/bloqueo
+            if (err.code === 'auth/popup-closed-by-user') {
+                // Usuario cerró la ventana - posiblemente por AdBlock
+                toast.error('Por favor desactiva tu AdBlock e intenta nuevamente');
+                return { cancelled: true };
+            } else if (err.code === 'auth/cancelled-popup-request') {
+                // Popup fue cancelado por otra solicitud
+                return { cancelled: true };
+            } else if (err.code === 'auth/popup-blocked') {
+                // Popup bloqueado por el navegador
+                toast.error('El popup fue bloqueado. Por favor, permite popups para este sitio');
+                setError('popup-blocked');
+            } else {
+                // Otros errores
+                console.error('Error en login con Google:', err);
+                setError(err.message);
+                toast.error('Error al iniciar sesión con Google');
+            }
             throw err;
         } finally {
             setLoading(false);
