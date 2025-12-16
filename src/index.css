@@ -1,3 +1,6 @@
+/* Importar fuentes de Google Fonts para Ranking System - DEBE IR PRIMERO */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
 @import "tailwindcss";
 
 /* Importar fuentes locales */
@@ -35,6 +38,39 @@
     --font-serif: "DM Serif Text", serif;
     --font-tarrget: "Tarrget", sans-serif;
     --font-tarrget-italic: "Tarrget-italic", italic;
+    --font-rajdhani: "Rajdhani", sans-serif;
+    --font-inter: "Inter", sans-serif;
+
+    /* Ranking System Colors */
+    --rank-gold: #FFD700;
+    --rank-silver: #C0C0C0;
+    --rank-bronze: #CD7F32;
+    --cyber-blue: #00f3ff;
+    --cyber-purple: #bc13fe;
+    --cyber-bg-deep: #050505;
+
+    /* God of Destruction Tournament Colors */
+    --tournament-bg-main: #010101;
+    --tournament-bg-card: #0f0f0f;
+    --tournament-bg-elevated: #1a1a1a;
+
+    --tournament-red-dark: #2c0f12;
+    --tournament-red-medium: #6b1e23;
+    --tournament-red-accent: #d32f2f;
+    --tournament-red-glow: rgba(107, 30, 35, 0.3);
+
+    --tournament-blue-dark: #0b3037;
+    --tournament-blue-medium: #134e5e;
+    --tournament-blue-accent: #1e88a8;
+    --tournament-blue-glow: rgba(19, 78, 94, 0.3);
+
+    --tournament-text-primary: #efefef;
+    --tournament-text-secondary: #b0b0b0;
+    --tournament-text-muted: #707070;
+
+    --tournament-border-subtle: rgba(255, 255, 255, 0.05);
+    --tournament-border-medium: rgba(255, 255, 255, 0.1);
+    --tournament-border-strong: rgba(255, 255, 255, 0.2);
 }
 
 
@@ -669,6 +705,224 @@ body {
 
 @utility res-text-muted {
     color: var(--reservations-text-muted);
+}
+
+/* ============================================
+   RANKING SYSTEM - GOD OF DESTRUCTION TOURNAMENT
+   ============================================ */
+
+/* Background Utilities */
+@utility tournament-bg-main {
+    background-color: var(--tournament-bg-main);
+}
+
+@utility tournament-bg-card {
+    background-color: var(--tournament-bg-card);
+}
+
+@utility tournament-bg-elevated {
+    background-color: var(--tournament-bg-elevated);
+}
+
+/* Text Utilities */
+@utility tournament-text-primary {
+    color: var(--tournament-text-primary);
+}
+
+@utility tournament-text-secondary {
+    color: var(--tournament-text-secondary);
+}
+
+@utility tournament-text-muted {
+    color: var(--tournament-text-muted);
+}
+
+/* Red Theme Utilities */
+@utility tournament-bg-red-dark {
+    background-color: var(--tournament-red-dark);
+}
+
+@utility tournament-bg-red-medium {
+    background-color: var(--tournament-red-medium);
+}
+
+@utility tournament-text-red {
+    color: var(--tournament-red-accent);
+}
+
+@utility tournament-border-red {
+    border-color: var(--tournament-red-medium);
+}
+
+.tournament-glow-red {
+    box-shadow: 0 0 20px var(--tournament-red-glow);
+}
+
+.tournament-glow-red-strong {
+    box-shadow: 0 0 40px var(--tournament-red-glow), 0 0 60px var(--tournament-red-glow);
+}
+
+/* Blue Theme Utilities */
+@utility tournament-bg-blue-dark {
+    background-color: var(--tournament-blue-dark);
+}
+
+@utility tournament-bg-blue-medium {
+    background-color: var(--tournament-blue-medium);
+}
+
+@utility tournament-text-blue {
+    color: var(--tournament-blue-accent);
+}
+
+@utility tournament-border-blue {
+    border-color: var(--tournament-blue-medium);
+}
+
+.tournament-glow-blue {
+    box-shadow: 0 0 20px var(--tournament-blue-glow);
+}
+
+.tournament-glow-blue-strong {
+    box-shadow: 0 0 40px var(--tournament-blue-glow), 0 0 60px var(--tournament-blue-glow);
+}
+
+/* Border Utilities */
+@utility tournament-border-subtle {
+    border-color: var(--tournament-border-subtle);
+}
+
+@utility tournament-border-medium {
+    border-color: var(--tournament-border-medium);
+}
+
+@utility tournament-border-strong {
+    border-color: var(--tournament-border-strong);
+}
+
+/* Rank Badge Utilities */
+.rank-badge-gold {
+    background: linear-gradient(135deg, var(--rank-gold), #ffed4e);
+    color: #1a1a1a;
+    box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+}
+
+.rank-badge-silver {
+    background: linear-gradient(135deg, var(--rank-silver), #e8e8e8);
+    color: #1a1a1a;
+    box-shadow: 0 4px 20px rgba(192, 192, 192, 0.4);
+}
+
+.rank-badge-bronze {
+    background: linear-gradient(135deg, var(--rank-bronze), #e6b17a);
+    color: #1a1a1a;
+    box-shadow: 0 4px 20px rgba(205, 127, 50, 0.4);
+}
+
+/* Glassmorphism Utilities */
+.tournament-glass {
+    background: rgba(15, 15, 15, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--tournament-border-medium);
+}
+
+.tournament-glass-strong {
+    background: rgba(15, 15, 15, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--tournament-border-strong);
+}
+
+/* Button Utilities */
+.tournament-btn-red {
+    background: linear-gradient(135deg, var(--tournament-red-medium), var(--tournament-red-dark));
+    color: var(--tournament-text-primary);
+    border: 1px solid var(--tournament-red-medium);
+    transition: all 0.3s ease;
+}
+
+.tournament-btn-red:hover {
+    background: linear-gradient(135deg, var(--tournament-red-accent), var(--tournament-red-medium));
+    box-shadow: 0 0 20px var(--tournament-red-glow);
+    transform: translateY(-2px);
+}
+
+.tournament-btn-blue {
+    background: linear-gradient(135deg, var(--tournament-blue-medium), var(--tournament-blue-dark));
+    color: var(--tournament-text-primary);
+    border: 1px solid var(--tournament-blue-medium);
+    transition: all 0.3s ease;
+}
+
+.tournament-btn-blue:hover {
+    background: linear-gradient(135deg, var(--tournament-blue-accent), var(--tournament-blue-medium));
+    box-shadow: 0 0 20px var(--tournament-blue-glow);
+    transform: translateY(-2px);
+}
+
+/* Card Hover Effects */
+.tournament-card {
+    background: var(--tournament-bg-card);
+    border: 1px solid var(--tournament-border-subtle);
+    transition: all 0.3s ease;
+}
+
+.tournament-card:hover {
+    background: var(--tournament-bg-elevated);
+    border-color: var(--tournament-border-medium);
+    transform: translateY(-4px);
+}
+
+/* Admin Panel Styles */
+.tournament-admin-panel {
+    background: rgba(1, 1, 1, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-left: 2px solid var(--tournament-red-medium);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+}
+
+/* Live Match Banner Styles */
+.tournament-live-banner {
+    background: linear-gradient(135deg,
+            var(--tournament-red-dark) 0%,
+            var(--tournament-bg-main) 50%,
+            var(--tournament-blue-dark) 100%);
+    border: 2px solid var(--tournament-red-medium);
+    box-shadow: 0 0 40px var(--tournament-red-glow);
+}
+
+/* Podium Styles */
+.tournament-podium-1 {
+    background: linear-gradient(to bottom, rgba(255, 215, 0, 0.15), transparent);
+    border-top: 3px solid var(--rank-gold);
+    box-shadow: 0 -10px 40px rgba(255, 215, 0, 0.2);
+}
+
+.tournament-podium-2 {
+    background: linear-gradient(to bottom, rgba(192, 192, 192, 0.15), transparent);
+    border-top: 3px solid var(--rank-silver);
+    box-shadow: 0 -10px 40px rgba(192, 192, 192, 0.2);
+}
+
+.tournament-podium-3 {
+    background: linear-gradient(to bottom, rgba(205, 127, 50, 0.15), transparent);
+    border-top: 3px solid var(--rank-bronze);
+    box-shadow: 0 -10px 40px rgba(205, 127, 50, 0.2);
+}
+
+/* Trend Indicators */
+.trend-up {
+    color: #4ade80;
+}
+
+.trend-down {
+    color: #f87171;
+}
+
+.trend-same {
+    color: var(--tournament-text-muted);
 }
 
 /* ============================================

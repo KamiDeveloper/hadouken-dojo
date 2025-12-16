@@ -1,12 +1,37 @@
 rules_version = '2';
 
-// Craft rules based on data in your Firestore database
-// allow write: if firestore.get(
-//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
 service firebase.storage {
   match /b/{bucket}/o {
+    
+    // Helper function para verificar si es admin
+    function isAdmin() {
+      return request.auth != null && 
+             firestore.get(/databases/(default)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+    
+    // Avatares del sistema de ranking
+    match /avatars/{gameId}/{filename} {
+      // Lectura pública para mostrar avatares
+      allow read: if true;
+      
+      // Solo admins pueden subir avatares desde Admin Panel
+      allow write: if isAdmin();
+    }
+    
+    // Fotos de perfil de usuarios (futuro)
+    match /profiles/{userId}/{filename} {
+      // Lectura pública
+      allow read: if true;
+      
+      // Usuario puede subir su propia foto o admin
+      allow write: if request.auth != null && 
+                   (request.auth.uid == userId || isAdmin());
+    }
+    
+    // Deny all other paths
     match /{allPaths=**} {
       allow read, write: if false;
     }
   }
 }
+

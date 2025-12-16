@@ -162,6 +162,24 @@ service cloud.firestore {
     }
 
     // ============================================
+    // RANKING SYSTEM (Leagues & Matches)
+    // ============================================
+
+    // Leagues and Players
+    match /leagues/{game}/players/{playerId} {
+      allow get: if true; // Public read for individual player
+      allow list: if true; // Public read for ranking list (requires composite index: currentRank ASC)
+      allow create, update, delete: if isAdmin(); // Only admin can modify
+    }
+
+    // Matches
+    match /matches/{matchId} {
+      allow get: if true; // Public read for individual match
+      allow list: if true; // Public read for matches list (requires composite index: scheduledDate DESC)
+      allow create, update, delete: if isAdmin(); // Only admin can modify
+    }
+
+    // ============================================
     // DENY ALL OTHER COLLECTIONS
     // ============================================
     

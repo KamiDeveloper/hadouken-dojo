@@ -78,6 +78,20 @@ class BookingValidator {
             return { can: false, reason: 'No puedes reservar slots en el pasado' };
         }
 
+        // ✅ FEATURE 1: Admin bypass - Administradores pueden saltarse límites de slots
+        if (isAdmin) {
+            // Verificar que el slot no esté ya seleccionado
+            const alreadySelected = currentSelection.some(
+                (s) => this.isSameSlot(s, slot)
+            );
+            if (alreadySelected) {
+                return { can: true, reason: 'Ya seleccionado (click para deseleccionar)' };
+            }
+
+            // Admin puede seleccionar sin restricciones (modo privilegiado)
+            return { can: true, adminMode: true };
+        }
+
         // ✅ FEATURE 3: Usuarios normales solo pueden seleccionar slots dentro del rango permitido
         if (!isAdmin && rules.maxWeeksInAdvanceForUsers !== undefined) {
             const maxWeeksForUsers = rules.maxWeeksInAdvanceForUsers ?? 0;
@@ -239,6 +253,79 @@ class BookingValidator {
         }
 
         return { valid: errors.length === 0, errors };
+    }
+
+    /**
+     * ✅ FEATURE 1: Validación relajada para bookings creados por administradores
+     * Solo verifica reglas críticas: userId presente, slots no vacíos, y slots no en el pasado
+     * Los admins pueden ignorar límites de slots por día/semana
+     * 
+     * @param {Object} bookingData - Datos del booking a crear { userId, slots, ... }
+     * @returns {Object} - { valid: boolean, errors: string[] }
+     */
+    static validateAdminBooking(bookingData = {}) {
+        const errors = [];
+
+        // Validar que userId esté presente
+        if (!bookingData.userId || bookingData.userId.trim() === '') {
+            errors.push('Debes seleccionar un usuario para la reserva');
+        }
+
+        // Validar que slots no esté vacío
+        if (!bookingData.slots || bookingData.slots.length === 0) {
+            errors.push('Debes seleccionar al menos un slot');
+            return { valid: false, errors };
+        }
+
+        // Verificar que ningún slot esté en el pasado
+        bookingData.slots.forEach((slot, index) => {
+            if (this.isPast(slot)) {
+                errors.push(`Slot ${index + 1} está en el pasado`);
+            }
+        });
+
+        return { valid: errors.length === 0, errors };
+    }
+
+    /**
+     * ✅ FEATURE 1: Verifica si un administrador puede sobrescribir/reservar un slot
+     * Detecta si hay conflicto con otra reserva existente y si es propia del usuario seleccionado
+     * 
+     * @param {Object} slot - Slot a verificar { startTime, endTime, ... }
+     * @param {Array} existingBookings - Array de bookings existentes
+     * @param {string} selectedUserId - ID del usuario para el cual se está creando la reserva
+     * @returns {Object} - { canOverride: boolean, conflict?: { bookingId, userId, userName }, isOwnBooking: boolean }
+     */
+    static canOverrideSlot(slot, existingBookings = [], selectedUserId = null) {
+        // Buscar si el slot tiene conflicto con alguna reserva existente
+        const conflictingBooking = existingBookings.find((booking) => {
+            // Solo considerar bookings activos
+            if (booking.status !== 'active') return false;
+
+            // Verificar si alguno de los slots del booking coincide con el slot target
+            return booking.slots?.some((bookedSlot) => this.isSameSlot(bookedSlot, slot));
+        });
+
+        // Si no hay conflicto, el admin puede reservar libremente
+        if (!conflictingBooking) {
+            return {
+                canOverride: true,
+                isOwnBooking: false
+            };
+        }
+
+        // Hay conflicto: verificar si es una reserva del mismo usuario
+        const isOwnBooking = conflictingBooking.userId === selectedUserId;
+
+        return {
+            canOverride: true, // Admin siempre puede override, pero con advertencia
+            conflict: {
+                bookingId: conflictingBooking.id,
+                userId: conflictingBooking.userId,
+                userName: conflictingBooking.userName || 'Usuario desconocido'
+            },
+            isOwnBooking
+        };
     }
 
     /**

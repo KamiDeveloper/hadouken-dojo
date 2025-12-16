@@ -93,10 +93,10 @@ const NavBarDesktop = () => {
                         whileTap="tap"
                     >
                         <NavLink
-                            to="/info"
+                            to="/ranking"
                             style={{ color: getLinkColor() }}
                         >
-                            Información
+                            Ranking
                         </NavLink>
                     </motion.div>
 

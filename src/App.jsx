@@ -4,7 +4,7 @@ import Profile from './pages/Profile'
 import CompleteRegistration from './pages/CompleteRegistration'
 import SystemManagement from './pages/SystemManagement'
 import Reservations from './pages/Reservations'
-import Info from './pages/Info'
+import Ranking from './pages/Ranking'
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from 'react-router-dom'
 import RootLayout from './layout/RootLayout'
 import { LoadingProvider, useLoading } from './context/LoadingContext'
@@ -21,7 +21,7 @@ function AppContent() {
       <Route path='/' element={<RootLayout />}>
         {/* Rutas públicas */}
         <Route index element={<Home />} />
-        <Route path='info' element={<Info />} />
+        <Route path='ranking' element={<Ranking />} />
         <Route path='getstarted' element={<GetStarted />} />
 
         {/* Rutas antiguas redirigen a la nueva */}

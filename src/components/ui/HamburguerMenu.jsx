@@ -108,7 +108,7 @@ const HamburguerMenu = () => {
                 <nav className="flex-1 overflow-y-auto">
                     <ul className="nav-links-mobile">
                         <NavLink to="/" onClick={toggleMenu}>Inicio</NavLink>
-                        <NavLink to="/info" onClick={toggleMenu}>Información</NavLink>
+                        <NavLink to="/ranking" onClick={toggleMenu}>Ranking</NavLink>
                         <NavLink to="/reservations" onClick={toggleMenu}>Reservas</NavLink>
                         {user?.role === 'admin' && (
                             <NavLink to="/system" onClick={toggleMenu}>Sistema</NavLink>
